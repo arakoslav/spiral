@@ -1,12 +1,14 @@
-# Hypnotic Spiral 2.0
+# Hypnotic Spiral 3.0
 Copyright (C) 2006, 2007 by Yonah Arakoslav
+yonah.arakoslav@yahoo.com
 
 ## New in this version
 
-Recording with an iSight (Mac only)
-Much better speech synthesis (Mac only)
-
-Several new scripts
+Many new scripts
+Some sample images and a sound track
+Experiment with syllabalized words in spiral.py
+I've now got an e-mail address.  I'm happy to receive reports of use
+of this program, especially if you've got the a/v features working!
 
 ## Introduction
 
@@ -54,10 +56,6 @@ Linux system, you can probably just install both through your package
 manager.  On a Mac, there are nice pre-packaged installers.  On
 Windows, you're on your own.
 
-If you're on a Mac *AND* you want the video-recording feature, you'll have to install Quicktime Broadcaster.  It's free from Apple at 
-<http://www.apple.com/quicktime/broadcaster/>.
-If not, don't worry about it.
-
 You will also need media.  Put pictures in the "images" directory.  I
 haven't included any pictures partly because they're huge, and partly
 because they're not mine to give away.  I've got a 40 MB bundle with
@@ -75,10 +73,6 @@ If you make it executable, Windows or Mac machines should be able to
 just double-click it:
 
 > chmod a+x spiral.py
-
-If you are on a Mac, you can use speaker.py instead.  It has much better speech
-synthesis than the spiral.py code.  It uses a different configuration file,
-configSpeaker.py.
 
 ### Usage
 
@@ -155,7 +149,9 @@ Each config script will start with its "text()" method.  That's the
 one thing you must override; the other names like "body()" are just
 my convention.
 
-Experiment!  Try new things and let me hear about them!
+Experiment!  Try new things and let me hear about them!  I'd love to
+see new scripts or new uses for the program.  Let me know at
+<yonah.arakoslav@yahoo.com>
 
 
 ## Extending the program: new modules

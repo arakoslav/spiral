@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # Hypnotic Spiral
 # Copyright (C) 2006, 2007 by Yonah Arakoslav
+# yonah.arakoslav@yahoo.com
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,7 +25,7 @@
 #  * mail variable contents to a master
 #  * mail audio and video to a master
 
-import pygame, math, os, sys, random, textwrap
+import pygame, math, os, sys, random, textwrap, time
 from pygame.locals import *
 from config import configs
 
@@ -51,6 +52,10 @@ def pick_config(cs):
         sys.exit(1)
     elif len(cs) == 1:
         return cs[0]
+    if len(sys.argv) == 2:
+        for c in cs:
+            if c.name == sys.argv[1]:
+                return c
     print "Select a configuration:"
     for i in xrange(0,len(cs)):
         print "  %i) %s" % (i, cs[i].name)
@@ -97,25 +102,30 @@ def textOutline(font, message, fontcolor, outlinecolor):
     return img
 
 class Spiral:
-    def init_screen(self):
-        flags = HWSURFACE | DOUBLEBUF | ASYNCBLIT
+    def init_globals(self):
+        self.flags = HWSURFACE | DOUBLEBUF | ASYNCBLIT
         if self.config.fullscreen:
-            flags |= FULLSCREEN
-            pygame.mouse.set_visible(False)                   
+            self.flags |= FULLSCREEN
             if self.config.size in pygame.display.list_modes():
                 self.x_size, self.y_size = self.config.size
             else:
                 self.x_size, self.y_size = pygame.display.list_modes()[0]
         else:
-            flags |= RESIZABLE
+            self.flags |= RESIZABLE
             self.x_size, self.y_size = self.config.size
-        self.screen = pygame.display.set_mode((self.x_size, self.y_size),flags)
+        self.screen = pygame.display.set_mode((1, 1),self.flags | NOFRAME)
+
+    def init_screen(self):
+        if self.config.fullscreen:
+            pygame.mouse.set_visible(False)
+        self.screen = pygame.display.set_mode((self.x_size, self.y_size),self.flags)
 
     def process_events(self):
         for event in pygame.event.get():
             if event.type == KEYDOWN:
                 if event.unicode == 'f':
                     self.config.fullscreen = not self.config.fullscreen
+                    self.init_globals()
                     self.init_screen()
                     self.rescale()
                 elif event.unicode in ['<',',']:
@@ -129,6 +139,7 @@ class Spiral:
                     self.running=False
             elif event.type == VIDEORESIZE:
                 self.config.size = event.size
+                self.init_globals()
                 self.init_screen()
                 self.rescale()
     
@@ -189,6 +200,10 @@ class Spiral:
     def pause_music(self): pygame.mixer.music.pause()
     def unpause_music(self): pygame.mixer.music.unpause()
     def stop_music(self): pygame.mixer.music.stop()
+    def fullscreen(self):
+        self.config.fullscreen = not self.config.fullscreen
+        self.init_globals()
+        self.init_screen()
     def start_music(self,filename):
         self.config.music=filename
         self.init_music()
@@ -240,8 +255,9 @@ class Spiral:
         else:
             self.insert_text(no)
     def init_spiral(self):
-        self.clear_screen()
-        self.draw_text("Loading spiral")
+        #self.clear_screen()
+        #self.draw_text("Loading spiral")
+        print "Loading spiral...",
         spiral_size = int(1.2* max(self.x_size, self.y_size))
         spiral = pygame.Surface((spiral_size, spiral_size))
         dots = []
@@ -264,7 +280,8 @@ class Spiral:
         self.spirals=[]
         for t in xrange(0,90):
             self.spirals.append(pygame.transform.rotate(spiral,-t))
-        self.clear_screen()
+        #self.clear_screen()
+        print "...done"
         self.spirals_index=0
 
     def load_image(self,i):
@@ -272,6 +289,7 @@ class Spiral:
         path = os.path.join(self.config.image_dir,i)
         i = pygame.image.load(path).convert()
         i.set_alpha(self.config.image_alpha)
+        print ".",
         return i
 
     def scale_font(self):
@@ -295,14 +313,16 @@ class Spiral:
     
     def init_images(self):
         if self.config.image_dir:
-            self.clear_screen()
-            self.draw_text("Loading images")
+            #self.clear_screen()
+            #self.draw_text("Loading images")
+            print "Loading images...",
             image_file_names = os.listdir(self.config.image_dir)
             self.images = [self.load_image(i) for i in image_file_names
                            if i.endswith(".jpg")]
             if self.config.shuffle_images: random.shuffle(self.images)
             self.scale_images()
-            self.clear_screen()
+            print "...done"
+            #self.clear_screen()
             self.image_index=0
             self.images_initialized = True
 
@@ -389,11 +409,14 @@ class Spiral:
     def __init__(self,config):
         pygame.init()
         self.config = config()
-        self.init_screen()
-        self.init_text()
+        self.init_globals()
         self.init_spiral()
         self.init_images()
+        self.init_text()
         self.init_music()
+        self.init_screen()
+
+
 
 startup = """Hypnotic Spiral, Copyright (C) 2006 Yonah Arakoslav
 This program comes with ABSOLUTELY NO WARRANTY.  This is free software,
@@ -410,6 +433,9 @@ usage = """Keys:
 if __name__=='__main__':
     print startup
     c = pick_config(configs)
+    delay = random.randint(c.minimum_delay,c.maximum_delay)
+    print "Waiting %i:%i." % (delay/60,delay%60)
+    time.sleep(delay)
     print usage
     s = Spiral(c)
     s.run_spiral()

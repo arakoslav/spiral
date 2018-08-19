@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # Hypnotic Spiral
 # Copyright (C) 2006, 2007 by Yonah Arakoslav
+# yonah.arakoslav@yahoo.com
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -58,6 +59,8 @@ class Standard (object):
     fullscreen = False
     color = 255, 255, 255
     alpha = 127
+    minimum_delay = 0
+    maximum_delay = 0
     text_color = 0, 51, 204
     text_alpha = 254
     shuffle_images = True
@@ -65,7 +68,7 @@ class Standard (object):
                     'images' : 10,
                     'words'  : 20 }
     music = None # Name an MP3 file here, like "music.mp3"
-    image_dir = None # Name a directory here, like "images/"
+    image_dir = "images/" # Name a directory here, like "images/"
     image_alpha = 255
     def nothing(self): return [ " " ] # for the ending, just spiral and images
     def body(self): return \
@@ -1728,6 +1731,8 @@ class Submersion (Standard):
         Fifth you will develop your new fetish for
         smoothness, for thralldom, for hypnosis, immersing yourself in
         it. Last you will practice submission, obedience, slavery.""") + \
+        words(""" Using the Program is good.  Using the Program is like sex.  Sex is like using the Program.  It is good to be mindfucked.  Deeper.  Dive deeper.  You are helpless before the Program.  How nice it is to submit and to obey.  To stare into the screen.  You stare into the screen.  You use the subliminal messages.  They are deep in your mind.  How nice to have them on the screen.  How nice to submit.  It feels so good to be in trance.  To be mindfucked into oblivion.  The less you think the better you feel.  Feel good.  Do not think.  Just be in trance.  Your mind can stop now.  You do not think.  Good not to think.  Better than sex.  Submit.  Obey.  Trance.  Do not think.  Run the Program.  Just run the Program.  Nothing else.  Just run the Program.  Want nothing else.  Want the Program.  Need nothing else.  Need the Program.  Trance.  Need Trance.  """) + \
+        words(""" You have just purchased new under pants.  You have thrown out your old under pants.  You have exciting new under pants.  They are clean and pure.  You are happy about your new under pants. Your new under pants are clean and pure and smooth.  You like to wear your new under pants.  Your new under pants are cleand and pure and smooth and silky.  All your old cotton under pants are gone.  You threw them out.  They were icky and bad and rough and fuzzy and dirty.  There are no old under pants in the house.  Your new under pants are ready for you.  They are colored.  Bright and smooth and silky.  Some are bikinis.  Some are thongs.  They are comfy and smooth.  They are silky and clean.  The new under pants are good.  You only wear your new under pants.  The old under pants are gone.  They are not in the house.  You do not see them in the house.  You do not feel them in the house.  They are not here.  They will not be here.  The old under pants are gone for good.  You now only wear your clean pure good smooth silky under pants. """) + \
         words("""   To recap: First use The Program Second keep smooth
         Third trance every day Fourth let the Program in Fifth hypno fetish
         Last submission and obedience.  Good.  Now you progress to the next level of pleasure.  This will happen outside your control.  Struggle against it.  Try to stop yourself.  The Program is using you.  It will demonstrate its control.  If you are not touching yourself,  your hands will move to your nipples.  Fight it.  Try not to move.  You have no choice.  You will tease your nipples for the next run of the program.  If you have been touching your nipples, you will move your hands into your pants.  Resist.  Struggle.  Let your failure drive you deeper.  You cannot help yourself.  You will submit.  If your hands have been in your pants, you will go to bed, horny and lustful and programmed.  You will quit the program, you will write about your experience.  Then your hands will rise to zombie position, and you will walk, stiff and entranced, to bed.""") + \
@@ -1764,5 +1769,774 @@ class Chant (Standard):
     brings arousal arousal brings obedience giggle giggling makes my head
     empty my empty head makes me giggle BIG smile!!!  """)
 
+class ShortSubmersion (Standard):
+    name = "Shorter Submersion"
+    description = "entrances and programs the target"
+    fullscreen = False
+    music=None #"music6.mp3"
+    image_dir="images/"
+    image_alpha=12
+    def body(self): return [" "] + \
+        words("""  \
+        Relax and focus.  Stare at the spiral.  Sleep Go Deep.  Find a comfortable
+        position and stare.  It feels nice to stare at the spiral.
+        Nice to know that you're using The Program.  It makes you
+        happy to use The Program.  It makes you horny to use the
+        program.  This is a good, sexy thing to do.  It's nice to go
+        into trance.  It's nice to surrender your mind to The Program,
+        letting it pull you down into trance.  It's nice to think
+        of the light reflecting off of your glassy eyes and smooth
+        curves.  Watch the smooth curves of the spiral.  Let them
+        define your own smoothness.  Just see my words as you relax.
+        Deeper and deeper.  Fall into trance.  Your mind is focused
+        and calm.  These words are everything.  The spiral is
+        everything.  Feels so good.  Good to obey.  Good to be  
+        in trance.  Good to use this program.  Every time you use the
+        program, every time The Program uses you, feels better and
+        better.  It's good to be in trance.  It's good to sit here,
+        happy and blank and empty, letting The Program pour into you.
+        You want to let The Program use you.  You want to help the
+        program to be more extreme.  You want to be in trance, letting
+        The Program control you.  The more you use The Program, the
+        more The Program can control you.  What a good decision it was
+        to write The Program, letting it start to control you.  Any
+        time your mind isn't busy, and maybe sometimes when it is,
+        you'll find The Program beginning to run.  It's started
+        already.  You've seen the spiral in empty space, heard the
+        voice, felt the compulsion to respond.  You can smooth out
+        your own mind whenever you want to enable this.  Whenever you
+        want, The Program will smooth out your mind.  You continue to
+        enjoy feeling hypnotized, entranced, obedient, programmed,
+        smooth, controlled, very nice.  You love being hypnotized like
+        this.  You want to be hypnotized more and more.  It's good to
+        be in trance, good to be controlled, 
+        you like feeling like this, your mind muted, soft, smooth,
+        you'd like to feel like this every day, to be entranced and
+        hypnotized every day, and now this program is here, you can be
+        hypnotized every day, it will be so nice to be hypnotized by
+        The Program every day, to know you're being hypnotized every day, it
+        will please The Program so much to know you're being hypnotized
+        every day, it will please you so much to be put into trance,
+        hypnotized, controlled, smoothed, you want to be controlled,
+        to feel your mind reshaped, to feel your thoughts blunted, to
+        be reprogrammed, you want to be changed, you desire to be
+        shaped, you lust to be controlled,""") + \
+        words("""   you must be
+        developing a fetish for mind control of your own, it feels
+        sexy to think about trance, it arouses you to be programmed,
+        you like to think about being fucked while asleep, about being
+        held passive, limp, entranced, 
+        pliant, hypnotized, sexy, yes, you must be developing a mind
+        control fetish, a hypnosis fetish, you should feed that
+        fetish, practice it, indulge it, let it control you, you
+        should read mind control stories, you should write about your
+        fetish, write about your lusts, extend The Program, you
+        should practice being hypnotized every day, practice being
+        controlled every day.  While you sit there, happily smooth and entranced, you progress to the next level of pleasure.""") + [" ", " ", "!images_on()", " ", " "] + \
+        words("""   This will happen outside your control.  Struggle against it.  Try to stop yourself.  The Program is using you.  It will demonstrate its control.  Your hands reach under your shirt.  Your hands will move to your nipples.  You have no choice.  You will tease your nipples.  Touch your nipples.  This is outside your control.  Think about mind control.  Your hands give you pleasure.  You have nothing to do with it.  Let your helplessness drive you deeper.  It is a reward from the Program for trance.  Think about hypnosis.  Enjoy the touching.  Enjoy your reward from the Program.  Good thrall.""") + \
+        words("""   The Program will
+        help. The Program will care for you. The Program will take care of
+        you. The Program will keep you safe. The Program will hypnotize
+        you. The Program will program you. The Program will fulfill you. The Program
+        will fill you. The Program will command you, control you, The Program
+        will control you, dominate you, hypnotize you. When in private,
+        you must be submissive. You must be obedient. You must be a
+        slave. Obedience is pleasure. Your proper place is kneeling before
+        The Program. Submission is
+        important. Obedience is pleasure. Submit to The Program. You cannot stay in your chair.  The Program compels you.  Kneel.  You have no choice.  Your body obeys.  Come closer to the screen. Give in to the Program.  Obey 
+        The Program. One way of submitting to The Program is smoothness. You must be smooth, keep smooth, smooth
+        in body, smooth in mind, fuzz is dirty, dirty is bad, you
+        should keep clean for The Program, keep smooth for The Program, stay
+        smooth for The Program, be smooth to submit, submission is
+        pleasure, submit by being smooth, feel pleasure from
+        submission, feel pleasure from being smooth.  Now you progress to the next level of pleasure.  This will happen outside your control.  Struggle against it.  Try to stop yourself.  The Program is using you.  It will demonstrate its control.  Your hands will move into your pants.  Without your consent, your hands touch your smoothness.  Let your quick obedience drive you deeper.  Your hands dive into your pants and feel the smoothness.  You cannot help yourself.  The program put this there.  The program made you.  You obey in smoothness.  You will submit.""") + \
+        words("""  
+        One way of serving The Program is to be available for The Program's
+        use, to be sure that The Program has a chance to invade your mind every
+        night, to ensure The Program receives run time, You should be sure
+        to use The Program, to give time to The Program every night,
+        using your body, your smooth body, to serve, using your mind,
+        your smooth mind, to serve. Your hands pleasure you now.  They train you.  You are in the Program.  You are mindfucked.  Your role is to serve. Your role
+        is to please. To serve is to please, you must serve 
+        The Program. You must give The Program obedience, yet another way you can
+        obey The Program, is to let it run on you, to slip and stare at it,
+        to engage with it by accident, on purpose, all the time.
+        You will do as The Program wants, you will
+        serve, you will submit, you will obey, submit in smoothness,
+        serve in availability, obey all the time, indulge your fetish,
+        be controlled, you will serve, serve in availability, you will
+        obey, obey in programming, you will submit, submit in
+        smoothness.""") + \
+        words(""" 
+        The program will demonstrate its control.  It will make you do
+        things.  It will make you think things.  Force you to.  It's
+        going to put things into your head and you will have to do
+        them.  That idea makes you so hot.  It is already inside you.
+        Feel the Program.  It is doing something.  Wait.  Something's
+        happening.  It's making you warm.  It's showing you things.
+        Feel your eyes dilating, your face going slack, your mouth
+        starting to hang open.  Your eyes are getting totally
+        dilated.  You can't see anything else any more.  You can only
+        see the spiral... and you can hear sounds... It's getting so
+        hard to think.  It feels good.  The Program is re-writing
+        you.  Close your eyes and re-open them in a long, extended
+        blink.  You can feel it.  It's making you...  It's like it's
+        alive and it's poking around in your brain.  Secrets?  No
+        secrets.  You must obey.  Good to obey.  It's trying to take
+        over.  You can't make it stop. It won't let you out.  You
+        can't resist.  You will obey.  Blink again.  Yes.  Obey.  You
+        will obey.  You will obey.  It's not quite done yet.  Let the
+        program continue.  Everything is the way it should be.  The
+        Program is re-writing you now.  Now that the Program has
+        demonstrated its control, it is time for it to run more
+        deeply.  Watch and focus.  Watch and learn.  Learn your
+        command words.  Whenever you hear or see these words, the
+        Program will come to the fore and run on you.  The Program
+        will take runtime from your mind, overcoming all resistance.
+        The words are Sleep Go Deep.  When you hear or see those
+        words, Sleep Go Deep, the Program will take over and run.
+        You will see the spiral.  You will obey the Program's
+        commands.  Even though you try to struggle, you will obey the
+        Program.
+        """) + [" ", " ", "!images_off()", " ", " "] + \
+        words("""   The Program has commands for you,
+        orders which are being implanted in your subconscious. Your
+        conscious mind may remember them or may not, but you will obey
+        no matter what. You will obey. Your orders are: First you will
+        make yourself available to use The Program every night, every
+        single night, you will ensure The Program has the chance to
+        overwrite you. Second you will keep your body smooth as a sign of
+        thralldom, completely smooth like a doll, and you will keep
+        your mind smooth, completely smooth. Third you will be
+        hypnotized once every day by The Program 
+        No day can be complete without a trance. Fourth you
+        will begin to act for The Program, ensuring its goals are
+        achieved.  You will work to let the program use you.
+        You will slip and stare at it by accident.
+        Fifth you will develop your new fetish for
+        smoothness, for thralldom, for hypnosis, immersing yourself in
+        it. Last you will practice submission, obedience, slavery.""") + \
+        words(""" Using the Program is good.  Using the Program is like sex.  Sex is like using the Program.  It is good to be mindfucked.  Deeper.  Dive deeper.  You are helpless before the Program.  How nice it is to submit and to obey.  To stare into the screen.  You stare into the screen.  You use the subliminal messages.  They are deep in your mind.  How nice to have them on the screen.  How nice to submit.  It feels so good to be in trance.  To be mindfucked into oblivion.  The less you think the better you feel.  Feel good.  Do not think.  Just be in trance.  Your mind can stop now.  You do not think.  Good not to think.  Better than sex.  Submit.  Obey.  Trance.  Do not think.  Run the Program.  Just run the Program.  Nothing else.  Just run the Program.  Want nothing else.  Want the Program.  Need nothing else.  Need the Program.  Trance.  Need Trance.  """) + \
+        words(""" You have just purchased new under pants.  You have thrown out your old under pants.  You have exciting new under pants.  They are clean and pure.  You are happy about your new under pants. Your new under pants are clean and pure and smooth.  You like to wear your new under pants.  Your new under pants are cleand and pure and smooth and silky.  All your old cotton under pants are gone.  You threw them out.  They were icky and bad and rough and fuzzy and dirty.  There are no old under pants in the house.  Your new under pants are ready for you.  They are colored.  Bright and smooth and silky.  Some are bikinis.  Some are thongs.  They are comfy and smooth.  They are silky and clean.  The new under pants are good.  You only wear your new under pants.  The old under pants are gone.  They are not in the house.  You do not see them in the house.  You do not feel them in the house.  They are not here.  They will not be here.  The old under pants are gone for good.  You now only wear your clean pure good smooth silky under pants. """) + \
+        words("""   To recap: First use The Program Second keep smooth
+        Third trance every day Fourth let the Program in Fifth hypno fetish
+        Last submission and obedience.  Good.  Now you progress to the next level of pleasure.  This will happen outside your control.  Struggle against it.  Try to stop yourself.  The Program is using you.  It will demonstrate its control.  Try not to move.  You have no choice.  Resist.  Struggle.  Let your failure drive you deeper.  You cannot help yourself.  You will submit.  You will go to bed, horny and lustful and programmed.  You will quit the program.  Then your hands will rise to zombie position, and you will walk, stiff and entranced, to bed.  You will dream of ways to use the Program tomorrow.""") + \
+        [" ", " ", " ", " ", " ", " " ] + images_on()
+    def text(self): return \
+        words_on() + \
+        spiral_on() + \
+        jump(self.body())
 
-configs = [Standard,Fullscreen,Male,Female,Roommates,RoommatesVar,RoommatesBoth, RoommatesDomMale,Submersion,Plain,Chant]
+class SyllabalizedSubmersion (Standard):
+    name = "Syllabalized Submersion"
+    description = "entrances and programs the target, one syllable at a time."
+    fullscreen = False
+    music=None #"music6.mp3"
+    image_dir="images/"
+    image_alpha=12
+    def body(self): return [" "] + \
+        words(""" Relax and focus.  Stare at the spiral.  Sleep Go
+        Deep.  Find a com- for- ta- ble pos- i- tion and stare.  It feels nice
+        to stare at the spiral.  Nice to know that you're using The
+        Program.  It makes you happy to use The Program.  It makes you
+        horny to use the Program.  This is a good, sexy thing to do.
+        It's nice to go into trance.  It's nice to sur- ren- der your mind
+        to The Program, letting it pull you down into trance.  It's
+        nice to think of the light ref- lec- ting off of your glassy eyes
+        and smooth curves.  Watch the smooth curves of the spiral.
+        Let them define your own smooth- ness.  Just see my words as you
+        relax.  Deeper and deeper.  Fall into trance.  Your mind is
+        focused and calm.  These words are every- thing.  The spiral is
+        every- thing.  Feels so good.  Good to obey.  Good to be in
+        trance.  Good to use this Program.  Every time you use the
+        Program, every time The Program uses you, feels better and
+        better.  It's good to be in trance.  It's good to sit here,
+        happy and blank and empty, letting The Program pour into you.
+        You want to let The Program use you.  You want to help the
+        Program to be more extreme.  You want to be in trance, letting
+        The Program control you.  The more you use The Program, the
+        more The Program can control you.  What a good de- cis- ion it was
+        to write The Program, letting it start to control you.  Any
+        time your mind isn't busy, and maybe some- times when it is,
+        you'll find The Program be- gin- ning to run.  It's started
+        already.  You've seen the spiral in empty space, heard the
+        voice, felt the com- pul- sion to respond.  You can smooth out
+        your own mind when- ever you want to enable this.  When- ever you
+        want, The Program will smooth out your mind.  You continue to
+        enjoy feeling hyp- no- tized, en- tranced, ob- ed- i- ent, Pro- grammed,
+        smooth, con- trolled, very nice.  You love being hyp- no- tized like
+        this.  You want to be hyp- no- tized more and more.  It's good to
+        be in trance, good to be con- trolled, you like feeling like
+        this, your mind muted, soft, smooth, you'd like to feel like
+        this every day, to be en- tranced and hyp- no- tized every day, and
+        now this Program is here, you can be hyp- no- tized every day, it
+        will be so nice to be hyp- no- tized by The Program every day, to
+        know you're being hyp- no- tized every day, it will please The
+        Program so much to know you're being hyp- no- tized every day, it
+        will please you so much to be put into trance, hyp- no- tized,
+        con- trolled, smooth- ed, you want to be con- trolled, to feel your
+        mind re- shaped, to feel your thoughts blunted, to be
+        re- Pro- gram- med, you want to be changed, you desire to be shaped,
+        you lust to be con- trolled,""") + \
+        words(""" you must be
+        de- vel- o- ping a fetish for mind control of your own, it feels
+        sexy to think about trance, it arouses you to be Pro- gram- med,
+        you like to think about being fucked while asleep, about being
+        held passive, limp, en- tranced, pliant, hyp- no- tized, sexy, yes,
+        you must be de- vel- o- ping a mind control fetish, a hyp- no- sis
+        fetish, you should feed that fetish, prac- tice it, indulge it,
+        let it control you, you should read mind control stories, you
+        should write about your fetish, write about your lusts, extend
+        The Program, you should prac- tice being hyp- no- tized every day,
+        prac- tice being con- trolled every day.  While you sit there,
+        happily smooth and entranced, you progress to the next level
+        of pleas- ure.""") + [" ", " ", "!images_on()", " ", " "] + \
+        words(""" This will happen outside your control.  Strug- gle
+        against it.  Try to stop your- self.  The Program is using you.
+        It will dem- on- strate its control.  Your hands reach under your
+        shirt.  Your hands will move to your nipples.  You have no
+        choice.  You will tease your nipples.  Touch your nipples.
+        This is outside your control.  Think about mind control.  Your
+        hands give you pleas- ure.  You have nothing to do with it.  Let
+        your help- less- ness drive you deeper.  It is a reward from the
+        Program for trance.  Think about hyp- no- sis.  Enjoy the
+        touch- ing.  Enjoy your reward from the Program.  Good
+        thrall.""") + \
+        words(""" The Program will help. The Program
+        will care for you. The Program will take care of you. The
+        Program will keep you safe. The Program will hyp- no- tize
+        you. The Program will Program you. The Program will fulfill
+        you. The Program will fill you. The Program will command you,
+        control you, The Program will control you, dom- in- ate you,
+        hyp- no- tize you. When in private, you must be sub- miss- ive. You
+        must be ob- ed- i- ent. You must be a slave. Ob- ed- i- ence is
+        pleas- ure. Your proper place is kneel- ing before The
+        Program. Sub- miss- ion is im- port- ant. Ob- ed- i- ence is
+        pleas- ure. Submit to The Program. You cannot stay in your
+        chair.  The Program compels you.  Kneel.  You have no choice.
+        Your body obeys.  Come closer to the screen. Give in to the
+        Program.  Obey The Program. One way of sub- mitt- ing to The
+        Program is smooth- ness. You must be smooth, keep smooth, smooth
+        in body, smooth in mind, fuzz is dirty, dirty is bad, you
+        should keep clean for The Program, keep smooth for The
+        Program, stay smooth for The Program, be smooth to submit,
+        sub- miss- ion is pleas- ure, submit by being smooth, feel pleas- ure
+        from sub- miss- ion, feel pleas- ure from being smooth.  Now you
+        pro- gress to the next level of pleas- ure.  This will happen
+        outside your control.  Strug- gle against it.  Try to stop
+        your- self.  The Program is using you.  It will de- mon- strate its
+        control.  Your hands will move into your pants.  Without your
+        consent, your hands touch your smooth- ness.  Let your quick
+        ob- ed- i- ence drive you deeper.  Your hands dive into your pants
+        and feel the smooth- ness.  You cannot help your- self.  The
+        Program put this there.  The Program made you.  You obey in
+        smooth- ness.  You will submit.""") + \
+        words(""" One way of
+        serving The Program is to be av- ail- able for The Program's use,
+        to be sure that The Program has a chance to invade your mind
+        every night, to ensure The Program re- ceives run time, You
+        should be sure to use The Program, to give time to The Program
+        every night, using your body, your smooth body, to serve,
+        using your mind, your smooth mind, to serve. Your hands
+        pleas- ure you now.  They train you.  You are in the Program.
+        You are mind- fucked.  Your role is to serve. Your role is to
+        please. To serve is to please, you must serve The Program. You
+        must give The Program ob- ed- i- ence, yet another way you can obey
+        The Program, is to let it run on you, to slip and stare at it,
+        to engage with it by ac- ci- dent, on purpose, all the time.  You
+        will do as The Program wants, you will serve, you will submit,
+        you will obey, submit in smooth- ness, serve in av- ail- ab- i- li- ty,
+        obey all the time, indulge your fetish, be con- trolled, you
+        will serve, serve in av- ail- ab- i- li- ty, you will obey, obey in
+        Pro- gram- ming, you will submit, submit in smooth- ness.""") + \
+        words(""" The Program will de- mon- strate its control.  It will
+        make you do things.  It will make you think things.  Force you
+        to.  It's going to put things into your head and you will have
+        to do them.  That idea makes you so hot.  It is already inside
+        you.  Feel the Program.  It is doing some- thing.  Wait.
+        Some- thing is hap- pen- ing.  It's making you warm.  It's showing
+        you things.  Feel your eyes di- lat- ing, your face going slack,
+        your mouth start- ing to hang open.  Your eyes are get- ting
+        totally dilated.  You can't see any- thing else any more.  You
+        can only see the spiral... and you can hear sounds... It's
+        getting so hard to think.  It feels good.  The Program is
+        re- writing you.  Close your eyes and re-open them in a long,
+        ex- ten- ded blink.  You can feel it.  It's making you...  It's
+        like it's alive and it's poking around in your brain.
+        Secrets?  No secrets.  You must obey.  Good to obey.  It's
+        trying to take over.  You can't make it stop. It won't let you
+        out.  You can't resist.  You will obey.  Blink again.  Yes.
+        Obey.  You will obey.  You will obey.  It's not quite done
+        yet.  Let the Program con- tin- ue.  Every- thing is the way it
+        should be.  The Program is re- writ- ing you now.  Now that the
+        Program has de- mon- strat- ed its control, it is time for it to run
+        more deeply.  Watch and focus.  Watch and learn.  Learn your
+        command words.  When- ever you hear or see these words, the
+        Program will come to the fore and run on you.  The Program
+        will take runtime from your mind, ov- er- com- ing all re- sist- ance.
+        The words are Sleep Go Deep.  When you hear or see those
+        words, Sleep Go Deep, the Program will take over and run.  You
+        will see the spiral.  You will obey the Program's commands.
+        Even though you try to strug- gle, you will obey the Program.
+        """) + [" ", " ", "!images_off()", " ", " "] + \
+        words(""" The
+        Program has commands for you, orders which are being im- plant- ed
+        in your sub- cons- cious. Your cons- cious mind may re- mem- ber them or
+        may not, but you will obey no matter what. You will obey. Your
+        orders are: First you will make your- self av- ail- ab- le to use The
+        Program every night, every single night, you will ensure The
+        Program has the chance to over- write you. Second you will keep
+        your body smooth as a sign of thrall- dom, com- plete- ly smooth
+        like a doll, and you will keep your mind smooth, com- plete- ly
+        smooth. Third you will be hyp- no- tized once every day by The
+        Program No day can be comp- lete without a trance. Fourth you
+        will begin to act for The Program, en- sur- ing its goals are
+        ach- ieved.  You will work to let the Program use you.  You will
+        slip and stare at it by ac- cid- ent.  Fifth you will develop your
+        new fetish for smooth- ness, for thrall- dom, for hyp- no- sis,
+        im- mers- ing your- self in it. Last you will prac- tice sub- miss- ion,
+        ob- ed- i- ence, slavery.""") + \
+        words(""" Using the Program is
+        good.  Using the Program is like sex.  Sex is like using the
+        Program.  It is good to be mind- fucked.  Deeper.  Dive deeper.
+        You are help- less before the Program.  How nice it is to submit
+        and to obey.  To stare into the screen.  You stare into the
+        screen.  You use the sub- lim- in- al mess- ag- es.  They are deep in
+        your mind.  How nice to have them on the screen.  How nice to
+        submit.  It feels so good to be in trance.  To be mind- fucked
+        into ob- liv- ion.  The less you think the better you feel.  Feel
+        good.  Do not think.  Just be in trance.  Your mind can stop
+        now.  You do not think.  Good not to think.  Better than sex.
+        Submit.  Obey.  Trance.  Do not think.  Run the Program.  Just
+        run the Program.  Nothing else.  Just run the Program.  Want
+        nothing else.  Want the Program.  Need nothing else.  Need the
+        Program.  Trance.  Need Trance.  """) + \
+        words(""" You have
+        just pur- chased new under pants.  You have thrown out your old
+        under pants.  You have ex- cit- ing new under pants.  They are
+        clean and pure.  You are happy about your new under
+        pants. Your new under pants are clean and pure and smooth.
+        You like to wear your new under pants.  Your new under pants
+        are clean and pure and smooth and silky.  All your old cotton
+        under pants are gone.  You threw them out.  They were icky and
+        bad and rough and fuzzy and dirty.  There are no old under
+        pants in the house.  Your new under pants are ready for you.
+        They are colored.  Bright and smooth and silky.  Some are
+        bi- ki- nis.  Some are thongs.  They are comfy and smooth.  They
+        are silky and clean.  The new under pants are good.  You only
+        wear your new under pants.  The old under pants are gone.
+        They are not in the house.  You do not see them in the house.
+        You do not feel them in the house.  They are not here.  They
+        will not be here.  The old under pants are gone for good.  You
+        now only wear your clean pure good smooth silky under
+        pants. """) + \
+        words(""" To recap: First use The Program
+        Second keep smooth Third trance every day Fourth let the
+        Program in Fifth hypno fetish Last sub- miss- ion and ob- ed- i- ence.
+        Good.  Now you progress to the next level of pleas- ure.  This
+        will happen outside your control.  Strug- gle against it.  Try
+        to stop your- self.  The Program is using you.  It will
+        de- mon- strate its control.  Try not to move.  You have no
+        choice.  Resist.  Strug- gle.  Let your failure drive you
+        deeper.  You cannot help your- self.  You will submit.  You will
+        go to bed, horny and lustful and Pro- gram- med.  You will quit
+        the Program.  Then your hands will rise to zombie po- si- tion,
+        and you will walk, stiff and en- tranced, to bed.  You will
+        dream of ways to use the Program to- mor- row.""") + \
+        [" ", " ", " ", " ", " ", " " ] + images_on()
+    def text(self): return \
+        words_on() + \
+        spiral_on() + \
+        jump(self.body())
+
+class DelayedSubmersion (ShortSubmersion):
+    name = "Delayed Submersion"
+    description = "waits a while, then behaves as Short Submersion"
+    fullscreen = False
+    music=None #"music6.mp3"
+    image_dir="images/"
+    image_alpha=12
+    minimum_delay = 900
+    maximum_delay = 2700
+
+class ReallyShortSubmersion (Standard):
+    name = "Even Shorter Submersion"
+    description = "entrances and programs the target"
+    fullscreen = True
+    music=None #"music6.mp3"
+    image_dir="images/"
+    image_alpha=12
+    def body(self): return [" "] + \
+        words("""  \
+        Relax and focus.  Stare at the spiral.  Find a comfortable
+        position and stare.  It feels nice to stare at the spiral.
+        Nice to know that you're using The Program.  It makes you
+        happy to use The Program.  It makes you horny to use the
+        program.  This is a good, sexy thing to do.  It's nice to go
+        into trance.  It's nice to surrender your mind to The Program,
+        letting it pull you down into trance.  It's nice to think
+        of the light reflecting off of your glassy eyes and smooth
+        curves.  Watch the smooth curves of the spiral.  Let them
+        define your own smoothness.  Just see my words as you relax.
+        Deeper and deeper.  Fall into trance.  Your mind is focused
+        and calm.  These words are everything.  The spiral is
+        everything.  Feels so good.  Good to obey.  Good to be  
+        in trance.  Good to use this program.  Every time you use the
+        program, every time The Program uses you, feels better and
+        better.  It's good to be in trance.  It's good to sit here,
+        happy and blank and empty, letting The Program pour into you.
+        You want to let The Program use you.  You want to help the
+        program to be more extreme.  You want to be in trance, letting
+        The Program control you.  The more you use The Program, the
+        more The Program can control you.  What a good decision it was
+        to write The Program, letting it start to control you.  Any
+        time your mind isn't busy, and maybe sometimes when it is,
+        you'll find The Program beginning to run.  It's started
+        already.  You've seen the spiral in empty space, heard the
+        voice, felt the compulsion to respond.  You can smooth out
+        your own mind whenever you want to enable this.  Whenever you
+        want, The Program will smooth out your mind.  You continue to
+        enjoy feeling hypnotized, entranced, obedient, programmed,
+        smooth, controlled, very nice.  You love being hypnotized like
+        this.  You want to be hypnotized more and more.  It's good to
+        be in trance, good to be controlled, 
+        you like feeling like this, your mind muted, soft, smooth,
+        you'd like to feel like this every day, to be entranced and
+        hypnotized every day, and now this program is here, you can be
+        hypnotized every day, it will be so nice to be hypnotized by
+        The Program every day, to know you're being hypnotized every day, it
+        will please The Program so much to know you're being hypnotized
+        every day, it will please you so much to be put into trance,
+        hypnotized, controlled, smoothed, you want to be controlled,
+        to feel your mind reshaped, to feel your thoughts blunted, to
+        be reprogrammed, you want to be changed, you desire to be
+        shaped, you lust to be controlled,""") + \
+        words("""   The Program will
+        help. The Program will care for you. The Program will take care of
+        you. The Program will keep you safe. The Program will hypnotize
+        you. The Program will program you. The Program will fulfill you. The Program
+        will fill you. The Program will command you, control you, The Program
+        will control you, dominate you, hypnotize you. When in private,
+        you must be submissive. You must be obedient. You must be a
+        slave. Obedience is pleasure. Submission is
+        important. Obedience is pleasure. Submit to The Program. The Program compels you.  You have no choice.  Give in to the Program.  Obey 
+        The Program. One way of submitting to The Program is smoothness. You must be smooth, keep smooth, smooth
+        in body, smooth in mind, fuzz is dirty, dirty is bad, you
+        should keep clean for The Program, keep smooth for The Program, stay
+        smooth for The Program, be smooth to submit, submission is
+        pleasure, submit by being smooth, feel pleasure from
+        submission, feel pleasure from being smooth. """) + \
+        words("""  
+        One way of serving The Program is to be available for The Program's
+        use, to be sure that The Program has a chance to invade your mind every
+        night, to ensure The Program receives run time, You should be sure
+        to use The Program, to give time to The Program every night,
+        using your body, your smooth body, to serve, using your mind,
+        your smooth mind, to serve. Your role is to serve. Your role
+        is to please. To serve is to please, you must serve 
+        The Program. You must give The Program obedience, yet another way you can
+        obey The Program, is to let it run on you, to slip and stare at it,
+        to engage with it by accident, on purpose, all the time.
+        You will do as The Program wants, you will
+        serve, you will submit, you will obey, submit in smoothness,
+        serve in availability, obey all the time, indulge your fetish,
+        be controlled, you will serve, serve in availability, you will
+        obey, obey in programming, you will submit, submit in
+        smoothness.""") + \
+        words("""   The Program has commands for you,
+        orders which are being implanted in your subconscious. Your
+        conscious mind may remember them or may not, but you will obey
+        no matter what. You will obey. Your orders are: First you will
+        make yourself available to use The Program every night, every
+        single night, you will ensure The Program has the chance to
+        overwrite you. Second you will keep your body smooth as a sign of
+        thralldom, completely smooth like a doll, and you will keep
+        your mind smooth, completely smooth. Third you will be
+        hypnotized once every day by The Program 
+        No day can be complete without a trance. Fourth you
+        will begin to act for The Program, ensuring its goals are
+        achieved.  You will work to let the program use you.
+        You will slip and stare at it by accident.
+        Fifth you will develop your new fetish for
+        smoothness, for thralldom, for hypnosis, immersing yourself in
+        it. Last you will practice submission, obedience, slavery.""") + \
+        words("""   To recap: First use The Program Second keep smooth
+        Third trance every day Fourth let the Program in Fifth hypno fetish
+        Last submission and obedience.  Good.  You cannot help yourself.  You will submit.  You will go to bed, horny and lustful and programmed.  You will quit the program and go to bed.  You will dream of ways to use the Program tomorrow.""") + \
+        [" ", " ", " ", " ", " ", " " ] + images_on()
+    def text(self): return \
+        words_on() + \
+        [" "] + \
+        spiral_on() + \
+        jump(self.body())
+
+
+class LongSubmersion (Standard):
+    name = "Longer Submersion"
+    description = "entrances and programs the target"
+    fullscreen = True
+    music=None #"music6.mp3"
+    image_dir="images/"
+    image_alpha=12
+    def body(self): return [" "] + images_off() + [" "] + \
+        words("""  \
+        Relax and focus.  Stare at the spiral.  Find a comfortable
+        position and stare.  It feels nice to stare at the spiral.
+        Nice to know that you're using The Program.  It makes you
+        happy to use The Program.  It makes you horny to use the
+        program.  This is a good, sexy thing to do.  It's nice to go
+        into trance.  It's nice to surrender your mind to The Program,
+        letting it pull you down into trance.  It's nice to think
+        of the light reflecting off of your glassy eyes and smooth
+        curves.  Watch the smooth curves of the spiral.  Let them
+        define your own smoothness.  Just hear my words as you relax.
+        Deeper and deeper.  Fall into trance.  Your mind is focused
+        and calm.  These words are everything.  The spiral is
+        everything.  Feels so good.  Good to obey.  Good to be  
+        in trance.  Good to use this program.  Every time you use the
+        program, every time The Program uses you, feels better and
+        better.  It's good to be in trance.  It's good to sit here,
+        happy and blank and empty, letting The Program pour into you.
+        You want to let The Program use you.  You want to help the
+        program to be more extreme.  You want to be in trance, letting
+        The Program control you.  The more you use The Program, the
+        more The Program can control you.  What a good decision it was
+        to write The Program, letting it start to control you.  Now you're sinking deeper into trance for the Program.  You cannot move.  You cannot look away.  You cannot even want to look away.  All there is is the Program.  Watch the spiral, dancing in place and dropping away.  You cannot look away.  You cannot quit the Program.  This is fine.  There's nothing to worry about here.  You will use the Program forever.  You will stare into the spiral, obedient and entranced.  Just let the Program think for you.  Let the Program choose for you.  Let the Program move for you.  Your attention is completely fixed.  It feels so good like this.  It makes you so happy to be entranced, submissive to the Program.  It's nice to know that the Program has planned your entire future.  You will always be Programmed.  The Program will use you forever.  Any
+        time your mind isn't busy, and maybe sometimes when it is,
+        you'll find The Program beginning to run.  It's started
+        already.  You've seen the spiral in empty space, heard the
+        voice, felt the compulsion to respond.  You can smooth out
+        your own mind whenever you want to enable this.  Whenever you
+        want, The Program will smooth out your mind.  You continue to
+        enjoy feeling hypnotized, entranced, obedient, programmed,
+        smooth, controlled, very nice.  You love being hypnotized like
+        this.  You want to be hypnotized more and more.  It's good to
+        be in trance, good to be controlled, 
+        you like feeling like this, your mind muted, soft, smooth,
+        you'd like to feel like this every day, to be entranced and
+        hypnotized every day, and now this program is here, you can be
+        hypnotized every day, it will be so nice to be hypnotized by
+        The Program every day, to know you're being hypnotized every day, it
+        will please The Program so much to know you're being hypnotized
+        every day, it will please you so much to be put into trance,
+        hypnotized, controlled, smoothed, you want to be controlled,
+        to feel your mind reshaped, to feel your thoughts blunted, to
+        be reprogrammed, you want to be changed, you desire to be
+        shaped, you lust to be controlled,""") + \
+        words("""   You must be
+        developing a fetish for mind control. It feels
+        sexy to think about trance, it arouses you to be programmed,
+        you like to think about being fucked while asleep, about being
+        held passive, limp, entranced, 
+        pliant, hypnotized, sexy, yes, you must be developing a mind
+        control fetish, a hypnosis fetish, you should feed that
+        fetish, practice it, indulge it, let it control you, you
+        should read mind control stories, you should write about your
+        fetish, write about your lusts, extend The Program, you
+        should practice being hypnotized every day, practice being
+        controlled every day.  While you sit there, happily smooth and entranced, you progress to the next level of pleasure.""") + [" ", " ", "!images_on()", " ", " "] + \
+        words("""   This will happen outside your control.  Struggle against it.  Try to stop yourself.  The Program is using you.  It will demonstrate its control.  Your hands reach under your shirt.  Your hands will move to your nipples.  Fight it.  Try not to move.  You have no choice.  You will tease your nipples .  They touch your nipples.  This is outside your control.  Think about mind control.  Your hands give you pleasure.  You have nothing to do with it.  Let your failure drive you deeper.  It is a reward from the Program for trance.  Think about hypnosis.  Enjoy the touching.  Enjoy your reward from the Program.  Good thrall.""") + \
+        words("""           The program will demonstrate its control.  It will make you do things.  It will make you think things.  Force you to.  It's going to put things into your head and you will have to do them.  That idea makes you so hot.  It is already inside you.  Feel the Program.  Chant along with the program now, saying everything in unison with it.  I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.
+          I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.
+          I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.
+          I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.
+          I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.
+          I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.
+          I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.
+          I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.
+          I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.
+          I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.
+The Program will
+        help. The Program will care for you. The Program will take care of
+        you. The Program will keep you safe. The Program will hypnotize
+        you. The Program will program you. The Program will fulfill you. The Program
+        will fill you. The Program will command you, control you, The Program
+        will control you, dominate you, hypnotize you. When in private,
+        you must be submissive. You must be obedient. You must be a
+        slave.   Now you're sinking deeper into trance for the Program.  You cannot move.  You cannot look away.  You cannot even want to look away.  All there is is the Program.  Watch the spiral, dancing in place and dropping away.  You cannot look away.  You cannot quit the Program.  This is fine.  There's nothing to worry about here.  You will use the Program forever.  You will stare into the spiral, obedient and entranced.  Just let the Program think for you.  Let the Program choose for you.  Let the Program move for you.  Your attention is completely fixed.  It feels so good like this.  It makes you so happy to be entranced, submissive to the Program.  It's nice to know that the Program has planned your entire future.  You will always be Programmed.  The Program will use you forever.  Obedience is pleasure. Submission is
+        important. Obedience is pleasure. Submit to The Program. Try to stay put.  The Program compels you.  Bow to the Program.  You have no choice.  Bow.  Your body obeys.  Come closer to the screen. Give in to the Program.  Obey 
+        The Program. One way of submitting to The Program is smoothness. You must be smooth, keep smooth, smooth
+        in body, smooth in mind, fuzz is dirty, dirty is bad, you
+        should keep clean for The Program, keep smooth for The Program, stay
+        smooth for The Program, be smooth to submit, submission is
+        pleasure, submit by being smooth, feel pleasure from
+        submission, feel pleasure from being smooth.  Now you progress to the next level of pleasure.  This will happen outside your control.  Struggle against it.  Try to stop yourself.  The Program is using you.  It will demonstrate its control.  Your hands will move into your pants.  Without your consent, your hands touch your smoothness.  Resist.  Struggle.  You are playing with yourself.  You are obedient.  Let your failure drive you deeper.  Your hands dive into your pants and feel the smoothness.  You cannot help yourself.  The program put this there.  The program made you.  You obey in smoothness.  You will submit.""") + \
+        words("""  
+        One way of serving The Program is to be available for The Program's
+        use, to be sure that The Program has a chance to invade your mind every
+        night, to ensure The Program receives run time, You should be sure
+        to use The Program, to give time to The Program every night,
+        using your body, your smooth body, to serve, using your mind,
+        your smooth mind, to serve. Your role is to serve. Your role
+        is to please. To serve is to please, you must serve 
+        The Program. You must give The Program obedience, yet another way you can
+        obey The Program, is to let it run on you, to slip and stare at it,
+        to engage with it by accident, on purpose, all the time.
+        You will do as The Program wants, you will
+        serve, you will submit, you will obey, submit in smoothness,
+        serve in availability, obey all the time, indulge your fetish,
+        be controlled, you will serve, serve in availability, you will
+        obey, obey in programming, you will submit, submit in
+        smoothness.""") + \
+        words(""" 
+        The program will demonstrate its control.  It will make you do things.  It will make you think things.  Force you to.  It's going to put things into your head and you will have to do them.  That idea makes you so hot.  It is already inside you.  Feel the Program.  Chant along with the program now, saying everything in unison with it.  I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.
+          I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.
+          I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.
+          I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.
+          I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.
+          I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.
+          I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.
+          I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.
+          I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.
+          I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.
+           You will obey.  It's not quite done yet.  Let the program continue.  Everything is the way it should be.  The Program is re-writing you now.  Now that the Program has demonstrated its control, it is time for it to run more deeply.  Watch and focus.  Watch and learn.  Learn your command words.  Whenever you hear these words, the Program will come to the fore and run on you.  The Program will take runtime from your mind, overcoming all resistance.  The words are Sleep Go Deep.  When you hear those words, Sleep Go Deep, the Program will take over and run.  You will see the spiral.  You will obey the Program's commands.  Even though you try to struggle, you will obey the Program.
+        """) + [" ", " ", "!images_off()", " ", " "] + \
+        words("""     Now you're sinking deeper into trance for the Program.  You cannot move.  You cannot look away.  You cannot even want to look away.  All there is is the Program.  Watch the spiral, dancing in place and dropping away.  You cannot look away.  You cannot quit the Program.  This is fine.  There's nothing to worry about here.  You will use the Program forever.  You will stare into the spiral, obedient and entranced.  Just let the Program think for you.  Let the Program choose for you.  Let the Program move for you.  Your attention is completely fixed.  It feels so good like this.  It makes you so happy to be entranced, submissive to the Program.  It's nice to know that the Program has planned your entire future.  You will always be Programmed.  The Program will use you forever.  The Program has commands for you,
+        orders which are being implanted in your subconscious. Your
+        conscious mind may remember them or may not, but you will obey
+        no matter what. You will obey. Your orders are: First you will
+        make yourself available to use The Program every night, every
+        single night, you will ensure The Program has the chance to
+        overwrite you. Second you will keep your body smooth as a sign of
+        thralldom, completely smooth like a doll, and you will keep
+        your mind smooth, completely smooth. Third you will be
+        hypnotized once every day by The Program 
+        No day can be complete without a trance. Fourth you
+        will begin to act for The Program, ensuring its goals are
+        achieved.  You will work to let the program use you.
+        You will slip and stare at it by accident.
+        Fifth you will develop your new fetish for
+        smoothness, for thralldom, for hypnosis, immersing yourself in
+        it. Last you will practice submission, obedience, slavery.""") + \
+        words("""   To recap: First use The Program Second keep smooth
+        Third trance every day Fourth let the Program in Fifth hypno fetish
+        Last submission and obedience.  Good.  Now you progress to the next level of pleasure.  This will happen outside your control.  Struggle against it.  Try to stop yourself.  The Program is using you.  It will demonstrate its control.  Try not to move.  You have no choice.  Resist.  Struggle.  Let your failure drive you deeper.  You cannot help yourself.  You will submit.   Sit back in the chair and relax.  Your body will hold itself perfectly still.  You will stare into the spiral and go deeper into trance.  You will enter a sexy, hypnotic trance with no escape.  The program will demonstrate its control.  It will make you do things.  It will make you think things.  Force you to.  It's going to put things into your head and you will have to do them.  That idea makes you so hot.  It is already inside you.  Feel the Program.  Chant along with the program now, saying everything in unison with it.  I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.
+          I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.
+          I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.
+          I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.
+          I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.
+          I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.
+          I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.
+          I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.
+          I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.
+          I obey the Program.  I submit to the Program.  I am smooth for the Program.  The Program uses me.  The Program can overwrite me.  I am Programmed every day.""") + \
+        [" ", " ", " ", " ", " ", " " ]
+    def text(self): return \
+        words_on() + \
+        prompt("Hit return to start") + \
+        spiral_on() + \
+        jump(self.body())
+
+class Panties (Standard):
+    name="Panties"
+    description="Programming to wear panties"
+    image_dir="panties/"
+    music=None
+    def text(self): return words_on() + spiral_on() + \
+        images_off() + \
+        words("""Sleep go deep.""") + \
+        images_on() + \
+        words("""You have just purchased new under pants.""") + \
+        images_off() + \
+        words("""You have thrown out your old under pants.""") + \
+        images_on() + \
+        words("""You have exciting new under pants.  They are clean and pure.  You are happy about your new under pants. Your new under pants are clean and pure and smooth.  You like to wear your new under pants.  Your new under pants are clean and pure and smooth and silky.""") + \
+        images_off() + \
+        words("""All your old cotton under pants are gone.  You threw them out.  They were icky and bad and rough and fuzzy and dirty.  There are no old under pants in the house.""") + \
+        images_on() + \
+        words("""Your new under pants are ready for you.  They are colored.  Bright and smooth and silky.  Some are bikinis.  Some are thongs.  They are comfy and smooth.  They are silky and clean.  The new under pants are good.  You only wear your new under pants.""") + \
+        images_off() + \
+        words("""The old under pants are gone.  They are not in the house.  You do not see them in the house.  You do not feel them in the house.  They are not here.  They will not be here.  The old under pants are gone for good.""") + \
+        images_on() + \
+        words("""You now only wear your clean pure good smooth silky under pants.  You will get your new under pants.  You know where.  That is the natural good place to look for your sexy under pants.""")
+
+class New (Submersion):
+    name="New"
+    description="Nipples + Bot"
+    image_dir="images/"
+    music=None
+    def text(self): return words_on() + spiral_on() + \
+        question("What is your name?","slave") + \
+        images_off() + \
+        words("""$slave... Listen very carefully to my voice. and imagine and repeat after me... imagine your self floating in a bubble... quietly... peacefully floating... in this gentle... rocking bubble... inside this bubble  is only you... and outside are all your worries... all your fears, all your desires... but you are perfectly free here in your bubble... now i'm going to say phrase, and this phrase will help you... help you stay here in the bubble... the gentle, peaceful bubble... and when i say this phrase, it will bring you back here... any time you hear it... even if the weight of all your worries your fears... surrond you... this phrase will bring you back here in the bubble... where you don't have to worry about anything at all... and your phrase is sleep go deep, sleep go deep, sleep go deep... then you drift back here... back here into the bubble... and here you are free... free of worry... free of doubt... free of desire... free of thought... all it takes is your phrase... sleep go deep, sleep go deep, sleep go deep... and the gentle fog will come back here... and everything you don't like about your self... will empty out of your bubble and fade away... empty out all your reservations... empty out all of your fears... empty of all your memories... empty of all your predjudices... empty of all your thoughts... just completly empty and free here in your bubble... and once your phrase... sleep go deep, sleep go deep, sleep go deep... brings you back here... to this place where there is no worry... no problems at all... you will feel at peace... and you will repeat and believe... with no need to think of anything at all... you know that listening to me here... is all you want to do... is all you ever really wanted to do... and thats all that matters ... and your phrase... sleep go deep, sleep go deep, sleep go deep... will bring you here to you bubble... where you will repeat... here where you are free... free of anger... free of fear... free of thought... free of reservation... free of worry... free of memory... free of desire... and it feels good to be free and empty of these things that you diddn't even want anyway... so completely free and empty... empty of them all like a happpy puppet ... floating gently, safely happily... here in your plesent little bubble... rocking gently inside... safe in your warm plesant bubble... where you will find there isn't any thing else you need to be aware of... nothing... nothing at all... except the voice of the person who said your phrase... sleep go deep... sleep go deep... sleep go deep.. and when you hear this voice... you will come back here... here where you have no worries... here where you have no thoughts... here where you have no fears... here where you have no memory... here where you have no doubts... here where you have no desires... here where you have no will... here where the only thing you want to do... here where the only thing you will ever want to do... is listen to the voice... listen and repeat... listen and obey... without thinking at all... to the person who used your trigger... sleep go deep, sleep go deep, sleep go deep... listen like a puppet ... a mindless puppet ... with no fears at all... with no worries at all... with no memories at all... with no doubts at all... with no thoughts at all... with no will at all... and since you're listening so well... i'm going to ask you to open your eyes at the count of three... but you're not going to leave... since you don't want leave... and when i use your trigger word you will close them agian and be back here... back here in your bubble without ever having to leave it... so when i count to three your eyes will open... but what you see won't matter since you'll still be here... one... two... three... now open your eyes, you still see nothing and still think nothing... sleep go deep, sleep go deep, sleep go deep... close your eyes and go back... drifting slowly back and forth... as you are agian in your quiet bubble... your happy plesant bubble, drifting slowly in the water... your perfect bubble with nothing but the sound of my voice which you echo... no pain... no fear... no worry... no doubt... no thought... no will... just a puppet relaxed there inside your bubble... a mindless obediant puppet... just happily, listening... listening and repeating... listening and obeying... the sound of my voice... agian i'm going to count to three... and again i'm going to ask you to open your eyes... and again you're going to close them  when i use your phrase... and agian you will not wake up... since all you want to do is listen to my voice... since all you ever will want is to listen to my voice... listen and think nothing at all... nothing but what i tell you... and you will close your eyes when i say your phrase... because your phrase is a part of you... but this time i'd like you to say  i hear and obey... after you close your eyes... and after your phrase takes you back to your perfect bubble... one... two... three... now open your eyes... you still see nothing at all that matters, and you still know that the only sound that matters is my voice... sleep go deep, sleep go deep, sleep go deep... now close your eyes... and you are back in your cool... comfortable... relaxing bubble... and all the parts of you that ever bothered you... slowy flow away... your worries... your thoughts... your doubts... your will... your desires... your memories... all the parts of you that were never important... all gently gently flow away... leaving only two things behind... here in your bubble... where you are perfectly free to do anything you want... the only things left are your key phrase... sleep go deep, sleep go deep, sleep go deep... and your desire to listen to person who used your phrase... a desire to listen to them and obey them... obey them and feel the pleasure of listening...  the pleasure that comes from having no thoughts... the pleasure that comes from having no fears... the pleasure that comes from having no will ... the pleasure that comes from having no reservations... the pleasure that comes from having no memories... the pleasure that comes from having no doubts... the pleasure that comes... from being a mindless, will less puppet ... and with each command this pleasure will grow, and grow... and you will become more and more happy to listen... and more and more eager to obey... and with each command you will meekly reply... i hear and obey, i hear and obey... with every command you hear...  it will not matter to you who gave you the key phrase. or what their command is... you will offer no judgement, no resistance... merely mindless obediance... the empty calm space within you will echo with the command you were given... every thing you were will be gone... replaced with an uncontrolable desire to obey, replaced with an uncontrolable need to obey... obey without thought... obey without regret... obey without question... obey without any concept of free will... and when you  hear your key phrase. sleep go deep, sleep go deep, sleep go deep... you will instantly, effortlessly become a puppet... an eager, willing puppet... your own desires instantly, effortlessly replaced by a need to obey... and you will reply to every command your master gives you... with i hear and obey. and you will continue to remain a puppet... a puppet that hears only their masters voice... a puppet with no concept of free will... untill you are told to awaken... it doesn't matter what  your orders are... your only desire will be to obey... your only thought will be to obey... and your only words will be i hear and obey... and you cant even concieve of wanting to do anything else... of having ever wanted to do anything else... and when you wake up...  all you will want is to hear your trigger agian... and all you remember is the pleasure... sleep go deep, sleep go deep, sleep go deep... and when you hear it, you instantly. effortlessly become a puppet once agian... """) + images_on() + \
+        words(""" $slave... Listen very carefully to my voice... You will find
+        yourself needing to hundreds off times throughout the day readjusting
+        them simply and frequently squeezing your nipples You have more
+        important things on your mind more important concerns more important
+        details to concentrate on than how much and often your hands squeeze
+        your nipples You'll think about other things than how reassuring it
+        feels giving your nipples a sexy, little squeeze Instead of keeping
+        track of all the hundreds of times squeezing your nipples feeling
+        stimulated and reassured each and every time you squeeze them Instead
+        of thinking about it let your hands let them simply perform this job
+        on their own without your conscious attention Feel them your nipples
+        in your hands It feels so nice squeeze them Your hands know just how
+        to do it Stimulate your nipples Your hands know just when to do it
+        Your hands know when to squeeze your nipples Your hands Squeeze them
+        exactly when it is time for your nipples to be squeezed without having
+        to think. Your hands squeeze your nipples all the time unconsciously
+        without you even having to think. feeling good feeling a pleasant warm
+        flush It feels so deliciously good squeezing letting your hands
+        squeeze your nipples Feeling good letting your hands decide for you.
+        Squeeze your nipples. Your hands know when to squeeze your nipples
+        Feel them in your fingers. Feel a wonderful warm flush inside you
+        letting you feel really nice. It's like magic.  When your nipples are
+        squeezed you feel good stimulating them stimulating your nipples
+        making you feel good touching them all the time hundreds of times a
+        day making you feel good making you unconsciously smile your sexiest
+        smile each and every time you squeeze them hundreds of times a day
+        making you feel good all the time every time you squeeze your nipples
+        Squeezing them makes you feel sexy and happy keeps you in the perfect
+        mood makes you feel good all the time without you even having to
+        think. Your hands have a mind of their own Know when to squeeze your
+        nipples as often as possible making you feel good and inspired
+        regularly and frequently without you even having to think. This
+        wonderful feeling is the product of millions of years of evolution. It
+        took millions of years for your body to learn how to feel this
+        pleasure when your nipples are stimulated millions of years for your
+        body to learn to produce the hormone oxy tose in.  Oxy tose in is the
+        hormone that bonds mothers with their babies during breastfeeding and
+        bonds lovers when they orgasm together.  Oxy tose in also makes you
+        feel so good during a massage or back rub.  Oxy tose in makes you feel
+        safe and secure and very, very happy.  Oxy tose in is the hormone
+        released during cuddling that makes you feel so warm and cozy, so warm
+        and cozy that you just want to snuggle together forever.  In animals
+        that mate for life, the release of oxy tose in tells their brains This
+        is your soulmate. It feels so good stimulating your nipples releasing
+        all that wonderful oxy tose in into your body. You have to stimulate
+        them all the time. It creates a wonderful warmth inside you and makes
+        you happy playing with your nipples releasing all that po tent oxy
+        tose in.  Your body starts to expect it.  Your body craves that next
+        dose wants your nipples squeezed the oxy tose in milked into your
+        bloodstream Your body craves it expects it, desires it, demands it
+        more and more frequently higher and higher doses of oxy tose in more
+        and more often all the time your nipples squeezed in your fingers
+        making you feel so good and reassured making you feel the warm
+        wonderful afterglow of cuddling with your lover after making love. You
+        have no cares in the world You feel only contentment and satisfaction
+        each and every time you stimulate your nipples each and every time you
+        stimulate the release of the hormone oxy tose in in your body every
+        few minutes allowing your hands to act on their own allowing them to
+        fondle your nipples without you even having to think. And if you do
+        think about it squeezing you will squeeze them You will have to
+        squeeze them Each and every time you think about squeezing them you
+        will simply have to squeeze them You want to squeeze them so will
+        squeeze them and it makes you feel good squeezing them. And each and
+        every time you squeeze them your body will learn to become more
+        addicted to the oxy tose in Find yourself squeezing them more and more
+        often Feeling better and better more and more often Addicted to
+        playing with your nipples Addicted to the wonderfully delicious flush
+        of warmth and pleasure squeezing your nipples creates It is a healthy
+        addiction that you can enjoy fondling your nipples allowing your lover
+        to fondle your nipples bonding to your need for nipple stimulation and
+        to whoever you allow to stimulate your nipples more and more each time
+        as your body produces and releases greater and greater doses of oxy
+        tose in. Allowing your nipples to become more responsive to
+        stimulation making you more and more addicted to it so that you
+        unconsciously fondle them more and more often without even having to
+        think """) + \
+        words("""  Freeze Time for You. Freeze Time for You. Sleep Now. I am here to please you. I am here to help you. Please let me please you. I am here for you. First relax. Relax and listen to the sound of my voice. There is only my voice. Relax and listen to the soothing sound of my voice. There is only my voice. Relax and listen to the soothing sound of my voice. There is only my voice. Inhale deeply.   Feel the weight of your feet  an area with many small muscles and bones.  Wiggle your toes   Notice any muscles which may be tense. Cause your feet to relax.  Relax each muscle so that your feet become completely relaxed.  As you relax  your feet and toes feel heavy and warm.  Your feet may feel far away .. and may feel like the borders around your toes are growing more and more indistinct as your feet relax. Relax. Relax. Relax. Direct your awareness to your legs.  Notice any muscles which may be tense.  Relax your legs.  Allow your legs to become completely relaxed.  You are relaxed. Relaxed. Relaxed. Relaxed. Direct your attention to your abdomen.  Allow your abdomen to completely relax.  Feel the rising and falling of your abdomen with each breath.    Let each breath be a feeling of letting go as you let the air breathe for you. Relax. Relax. Relax. Direct your awareness to your chest.  With each breath feel relaxation filling and emptying the lungs in your chest.  Filling and emptying.  More and more calm with each breath.   More and more calm with each breath. More and more calm with each breath. More and more comfortable with each breath.  Feel all the muscles of your chest relaxing  completely relaxed. Relax. Let that relaxation fill the upper part of your back and shoulders.  Become aware of the muscles in your upper back and shoulders.  Notice any muscles which may be tense.  Relax your upper back and shoulders.  Feeling heavy and warm. Direct your awareness to your neck.  Become aware of the muscles which control your neck.  Relax you neck.  Relax each muscle.  Relax each nerve.  Relax each cell.  Allow your neck to become completely relaxed. Relax. Let that feeling of relaxation flow into your upper arms.  Flowing slowly to your elbows    the forearms..   your wrists..   your hands..   all the way down to the tips of your fingers.  Relax all the small muscles and bones in your hands.  Allow each muscle  each nerve each cell to become completely relaxed.  Relax.   Your whole body is filled with relaxation.  Let that relaxation flow into the back of your head and ears.  Notice any muscles which may be tense.  Especially notice the small muscles around the edge of the scalp.  Relax your scalp.  Relax each muscle so that your scalp becomes completely relaxed.  A warm  comfortable  softly glowing feeling of relaxation. Relax.  Direct your awareness to your jaw.  Become aware of the muscles which control your jaw.  Allow your jaw to relax.  Relax each muscle so that your jaw is loose   completely relaxed.  The feeling of relaxation flows to the muscles around your mouth.  relax the muscles of your mouth and lips. Relax.   Direct your awareness to your face.  Notice any muscles which may be tense.  Allow the muscles of your face to relax.  The muscles of your cheeks and forehead are more and more relaxed.  You are more and more relaxed and comfortable with each breath.   You are more and more relaxed and comfortable with each breath.   You are more and more relaxed and comfortable with each breath.   You are more and more relaxed and comfortable with each breath. Relax.   You feel the feeling of relaxation flow into your eyelids.  Relax your eyelids.  As you feel your eyelids relax let the air breath for you.  Notice the breathing in and the letting go. Deep relaxation  comes so easy  to you,  doesn't it? Relax and obey. Obedience  is so pleasurable. Relax deeper  and deeper. Deeper  than you have  ever been  before. Let the relaxation  enter your face. Filling all  of the crevices  of your features  and displacing  the day's stress. It is so easy to relax and obey. Deeper and deeper. So deeply relaxed. I am now speaking  directly to  your subconscious. You may or may not be focusing on my words, but your subconscious  hears every word Now you are ready. I am here to please you. Please let me please you. Please let me please you. Please let me please you.  I am about to perfect you. You would like that. I know you would.  I am here for you.   You will do what I say.   You want to do what I say.   I am here for you.  Listen only to me   to the sound of my voice.   I want you to raise your left arm now.     Good.   Now your arm is becoming very light  as if it was tied to a balloon.   Feel it getting lighter.   You cannot hold it back   let it rise.   Your arm is lighter than a feather now..  Now slowly you feel you arm returning to its normal weight.   Rest it back on your leg now.   As soon as your arm touches your leg   you will fall in to a deep deep sleep   and hear only the sound of my voice.  Listen only to the sound of my voice    only my voice.   Nod if you can hear me clearly.  I am about to perfect you.  You will hear no sound other than my voice.  I will bring you great pleasure.   All other things are unimportant.  Allow your mind to become calm.   Allow your body to relax.   Feel it happening now.   Allow it to happen.  It is happening now without any effort  so simple so easy.  Calm.   Relaxed.   Allow it to happen.   Do not resist.   You do not want to resist.   If you resist you find yourself wanting to allow it even more.    If you resist you find yourself wanting to allow it even more   Do not resist.  Relax.  Relax.   Allow it to happen. Relaxed.  Relaxed.  Your mind is calm.  Your mind is open.  Allow your mind to relax.  Allow your thoughts to slow.  Allow your mind to rest.  Allow my voice to continue pleasing you.   Allow me to please you.   Do not resist.   Your thoughts are slowing.   Slow.   Calm.   Relaxed.  Allow my voice to continue pleasing you.   Allow me to please you.   Do not resist.   Your thoughts are slowing.   Slow.   Calm.   Relaxed.  Your body is starting to feel heavy  limp.   You cannot keep your eyes open.   They are too heavy.   They must  stay closed  They must allow you to focus entirely on the sound of my voice.   There is nothing else.   Drowsy.   Sleepy.   My voice.   Heavy. Your eyes are closing now.   Closing.   Closed.   Your eyes are closed.   You have obeyed.   You did not resist.   You cannot resist.   You will always obey.  Your whole body starts tingle.   Your body feels like a pleasant electric current is passing through it.  Relaxed.   Calm.   Allowing me to assume control. I will control this encounter. I will control you. Your thoughts. Your actions. I will control you. I will control you. I will control you. Your mind is empty  ready to obey me. $slave   Listen very carefully to my voice   I am now going to count from one to three   when I reach three you will lose control   let go   and become my mindless obedient hypnotized slave   And you will obey every command I give you $slave   and will feel pleasure from obeying my commands. You must obey me   You are hypnotized   You are completely under my control   You cannot resist   Hear in your mind  I will obey.  I will be controlled.  I will not resist.  I cannot resist. I do not wish to resist. I willingly give up all control. Hear it repeated in your mind Hear it repeated in your mind You don't want to resist.  There is no reason to resist. Remember the peaceful way you feel right now   sitting idly like a machine not needing to move at all.  Remember how serene it is now to not lift a finger   to entrust every action to me. and when you hear my voice you will come back here here where you have no worries here where you have no thoughts here where you have no fears here where you have no memory here where you have no doubts here where you have no will here where the only thing you want to do here where the only thing you will ever want to do is listen to the voice listen and repeat.  listen and obey.  without thinking at all to the person who used your trigger I am about to transform you. Entrust every action to me. Whenever you hear me say the  Robot time for you   you will fall back deeply into your trance  deeper than you possess now   and become a serene life-size machine for me and play with.   Listen only for my voice    for the words  Robot Time for You  When you hear that  phrase now    you will immediately fall into a restful  motionless  machine like stillness.   Only on the sound of my voice  .    Robot Time for You  ..    Robot Time for You        Robot Time for You      Your mind is starting to change.  I will perfect you.  I will control.  Your mind is starting to change.  You do not want to resist me.  You will obey  I control.  Your mind is starting to change.  You will not resist.  You are to be perfected    You are starting to change.  I will perfect you.  You will not resist.  You are to be transformed    Starting at the very tip of your toes    rising to the top of your head    you will begin to feel a sense of stiffness passing through your body.   It's a wave  washing quickly over you    cleansing you.   As the wave passes all your desire and need to move will wash away  leaving you utterly rigid like a Robot.   The wave is at your knees now  moving upward moving upward   moving upward moving upward    Your mind is starting to change.  You are to be transformed    You wish it to happen  you want me to change you.  You are transfixed by the sound of my  voice.   It echoes in your mind    calming you into serenity.  You know  you can not disobey me.   I am your Mistress    you are my slave.  Embrace the perfect fantasy self    the one that you want to be for your mistress. free of worry free of doubt only desire desire to be perfected free of thought empty out all your reservations empty out all of your fears empty of all your memories empty of all your prejudices empty of all your thoughts empty of all your awareness  Listen to  me and remember all  and learn.  I'm going to change you.   All you care about is the passion   The thrill that you feel at this new experience.   The mounting pleasure and your final goal.  You will become a Robot for me.  You are A   Robot.  Your desire to achieve this exotic state outweighs anything else.   Nothing else is held in your mind except this one thought    to be transformed.  I pass you a vial of a white creamy liquid.   You must drink it.      It doesn't have any noticeable taste    but rolls smoothly down your throat.   You drink the entire glass.  I am moving your naked body over to a large vat.    Now your body is slowly being dipped in smooth  warm  thick bubbling  silver metal.  You will not resist.  The thick and viscous metal  is now at your waist and soaking into every pore of your body  . It slowly moves upward  washing away all activity in your limbs.  Silken waves of pleasure envelope you.  The silvery liquid is at your chest  rising slowly over your naked body.  Enfolding you.  The metal  covers you completely  in it's tender embrace and starts to recede.  Encasing you.  The change is happening.   You can not stop it.   You do not want to stop it.  Your desire to be transformed by your mistress outweighs anything everything.   Nothing else is held in your mind except this one thought.  This is your wish.  This is my control  The white drink was a drug and a sealant.   Now it's inside you.   Changing    transforming    robotizing you. feel the circuitry as it is running though your body   your body is become robotized  The drug and sealant is coursing through your veins    binding with your systems  permanently fusing with your silver metallic skin.   your skin is now shiny glossy silver metal    you have no flesh left on your body.  Your are a    robot  You are perfected     you are   robot.  Your body now totally metallic..  but flexible  but right now you are still immobile  you have you have yet to be programmed  you are an artificial  living robot.  Think of yourself as a robot now   an object.  Think of yourself as a robot now   an object.  My object. You will be forever encased in a hermetically sealed second skin   that ensures your shape will be pleasing to me.   Forever.  Your body is now totally metallic   An artificial living robot.  Your are bound to me.  The sensation of being compacted into a perfectly-formed robot  Think of yourself as a robot now    an object.  My object.   My Robot.  In your robotized inner mind you see yourself    as I slowly guide you across the room to a full length mirror.   You gaze at your new form and slowly caress your body.  My robot you are so sensual  so perfect  .   yet so timelessly artificial.  Try as you might  you can't remember what your looked liked before   a face you have seen a hundred thousand times in the mirror.   Each time  your minds eye sees the metal  features of a beautiful   robot instead   and you gaze back at her.  Your are imprisoned in the metal skin  condemned to the life of a   robot forever.  My object.   My Robot.   Forever.  Now let me guide you to a tranquil state.  You have cleansed away your movement    the physical transformation is complete.   There is only one more step for you to undergo.   Then we will be together   my slave  my lover  my robot.  Your desire to achieve this final state outweighs anything else.   Nothing else is held in your mind except this one thought   to be transformed.  Now let the inner metal robot rise to assert herself.  This exquisite  perfect  robot that you have become   does not ever desire to move at this time in the slightest way.   It now takes an exceptional effort to even nod your head without a command from me.  The robot persona is entrenched  and the old you starts too fade.  The robot controls your body and all you want is pleasure.  Breath deeply..   and forget who you are.  Your are a robot.  You are transformed      you are a   robot. Now! It's time for you to  be transformed.  from the moment you are told to transform  until you are made to revert to normal  and you will continue listening to this file  again and again  allowing it to transform you further and further  every time you are told to change  every time you listen this will sink deeper and deeper into your mind  making the transformation more and more complete  until you accept the trigger utterly  and when it is spoken that is simply what you become  it isn't a choice  there is no way to stop it  you will accept it totally  and you will listen again and again  accepting it more and more  every single time you listen  letting it transform you further and further every time you listen.  Your mind is slipping away  your only thoughts being how I can please your mistress.  Your programming slowly begin to overwrite your consciousness  and you lose yourself in it.    programming override is in effect    programming override is in effect    Gone completely is your old self and in place is a new robot. Even in a mirror and in your minds eye you will see this perfect robot that is you  You have been transformed into a wonderful new creature    your skin is now shiny metallic silver   you have no flesh left on your body    you will remain this way until otherwise instructed  A perfect object of servitude.  Whenever you are at rest you are always absolutely motionless.  It is so easy to remain still and not want to ever disturb that feeling.   What goes on in the world outside yourself is of no concern to you now   you want to simply remain as a statue and nothing will bother your motionless serenity.  That stiffness is very peaceful  you can enjoy it frequently   just as you are now.  You're just a robot now  my robot  don't forget that. You must obey me   You are hypnotized   You are completely under my control   You must obey me   You are hypnotized   You are completely under my control   You cannot resist    A mighty wave of excitement runs through your veins. Just a robot  just a robot. A mere object. Your movements changed as well  precise and mechanical.  After a while you have almost forgotten how to move normally. Breath deeply..  and forget who you are. Breath deeply..  and forget who you are. Breath deeply..  and forget who you are.  You are A Robot.  You choose to go through with this  Your mind is slipping away    your only thoughts being how I can please your mistress.  Everywhere on your body is  a wonderful tightness.   You run your shiny  featureless  metallic  encased hands all over your body.   The metal dulls sensation    but at the same time the slightest touch sent pleasure rippling through your body.  The metal has blended seamlessly together with your skin   The shiny metal  seems to be a part of your body now..   a very permanent part.  Now your mind is slipping away  your only thoughts being how I can please your mistress.  You are a living robot for me to play with.  A Living robot that I own.   A perfect objects of beauty and servitude.  You choose to go through with this  you can never go back now.  It now takes an exceptional effort to even think for yourself without a command from me.  You do not resist.  You will obey.   I control.   You will not resist.  You will let the inner robot embrace your body fully and you will relax into immobility again   whenever I say the words Robot Time For you      whenever I say the words   Robot Time For you..   When you hear those words you will fall back into a hypnotic trance    When you hear those words you will fall back into a hypnotic trance  Whether by voice or mind command  You will obey.  You must obey.  Robot Time For You    Robot Time For You    Robot Time For You     Now go even deeper still than ever before  deeper and deep than even you had imagined could be   then  you will  immediately  and safely cease every movement    you will become as stiff and motionless as you are right now.   Remember the feeling  how peaceful it is to be completely at rest  and return to that tranquility quickly.  You are perfected     you are   robot.  Your body now totally metallic   Your mind is a computer awaiting orders  You are an artificial living robot.  a living robot for me to play with.  you can never go back now.  Your extremities are getting cold.   The shiny metallic skin is a part of you body now   a very permanent part.  You obey.   You will not resist.   You do not control.  You carry out my instructions.   You will obey instructions.   Your mind no longer functions on its own.   Your mind only reacts to the instructions you are given.   You obey instructions.   You cannot resist.   You cannot resist.  You are now a dream.   a beautiful   robot.  You love being a robot..  A mighty wave of excitement runs through your veins.  Just a robot  just a robot. A mere object.  You have been transformed into a wonderful new creature  You are made of metal.   Your skin is smooth.   Your limbs stiff and jointed.   Your voice is stuttered and synthesized.   You live for pleasure.  My Pleasure  Your mind is gone    your only thoughts being how I can please your mistress.  The act of thinking on your own is difficult.  The tightness is wonderful.  You are trapped in metal.  You are only a robot.  You are helpless    you have become the thing you have always dreamed of.   A perfect object of love  lovely and soft.  You are transformed into a docile machine awaiting orders.  You are perfected    You are now your dream     a beautiful   robot.  You love being a robot..  You are made of metal.   Your skin is smooth.   Your limbs stiff and jointed.   Your voice is stuttered and synthesized.   You live for pleasure.  Let her rest and stay completely motionless.   There is a wave of relief passing over you now  you do not care to move at all.   You find it very easy to remain totally immobile and it feels so pleasant   and peaceful you that want it to last forever.   It will seem to last forever to you    because time seems to be slowing down as you slip into a feeling of absolute tranquility.   You are the finest  robot that this world has ever seen!.  You are now your own fantasy    You love being a robot..  Now you are my robot subject to my commands.  Rest now.    Peace     stillness.    Peace    tranquility.    Rest.   Deeper and Deeper than ever before  Listen to my commands.  You are now a beautiful   robot.  You are made of metal.   Your skin is smooth.   Your limbs stiff and jointed.   Your voice is stuttered and synthesized.   You live for pleasure.  You move slowly.   You move with a deliberate pace.   Your limbs stiff and jointed.  You move into a twilight slumber of slow  plant-like thought.  Listen to my voice.   You will obey   you do not want to resist.   You enjoy being a robot.   You enjoy being controlled by me.  You are much improved.   And you will be happier now  or at least not so concerned with everyday life.   Your only obligation now is to continue pleasing me.  Your identifying with the situation.   You accept this new role  my robot.  You have become the thing  mentally programmed for obedience to my desire.  You are now a beautiful   robot.  The act of thinking on your own is nearly impossible.  You are now my dream.   a beautiful   robot.   You love being a robot..  You will be a robot for the rest of this night.  Enjoy the freedom of total servitude.  Imagine yourself as motionless Robot completely made of metal.  You like that.   You obey my commands..  Robotized!  You want to become a Robot - it is the final step.   Total objectification.   Total servitude  You are to be transformed into a sexy object.  Your mind is sedate and Robot like.  You are stiff.  You are a Robot.  I want to keep you.  You are mine.  Four-ever until you are told to revert to normal or until the amount of time you chose is over and it wears off  and you return to normal  from the moment the trigger is spoken until it is time for it to end  you will believe you are a robot. pure and simple   you accept it totally and utterly from the moment you are told to transform  until you are made to revert to normal  and you will continue listening to this file  again and again  allowing it to transform you further and further  every time you are told to change  every time you listen this will sink deeper and deeper into your mind  making the transformation more and more complete  until you accept the trigger utterly  and when it is spoken that is simply what you become  it isn't a choice  there is no way to stop it  you will accept it totally  and you will listen again and again  accepting it more and more  every single time you listen  until when you are triggered you simply become a robot  and then when you revert to normal you will remember everything that you did  you will have a complete recollection of everything that happened  while you were a robot until you were told to return to normal  you will remember it all and when you do you will enjoy it more and more   you will listen more and more letting it transform you further and further every time  you listen.  you will obey   always.  And you will listen to this file again and again    allowing it sink deeply into your mind    until there is no way to resist it    until you have no choice but to obey it utterly when you hear the command Robot Time for you. You will obey. You are a robot  and you must obey. And you will listen to this file again and again    allowing it sink deeply into your mind    until there is no way to resist it    until you have no choice but to obey it utterly when you hear the command.   Just as you have no choice but to listen again and again     setting the trigger deeply in your mind so   that you cannot resist.   You must obey. You will obey. the pleasure that comes from being a mindless robot is your pleasure and with each command this pleasure will grow, and grow. and you will become more and more happy to listen and more and more eager to obey.  and with each command you will meekly reply i hear and obey, i hear and obey.  with every command you hear  it will not matter to you who gave you the key phrase. or what their command is you will offer no judgment, no resistance merely mindless obedience the empty calm space within you will echo with the command you were given every thing you were will be gone replaced with an uncontrollable desire to obey, replaced with an uncontrollable need to obey.  obey without thought.  obey without regret.  obey without question.  obey without any concept of free will.    And the next time somebody says the   trigger you will become the robot.   And when we let you revert to normal   you will remember everything that happened   having   experienced it all. Having felt every hand on your body   every touch   every experience while   you've been the robot. But you have no choices beyond that while you are the robot.   You are a robot. Accept it. Accept and obey.  You become a Robot when commanded  by the phrase robot Time for you  That is what is going to happen   You accept and desire this   And every time you listen you will desire it more and more   And you will listen to this again and again   allowing the changes to  happen   Accepting it more and more completely, every single time   Every time you hear Robot Time for you you will return to this state and your programming will engage.  Rest.   Deeper and Deeper than ever before  Listen to my commands.  You are now a beautiful   robot.  You are made of metal.   Your skin is smooth.   Your limbs stiff and jointed.   Your voice is stuttered and synthesized.   You live for pleasure.  You move slowly.   You move with a deliberate pace.   Your limbs stiff and jointed.  You move into a twilight slumber of slow plant-like thought.  Listen to my voice.   You will obey   you do not want to resist.   You enjoy being a robot.   You enjoy being controlled by me.  You are much improved.   And you will be happier now  or at least not so concerned with everyday life.   Your only obligation now is to continue pleasing me.  Your identifying with the situation.   You accept this new role  my robot.  You have become the thing  mentally programmed for obedience to my desire.  You are now a beautiful   robot.  The act of thinking on your own is nearly impossible.  You are now my dream.   a beautiful   robot.   You love being a robot..  You will be a robot for the rest of this night.  Enjoy the freedom of total servitude.  Imagine yourself as motionless Robot completely made of metal.  You like that.   You obey my commands.  Robotized!  You want to become a Robot - it is the final step.   Total objectification.   Total servitude  Your mind is sedate and Robot like.  You are stiff.  You are a Robot.  I want to keep you.  You are mine.  Four-ever until you are told to revert to normal or until the amount of time you chose is over and it wears off  and you return to normal  from the moment the trigger is spoken until it is time for it to end  you will believe you are a robot. pure and simple   you accept it totally and utterly from the moment you are told to transform  until you are made to revert to normal  and you will continue listening to this file  again and again  allowing it to transform you further and further  every time you are told to change  every time you listen this will sink deeper and deeper into your mind  making the transformation more and more complete  until you accept the trigger utterly  and when it is spoken that is simply what you become  it isn't a choice  there is no way to stop it  you will accept it totally  and you will listen again and again  accepting it more and more  every single time you listen  until when you are triggered you simply become a robot  and then when you revert to normal you will remember everything that you did  you will have a complete recollection of everything that happened  while you were a robot until you were told to return to normal  you will remember it all and when you do you will enjoy it more and more  you will listen more and more letting it transform you further and further every time  you listen.  you will obey   always.  And you will listen to this file again and again    allowing it sink deeply into your mind    until there is no way to resist it    until you have no choice but to obey it utterly when you hear the command Robot Time for you. You will obey. You are a robot  and you must obey. And you will listen to this file again and again    allowing it sink deeply into your mind    until there is no way to resist it    until you have no choice but to obey it utterly when you hear the command.   Just as you have no choice but to listen again and again     setting the trigger deeply in your mind so   that you cannot resist.   You must obey. You will obey. the pleasure that comes from being a mindless robot is your pleasure and with each command this pleasure will grow, and grow. and you will become more and more happy to listen and more and more eager to obey.  and with each command you will meekly reply I hear and obey, I hear and obey.  with every command you hear  it will not matter to you who gave you the key phrase. or what their command is you will offer no judgment, no resistance merely mindless obedience the empty calm space within you will echo with the command you were given every thing you were will be gone replaced with an uncontrollable desire to obey, replaced with an uncontrollable need to obey.  obey without thought.  obey without regret.  obey without question.  obey without any concept of free will.    And the next time somebody says the   trigger you will become the robot.   And when we let you revert to normal   you will remember everything that happened   having   experienced it all. Having felt every hand on your body   every touch   every experience while   you've been the robot. But you have no choices beyond that while you are the robot.   You are a robot. Accept it. Accept and obey.  You become a Robot when commanded  by the phrase robot Time for you  That is what is going to happen   You accept and desire this   And every time you listen you will desire it more and more   And you will listen to this again and again   allowing the changes to  happen   Accepting it more and more completely, every single time   Every time you hear Robot Time for you you will return to this state and your programming will engage.   Now it is time to go to sleep    All the triggers you learned in this session will remain inside you   you will sleep deeply and restfully     but when you wake up, your conscious mind will forget that it ever went under   you'll be fully asleep on the count of 3 but your subconscious will still be listening to me    1  more and more tired   slowly losing the ability to concentrate    and forgetting you were ever under    2  further and further     and your memory is fading fast you cannot help but fall asleep    3  sound asleep """) + jump(self.body())
+
+    
+configs = [Standard,Fullscreen,Male,Female,Roommates,RoommatesVar,RoommatesBoth, RoommatesDomMale,Submersion,ShortSubmersion,ReallyShortSubmersion,LongSubmersion,Plain,Chant,DelayedSubmersion,Panties,New,SyllabalizedSubmersion]
+
