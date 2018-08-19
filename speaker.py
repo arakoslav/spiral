@@ -1,6 +1,7 @@
 #!/usr/bin/env python
-# Hypnotic Spiral
+# Speech-driven spiral
 # Copyright (C) 2006, 2007 by Yonah Arakoslav
+# yonah.arakoslav@yahoo.com
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -24,26 +25,16 @@
 #  * mail variable contents to a master
 #  * mail audio and video to a master
 
-import pygame, math, os, sys, random, textwrap
+import pygame, math, os, sys, random, textwrap, string, re
+from datetime import datetime
 from pygame.locals import *
-from config import configs
-
+from configSpeaker import configs
+from AppKit import *
 try:
     from PySight import *
     camera = True
 except:
     camera = False
-
-try:
-    import AppKit
-    v = AppKit.NSSpeechSynthesizer.alloc().initWithVoice_("com.apple.speech.synthesis.voice.Vicki")
-    def speak(word): 
-	if 0==v.isSpeaking(): 
-	    v.startSpeakingString_(word)
-    def speaking(): return (v.isSpeaking() != 0)
-except:
-    def speak(word): pass
-    def speaking(): return False
 
 def pick_config(cs):
     if len(cs) == 0:
@@ -51,6 +42,10 @@ def pick_config(cs):
         sys.exit(1)
     elif len(cs) == 1:
         return cs[0]
+    if len(sys.argv) == 2:
+        for c in cs:
+            if c.name == sys.argv[1]:
+                return c
     print "Select a configuration:"
     for i in xrange(0,len(cs)):
         print "  %i) %s" % (i, cs[i].name)
@@ -96,7 +91,7 @@ def textOutline(font, message, fontcolor, outlinecolor):
     img.set_colorkey(0)
     return img
 
-class Spiral:
+class Spiral (NSObject) :
     def init_screen(self):
         flags = HWSURFACE | DOUBLEBUF | ASYNCBLIT
         if self.config.fullscreen:
@@ -124,13 +119,55 @@ class Spiral:
                     self.config.time_scale = self.config.time_scale+1
                 elif event.unicode == 'i':
                     self.draw_image = not self.draw_image
+                elif event.unicode == 'n':
+                    if self.speaking():
+                        self.speaking_text = None
+                        self.v.stopSpeaking()
+                    self.advance_text()
                 elif event.unicode == 'q':
+                    self.stop_recording()
                     sys.exit(0)
                     self.running=False
             elif event.type == VIDEORESIZE:
                 self.config.size = event.size
                 self.init_screen()
                 self.rescale()
+
+    def init_camera(self): pass
+        #self.camera = CSGCamera.alloc().init()
+        #self.camera.setDelegate_(self)
+        #self.camera_index = 0
+
+    def start_recording(self):
+        #self.camera.startWithSize_((320,240))
+        pass #os.system('osascript start_recording')
+
+    def stop_recording(self):
+        pass #self.camera.stop()
+
+    def camera_didReceiveFrame_(self, camera, frame):
+        self.camera_index += 1
+        if self.camera_index % 30 == 0:
+            filename="video/img%s.tif" % (datetime.now())
+            frame.TIFFRepresentation().writeToFile_atomically_(filename, 0)
+
+    def init_speech(self):
+        voice = self.config.voice
+        self.v = NSSpeechSynthesizer.alloc().initWithVoice_(voice)
+        self.v.setDelegate_(self)
+        self.spoken_word = " "
+        self.speaking_text = None
+        
+    def speak(self,text):
+        re.sub("\n? +"," ",text)
+        #print "Speaking text beginning with %s" % text[0:20]
+        if ' !' in text: print "Warning: script command embedded in spoken text"
+        self.speaking_text = self.varsub(text)
+        self.should_advance = False
+        self.v.startSpeakingString_(self.speaking_text)
+            
+    def speaking(self):
+        return self.speaking_text != None # (self.v.isSpeaking() != 0)
     
     def init_text(self):
         self.scale_font()
@@ -170,18 +207,16 @@ class Spiral:
         return word
 
     def act_on(self,command):
-        #try:
+        try:
             exec "self.%s" % command[1:]
             self.advance_text()
-        #except:
-        #     print "Unrecognized command: %s" % command
+        except:
+             print "Unrecognized command: %s" % command
 
     def images_on(self): self.draw_image=True
     def images_off(self): self.draw_image=False
     def toggle_images(self): self.draw_image=not self.draw_image
     def words_on(self): self.draw_words=True
-    def speaking_on(self): self.speak_words=True
-    def speaking_off(self): self.speak_words=False
     def words_off(self): self.draw_words=False
     def spiral_on(self): self.draw_spiral=True
     def spiral_off(self): self.draw_spiral=False
@@ -189,6 +224,7 @@ class Spiral:
     def pause_music(self): pygame.mixer.music.pause()
     def unpause_music(self): pygame.mixer.music.unpause()
     def stop_music(self): pygame.mixer.music.stop()
+    def shell(self,text): os.system(text)
     def start_music(self,filename):
         self.config.music=filename
         self.init_music()
@@ -200,6 +236,10 @@ class Spiral:
     def insert_text(self,t):
         index = self.words_index+1
         self.text[index:index] = t
+    def show_spoken_words_off(self):
+        self.show_spoken_words = False
+    def show_spoken_words_on(self):
+        self.show_spoken_words = True
     def prompt(self,text):
         self.display_box(self.varsub(text))
         while True:
@@ -245,6 +285,8 @@ class Spiral:
         spiral_size = int(1.2* max(self.x_size, self.y_size))
         spiral = pygame.Surface((spiral_size, spiral_size))
         dots = []
+	offset_x = []
+	offset_y = []
         for t in range(1, spiral_size*self.config.scale):
             t *= 0.5 / self.config.scale
             x =  t * t * math.cos(t)
@@ -252,14 +294,12 @@ class Spiral:
             dots.append((int(x+spiral_size/2.0), int(y+spiral_size/2.0)))
             self.process_events()
         pygame.draw.lines(spiral, self.config.color, False, dots, 4)
-        spiral.set_colorkey((0,0,0))
         a = pygame.transform.rotate(spiral,90)
         b = pygame.transform.rotate(spiral,180)
         c = pygame.transform.rotate(spiral,270)
-        spiral.blit(a,(0,0))
-        spiral.blit(b,(0,0))
-        spiral.blit(c,(0,0))
-        spiral.set_colorkey(None)
+        spiral.blit(a,(0,0),None,BLEND_ADD)
+        spiral.blit(b,(0,0),None,BLEND_ADD)
+        spiral.blit(c,(0,0),None,BLEND_ADD)
         spiral.set_alpha(self.config.alpha)
         self.spirals=[]
         for t in xrange(0,90):
@@ -279,13 +319,14 @@ class Spiral:
         self.font = pygame.font.SysFont(None,fontsize) # use default font
 
     def scale_images(self):
-        x = self.x_size / 2.0
-        y = self.y_size / 2.0
+        x = self.x_size * 4.0 / 5.0
+        y = self.y_size * 4.0 / 5.0
         for i in range(0,len(self.images)):
             pic_x,pic_y = self.images[i].get_size()
             x_factor = x / pic_x 
-            y_factor = y / pic_x
+            y_factor = y / pic_y
             scale = min(x_factor, y_factor)
+            #scale = min(scale,1.0)
             self.images[i] = pygame.transform.rotozoom(self.images[i],0,scale)
 
     def rescale(self):
@@ -294,17 +335,23 @@ class Spiral:
             self.scale_images()
     
     def init_images(self):
-        if self.config.image_dir:
-            self.clear_screen()
-            self.draw_text("Loading images")
-            image_file_names = os.listdir(self.config.image_dir)
-            self.images = [self.load_image(i) for i in image_file_names
-                           if i.endswith(".jpg")]
-            if self.config.shuffle_images: random.shuffle(self.images)
-            self.scale_images()
-            self.clear_screen()
-            self.image_index=0
-            self.images_initialized = True
+        self.clear_screen()
+        self.draw_text("Loading images")
+        image_file_names = os.listdir(self.config.image_dir)
+        self.images = [self.load_image(i) for i in image_file_names
+                       if i.endswith(".jpg")]
+        self.scale_images()
+        if self.config.shuffle_images:
+            random.shuffle(self.images)
+        else:
+            self.images.sort(key=lambda img: int(img.get_size()[0] / 10))
+            self.images.sort(key=lambda img: int(img.get_size()[1] / 10))
+            rev = self.images[:] # copy
+            rev.reverse()
+            self.images.extend(rev)
+        self.clear_screen()
+        self.image_index=0
+        self.images_initialized = True
 
     def init_music(self):
         if self.config.music:
@@ -330,22 +377,32 @@ class Spiral:
         temp_word.set_alpha(self.config.text_alpha)
         self.draw_surface(temp_word,delay)
 
-    def speak_text(self,word): speak(word)
-        #os.system('say -v Vicki %r &' % word)
-        
     def clear_screen(self,delay=False):
         self.screen.fill((0,0,0))
         if not delay: pygame.display.flip()
+
+    def speechSynthesizer_willSpeakWord_ofString_(self, synth, word, text):
+        if text==None:
+            text = self.speaking_text
+        start, end = word.location, (word.location + word.length)
+        while text[start] not in string.whitespace and start >= 0: start -=1
+        while text[end] not in string.whitespace and end<len(text)-1: end += 1
+        self.spoken_word = text[start:end]
+
+    def speechSynthesizer_didFinishSpeaking_(self, synth, success):
+        self.should_advance = True
+        self.spoken_word = " "
         
     def run_spiral(self):
         self.running = True
+        self.should_advance = True
         self.draw_image = False
         self.draw_spiral = False
         self.draw_words = False
-        self.speak_words = False
-        self.speaking_words_index = -1
+        self.show_spoken_words = True
         ticks = dict(self.config.frequencies)
         c = pygame.time.Clock()
+        self.start_recording()
         while self.running:
             c.tick(self.config.frame_rate)
             for key in ticks:
@@ -358,10 +415,12 @@ class Spiral:
                         if self.config.shuffle_images and 0==self.image_index:
                             random.shuffle(self.images)
                     elif key=='spiral':
-                        self.spirals_index = (self.spirals_index + 1) % \
+			inc = 1 # random.randint(1,3)
+                        self.spirals_index = (self.spirals_index + inc) % \
                                              len(self.spirals)
-                    elif key=='words':
-			if not speaking(): self.advance_text()
+                    elif key=='words' and \
+                         self.should_advance:
+                        self.advance_text()
             self.clear_screen(True)
             if self.draw_image:
                 self.draw_surface(self.images[self.image_index],True)
@@ -376,17 +435,14 @@ class Spiral:
                 self.act_on(word)
             elif word.startswith("[[") and word.endswith("]]"):
                 pass
+            elif self.show_spoken_words and self.speaking():
+                self.draw_text(self.spoken_word,True)
             elif self.draw_words: #and ticks['words'] != self.config.frequencies['words']:
                 self.draw_text(self.varsub(word),True)
-            if self.speak_words and \
-                 ticks['words'] <= 1:
-                if self.speaking_words_index != self.words_index:
-                    self.speak_text(self.varsub(word))
-                    self.speaking_words_index = self.words_index
             pygame.display.flip()
             self.process_events()
             
-    def __init__(self,config):
+    def init_(self,config):
         pygame.init()
         self.config = config()
         self.init_screen()
@@ -394,6 +450,9 @@ class Spiral:
         self.init_spiral()
         self.init_images()
         self.init_music()
+        self.init_speech()
+        self.init_camera()
+        return self
 
 startup = """Hypnotic Spiral, Copyright (C) 2006 Yonah Arakoslav
 This program comes with ABSOLUTELY NO WARRANTY.  This is free software,
@@ -411,5 +470,5 @@ if __name__=='__main__':
     print startup
     c = pick_config(configs)
     print usage
-    s = Spiral(c)
+    s = Spiral.alloc().init_(c)
     s.run_spiral()

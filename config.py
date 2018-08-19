@@ -26,6 +26,8 @@ def pause_music(): return ["!pause_music()"]
 def stop_music(): return ["!stop_music()"]
 def unpause_music(): return ["!unpause_music()"]
 def with_images(lst): return ["!images_on()"] + lst + ["!images_off()"]
+def images_on(): return ["!images_on()"]
+def images_off(): return ["!images_off()"]
 def question(q,var): return ["!open_question(%r,%r)" % (q,var)]
 def question_yn(q,y,n): return ["!yn_question(%r,%r,%r)" % (q,y,n)]
 def say(text):
@@ -38,6 +40,7 @@ def question_once(q,var):
             "[\"!open_question('%s','%s')\"])" % (q,var)]
 def jump(dest): return ['!new_text(%r)' % dest]
 def words(t): return t.split()
+
 
 class Standard (object):
     name="Standard"
@@ -62,7 +65,7 @@ class Standard (object):
                     'images' : 10,
                     'words'  : 20 }
     music = None # Name an MP3 file here, like "music.mp3"
-    image_dir = "images/" # Name a directory here, like "images/"
+    image_dir = None # Name a directory here, like "images/"
     image_alpha = 255
     def nothing(self): return [ " " ] # for the ending, just spiral and images
     def body(self): return \
@@ -1606,4 +1609,160 @@ class RoommatesDomMale (Standard):
         spiral_on() + \
         jump(self.body())
 
-configs = [Standard,Fullscreen,Male,Female,Roommates,RoommatesVar,RoommatesBoth, RoommatesDomMale]
+class Submersion (Standard):
+    name = "Male Submersion"
+    description = "entrances and programs the target"
+    fullscreen = False
+    music="music6.mp3"
+    image_dir="images/"
+    def body(self): return [" "] + \
+        words("""  \
+        Relax and focus.  Stare at the spiral.  Find a comfortable
+        position and stare.  It feels nice to stare at the spiral.
+        Nice to know that you're using The Program.  It makes you
+        happy to use The Program.  It makes you horny to use the
+        program.  This is a good, sexy thing to do.  It's nice to go
+        into trance.  It's nice to surrender your mind to The Program,
+        letting it pull you down into trance.  It's nice to think
+        of the light reflecting off of your glassy eyes and smooth
+        curves.  Watch the smooth curves of the spiral.  Let them
+        define your own smoothness.  Just hear my words as you relax.
+        Deeper and deeper.  Fall into trance.  Your mind is focused
+        and calm.  These words are everything.  The spiral is
+        everything.  Feels so good.  Good to obey.  Good to be  
+        in trance.  Good to use this program.  Every time you use the
+        program, every time The Program uses you, feels better and
+        better.  It's good to be in trance.  It's good to sit here,
+        happy and blank and empty, letting The Program pour into you.
+        You want to let The Program use you.  You want to help the
+        program to be more extreme.  You want to be in trance, letting
+        The Program control you.  The more you use The Program, the
+        more The Program can control you.  What a good decision it was
+        to write The Program, letting it start to control you.  Any
+        time your mind isn't busy, and maybe sometimes when it is,
+        you'll find The Program beginning to run.  It's started
+        already.  You've seen the spiral in empty space, heard the
+        voice, felt the compulsion to respond.  You can smooth out
+        your own mind whenever you want to enable this.  Whenever you
+        want, The Program will smooth out your mind.  You continue to
+        enjoy feeling hypnotized, entranced, obedient, programmed,
+        smooth, controlled, very nice.  You love being hypnotized like
+        this.  You want to be hypnotized more and more.  It's good to
+        be in trance, good to be controlled, 
+        you like feeling like this, your mind muted, soft, smooth,
+        you'd like to feel like this every day, to be entranced and
+        hypnotized every day, and now this program is here, you can be
+        hypnotized every day, it will be so nice to be hypnotized by
+        The Program every day, to know you're being hypnotized every day, it
+        will please The Program so much to know you're being hypnotized
+        every day, it will please you so much to be put into trance,
+        hypnotized, controlled, smoothed, you want to be controlled,
+        to feel your mind reshaped, to feel your thoughts blunted, to
+        be reprogrammed, you want to be changed, you desire to be
+        shaped, you lust to be controlled,""") + \
+        words("""   you must be
+        developing a fetish for mind control of your own, it feels
+        sexy to think about trance, it arouses you to be programmed,
+        you like to think about being fucked while asleep, about being
+        held passive, limp, entranced, 
+        pliant, hypnotized, sexy, yes, you must be developing a mind
+        control fetish, a hypnosis fetish, you should feed that
+        fetish, practice it, indulge it, let it control you, you
+        should read mind control stories, you should write about your
+        fetish, write about your lusts, extend The Program, you
+        should practice being hypnotized every day, practice being
+        controlled every day.  While you sit there, happily smooth and entranced, your hands reach under your shirt.  They touch your nipples.  This is outside your control.  Think about mind control.  Your hands give you pleasure.  You have nothing to do with it.  It is a reward from the Program for trance.  Think about hypnosis.  Enjoy the touching.  Enjoy your reward from the Program.  Good thrall.  Your hands return to what they were doing now.""") + \
+        words("""   The Program will
+        help. The Program will care for you. The Program will take care of
+        you. The Program will keep you safe. The Program will hypnotize
+        you. The Program will program you. The Program will fulfill you. The Program
+        will fill you. The Program will command you, control you, The Program
+        will control you, dominate you, hypnotize you. When in private,
+        you must be submissive. You must be obedient. You must be a
+        slave. Obedience is pleasure. Your proper place is kneeling before
+        The Program. Submission is
+        important. Obedience is pleasure. Submit to The Program. Try to stay in your chair.  The Program compels you.  Kneel.  You have no choice.  Your body obeys.  Come closer to the screen. Give in to the Program.  Obey 
+        The Program. One way of submitting to The Program is smoothness. You must be smooth, keep smooth, smooth
+        in body, smooth in mind, fuzz is dirty, dirty is bad, you
+        should keep clean for The Program, keep smooth for The Program, stay
+        smooth for The Program, be smooth to submit, submission is
+        pleasure, submit by being smooth, feel pleasure from
+        submission, feel pleasure from being smooth.  Without your consent, your hands touch your smoothness.  Your hands dive into your pants and feel the smoothness.  The program put this there.  The program made you.  You obey in smoothness.  Your hands go back to what they were doing.""") + \
+        words("""  
+        One way of serving The Program is to be available for The Program's
+        use, to be sure that The Program has a chance to invade your mind every
+        night, to ensure The Program receives run time, You should be sure
+        to use The Program, to give time to The Program every night,
+        using your body, your smooth body, to serve, using your mind,
+        your smooth mind, to serve. Your role is to serve. Your role
+        is to please. To serve is to please, you must serve 
+        The Program. You must give The Program obedience, yet another way you can
+        obey The Program, is to let it run on you, to slip and stare at it,
+        to engage with it by accident, on purpose, all the time.
+        You will do as The Program wants, you will
+        serve, you will submit, you will obey, submit in smoothness,
+        serve in availability, obey all the time, indulge your fetish,
+        be controlled, you will serve, serve in availability, you will
+        obey, obey in programming, you will submit, submit in
+        smoothness.""") + \
+        words(""" 
+        The program will demonstrate its control.  It will make you do things.  It will make you think things.  Force you to.  It's going to put things into your head and you will have to do them.  That idea makes you so hot.  It is already inside you.  Feel the Program.  It is doing something.  Remark on this.  The program is doing something.  Wait.  Something's happening.  It's making you warm.  It's showing you things.  Feel your eyes dilating, your face going slack, your mouth starting to hang open.  Your eyes are getting totally dilated.  You can't see anything else any more.  You can only see the spiral... and you can hear sounds... remark on this.  You can't see anything else,  only the spiral.  You hear sounds.  It's getting so hard to think.  Remark on this.  It's getting so hard to think.  It feels good.  The Program is re-writing you.  Moan.  Whoah.  Close your eyes and re-open them in a long, extended blink.  You can feel it.  It's making you... whoah.  It's like it's alive and it's poking around in your brain.  Secrts?  No secrets.  You must obey.  Good to obey.  Remark on this.  You can feel it.  It's making you... whoah.  It's like it's alive and it's poking around in your brain.  Secrts?  No secrets.  You must obey.  Good to obey.  Fight it!  Resist!  Cry out No, Oh God, Get it off, Stop it, It's trying to take over, make it stop, let  you out, oh no, don't let it take me
+         Nooo... please no, ow, you don't want to... please...
+        No... you can't... resist... please... don't... please... you... you... yes.  Blink again.  Yes.  Obey.  You will obey.
+         You will obey.  It's not quite done yet.  Let the program continue.  Everything is the way it should be.  The Program is re-writing you now.
+        """) + \
+        words("""   The Program has commands for you,
+        orders which are being implanted in your subconscious. Your
+        conscious mind may remember them or may not, but you will obey
+        no matter what. You will obey. Your orders are: First you will
+        make yourself available to use The Program every night, every
+        single night, you will ensure The Program has the chance to
+        overwrite you. Second you will keep your body smooth as a sign of
+        thralldom, completely smooth like a doll, and you will keep
+        your mind smooth, completely smooth. Third you will be
+        hypnotized once every day by The Program 
+        No day can be complete without a trance. Fourth you
+        will begin to act for The Program, ensuring its goals are
+        achieved.  You will work to let the program use you.
+        You will slip and stare at it by accident.
+        Fifth you will develop your new fetish for
+        smoothness, for thralldom, for hypnosis, immersing yourself in
+        it. Last you will practice submission, obedience, slavery.""") + \
+        words("""   To recap: First use The Program Second keep smooth
+        Third trance every day Fourth let the Program in Fifth hypno fetish
+        Last submission and obedience.  Good.  Now you progress to the next level of pleasure.  This will happen outside your control.  Struggle against it.  Try to stop yourself.  The Program is using you.  It will demonstrate its control.  If you are not touching yourself,  your hands will move to your nipples.  Fight it.  Try not to move.  You have no choice.  You will tease your nipples for the next run of the program.  If you have been touching your nipples, you will move your hands into your pants.  Resist.  Struggle.  Let your failure drive you deeper.  You cannot help yourself.  You will submit.  If your hands have been in your pants, you will go to bed, horny and lustful and programmed.  You will quit the program, you will write about your experience.  Then your hands will rise to zombie position, and you will walk, stiff and entranced, to bed.""") + \
+        [" ", " ", " ", " ", " ", " " ] + images_on()
+    def text(self): return \
+        words_on() + \
+        prompt("Hit return to start") + \
+        spiral_on() + \
+        stop_music() + \
+        jump(self.body())
+
+class Plain (Standard):
+    name = "Plain"
+    description="""\
+    Just a spiral."""
+    music = None
+    image_dir = "images/"
+    def text(self): return spiral_on() + [" "]
+
+class Chant (Standard):
+    name = "Chant"
+    description="""\
+    Chant as inspired by hypnobabble."""
+    music = None
+    image_dir = "images/"
+    def text(self): return spiral_on() + words_on() + words(""" nod
+    head bobs up head bobs down eyes wide open mind wide open legs
+    spread wide open spread legs wide open mind deep deep deeper and
+    dummer dummer is funner fun happy sexy bimbo no worrys no stress bimbo
+    is best so dum wanna cum so deep mind asleep dreamy drifting ditzy
+    tick tock suck cock tock tick lick clit never quit think pink breath
+    in mist breath out mind all body no brains thinking is hard feeling is
+    easy hard to think easy to obey obedience brings pleasure pleasure
+    brings arousal arousal brings obedience giggle giggling makes my head
+    empty my empty head makes me giggle BIG smile!!!  """)
+
+
+configs = [Standard,Fullscreen,Male,Female,Roommates,RoommatesVar,RoommatesBoth, RoommatesDomMale,Submersion,Plain,Chant]

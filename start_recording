@@ -1,0 +1,6 @@
+tell application "QuickTime Broadcaster"
+  if (exists document 1) then
+    start document 1
+    return "broadcast"
+  end if
+end tell
