@@ -1,6 +1,6 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2.7
 # Hypnotic Spiral
-# Copyright (C) 2006, 2007 by Yonah Arakoslav
+# Copyright (C) 2006, 2007, 2008 by Yonah Arakoslav
 # yonah.arakoslav@yahoo.com
 #
 # This program is free software; you can redistribute it and/or modify
@@ -42,10 +42,20 @@ try:
 	if 0==v.isSpeaking(): 
 	    v.startSpeakingString_(word)
     def speaking(): return (v.isSpeaking() != 0)
+    r = AppKit.NSSpeechRecognizer.alloc().init()
+    def setDelegate(s):
+        r.setDelegate_(s)
+        print "delegate set"
+    def listenFor(words):
+        r.setCommands_(words)        
+        r.startListening()
+        print("Listening for %r" % words)
 except:
     def speak(word): pass
     def speaking(): return False
-
+    def setDelegate(s): pass
+    def listenFor(words): pass
+    
 def pick_config(cs):
     if len(cs) == 0:
         print "No configurations.  Define 'configs' at the end of config.py."
@@ -101,24 +111,34 @@ def textOutline(font, message, fontcolor, outlinecolor):
     img.set_colorkey(0)
     return img
 
-class Spiral:
+def color_rotate(color):
+    (x, y, z) = color
+    return (z, x, y)
+
+class Spiral  (AppKit.NSObject):
     def init_globals(self):
         self.flags = HWSURFACE | DOUBLEBUF | ASYNCBLIT
+        self.waiting = False
         if self.config.fullscreen:
             self.flags |= FULLSCREEN
             if self.config.size in pygame.display.list_modes():
                 self.x_size, self.y_size = self.config.size
+                print("size set to (%i, %i)" % (self.x_size, self.y_size))
             else:
+                print("configured size %r not in modes" % self.config.size)
                 self.x_size, self.y_size = pygame.display.list_modes()[0]
         else:
             self.flags |= RESIZABLE
             self.x_size, self.y_size = self.config.size
-        self.screen = pygame.display.set_mode((1, 1),self.flags | NOFRAME)
+            print("size set to (%i, %i)" % (self.x_size, self.y_size))
+        self.screen = pygame.display.set_mode((self.x_size, self.y_size),self.flags | NOFRAME)
 
     def init_screen(self):
+        print("size at (%i, %i)" % (self.x_size, self.y_size))
         if self.config.fullscreen:
             pygame.mouse.set_visible(False)
-        self.screen = pygame.display.set_mode((self.x_size, self.y_size),self.flags)
+        bestdepth = pygame.display.mode_ok((self.x_size, self.y_size), self.flags, 32)
+        self.screen = pygame.display.set_mode((self.x_size, self.y_size),self.flags,bestdepth)
 
     def process_events(self):
         for event in pygame.event.get():
@@ -127,7 +147,8 @@ class Spiral:
                     self.config.fullscreen = not self.config.fullscreen
                     self.init_globals()
                     self.init_screen()
-                    self.rescale()
+                    #self.rescale()
+                    self.init_images()
                 elif event.unicode in ['<',',']:
                     self.config.time_scale = max(self.config.time_scale-1,1)
                 elif event.unicode in ['>','.']:
@@ -143,13 +164,16 @@ class Spiral:
                 self.init_screen()
                 self.rescale()
     
-    def init_text(self):
+    def init_text(self):        
         self.scale_font()
         self.words_index = 0
         self.text = self.config.text()
         self.variables={}
+        self.background_text=""
+        self.background_word=None
         self.persistent_text=""
         self.persistent_word = self.font.render("",True,self.config.text_color)
+        
 
     def display_box(self,message):
         x,y = self.font.size(message)
@@ -220,6 +244,9 @@ class Spiral:
     def spiral_on(self): self.draw_spiral=True
     def spiral_off(self): self.draw_spiral=False
     def quit(self): self.running=False
+    def background(self,w):
+        self.background_text=w
+        self.render_background_word()
     def pause_music(self): pygame.mixer.music.pause()
     def unpause_music(self): pygame.mixer.music.unpause()
     def stop_music(self): pygame.mixer.music.stop()
@@ -239,11 +266,28 @@ class Spiral:
         index = self.words_index+1
         self.text[index:index] = t
     def prompt(self,text):
+        self.waiting=True
         self.display_box(self.varsub(text))
         while True:
             event = pygame.event.wait()
             if event.type==KEYDOWN and event.key==K_RETURN: break
+        self.waiting=False
+    def short_prompt(self,text,time):
+        self.display_box(self.varsub(text))
+        pygame.time.set_timer(USEREVENT,time)
+        while True:
+            event = pygame.event.wait()
+            if event.type==USEREVENT: break
+            if event.type==KEYDOWN and event.key==K_RETURN: break
+    def short_prompt_jump(self,text,time,new):
+        self.display_box(self.varsub(text))
+        pygame.time.set_timer(USEREVENT,time)
+        while True:
+            event = pygame.event.wait()
+            if event.type==USEREVENT: break
+            if event.type==KEYDOWN and event.key==K_RETURN: self.new_text(new)
     def yn_question(self,question,yes=None,no=None):
+        self.waiting=True
         self.display_box(self.varsub(question) + "(y/n)")
         while True:
             event = pygame.event.wait()
@@ -254,7 +298,9 @@ class Spiral:
                 elif event.key==K_n:
                     if no: self.new_text(no)
                     break
+        self.waiting=False
     def open_question(self,question,var):
+        self.waiting=True
         answer=""
         while True:
             self.display_box(self.varsub(question) + ": " + answer)
@@ -267,6 +313,24 @@ class Spiral:
                 else:
                     answer += event.unicode
         self.variables['$'+var]=answer
+        self.waiting=False
+    def challenge(self,question,correct_answer):
+        self.waiting=True
+        answer=""
+        while answer!=correct_answer:
+            while True:
+                self.spirals_index = (self.spirals_index + 1) % \
+                                     len(self.spirals)
+                self.display_box(self.varsub(question) + ": " + answer)
+                event = pygame.event.wait()
+                if event.type==KEYDOWN:
+                    if event.key==K_BACKSPACE:
+                        answer = answer[0:-1]
+                    elif event.key==K_RETURN:
+                        break
+                    else:
+                        answer += event.unicode
+        self.waiting=False
     def cond_jump(self,test,yes=None,no=None):
         if eval(test) and yes:
             self.new_text(yes)
@@ -277,15 +341,32 @@ class Spiral:
             self.insert_text(yes)
         else:
             self.insert_text(no)
+    def listen(self):
+        listenFor(self.config.good_words + self.config.bad_words)
+    def heard(self,w):
+        if w in self.config.good_words:
+            self.insert_text(good_word_response)
+        if w in self.config.bad_words:
+            self.insert_text(bad_word_response)
+    def speechRecognizer_didRecognizeCommand_(self,r,word):
+        print("You said %r!" % word)
+        if word in self.config.good_words:
+            self.insert_text(self.config.good_word_response)
+        if word in self.config.bad_words:
+            self.insert_text(self.config.bad_word_response)
+        #self.insert_text(("!heard(%r)" % word))
     def init_spiral(self):
         #self.clear_screen()
         #self.draw_text("Loading spiral")
         print "Loading spiral...",
+        scale=1.0
         if (self.config.spiral_image != ""):
-		tmpspiral=pygame.image.load(self.config.spiral_image).convert()
-        	scale=1.0
-        	spiral = pygame.transform.rotozoom(tmpspiral,0,scale)
-	elif True:
+		spiral=pygame.image.load(self.config.spiral_image)
+                spiral_x, spiral_y = spiral.get_size()
+        	scale=1.2 * max(self.x_size,self.y_size) / \
+                            min(spiral_x,spiral_y)
+                print scale
+	else:
         	spiral_size = int(1.2* max(self.x_size, self.y_size))
         	spiral = pygame.Surface((spiral_size, spiral_size))
         	dots = []
@@ -307,7 +388,12 @@ class Spiral:
         spiral.set_alpha(self.config.alpha)
         self.spirals=[]
         for t in xrange(0,self.config.spiral_range/self.config.spiral_step):
-            self.spirals.append(pygame.transform.rotate(spiral,-t*self.config.spiral_step))
+            t = pygame.transform.rotozoom(spiral,
+                                          -t*self.config.spiral_step,
+                                          scale)
+            t.set_alpha(self.config.alpha)
+            self.spirals.append(t.convert())
+            
         #self.clear_screen()
         print "...done"
         self.spirals_index=0
@@ -323,6 +409,7 @@ class Spiral:
     def scale_font(self):
         fontsize = self.x_size/10
         self.font = pygame.font.SysFont(None,fontsize) # use default font
+        self.bgfont = pygame.font.SysFont(None,3*fontsize)
 
     def scale_images(self):
         x = self.x_size / 2.0
@@ -333,6 +420,7 @@ class Spiral:
             y_factor = y / pic_x
             scale = min(x_factor, y_factor)
             self.images[i] = pygame.transform.rotozoom(self.images[i],0,scale)
+            self.images[i].convert()
 
     def rescale(self):
         self.scale_font()
@@ -379,6 +467,33 @@ class Spiral:
         temp_word.set_alpha(self.config.text_alpha)
         self.draw_surface(temp_word,delay)
 
+    def render_background_word(self):
+        lines = self.background_text.splitlines()
+        width = 0
+        height = 0
+        for l in lines:
+            w,h = self.bgfont.size(l)
+            width = max(width,w)
+            height += h
+        img = pygame.Surface((width,height),16)
+        img.set_colorkey((0,0,0))
+        height=0
+        for l in lines:
+            temp_word = self.bgfont.render(l,
+                                           True,
+                                           color_rotate(self.config.text_color))
+            cx, cy = temp_word.get_rect().center
+            x_off = (width/2) - cx
+            y_off = height
+            height += 2*cy
+            img.blit(temp_word, (x_off, y_off))
+        img.set_alpha(int(self.config.text_alpha / 2))
+        self.background_word=img.convert()
+
+    def draw_background_text(self):
+        if self.background_word:
+            self.draw_surface(self.background_word,True)
+
     def speak_text(self,word): speak(word)
         #os.system('say -v Vicki %r &' % word)
         
@@ -410,13 +525,13 @@ class Spiral:
                         self.spirals_index = (self.spirals_index + 1) % \
                                              len(self.spirals)
                     elif key=='words':
-			if not speaking(): self.advance_text()
+			if not (speaking() or self.waiting): self.advance_text()
             self.clear_screen(True)
             if self.draw_image:
                 self.draw_surface(self.images[self.image_index],True)
+            self.draw_background_text()
             if self.draw_spiral:
                 try:
-                    self.spirals[self.spirals_index].set_alpha(self.config.alpha)
                     self.draw_surface(self.spirals[self.spirals_index],True)
                 except IndexError:
                     print "Index %i out of range 0..%i" % (self.spirals_index,
@@ -434,7 +549,8 @@ class Spiral:
                  ticks['words'] <= 1:
 		bulkspeak=""
                 if self.speaking_words_index != self.words_index:
-		    while ((self.text[self.words_index+1].startswith("!") != True) and (self.words_index+2 < len(self.text))):
+		    while ((not self.text[self.words_index+1].startswith("!"))
+                           and self.words_index+2 < len(self.text)):
 		    	word = self.text[self.words_index]
 		    	bulkspeak=bulkspeak+" "+self.varsub(word)
                         self.advance_text()
@@ -444,21 +560,25 @@ class Spiral:
                     # self.speak_text(self.varsub(word))
                     self.speak_text(bulkspeak)
                     self.speaking_words_index = self.words_index
-
-
-
             pygame.display.flip()
             self.process_events()
             
     def __init__(self,config):
         pygame.init()
         self.config = config()
+        self.images_initialized=False
         self.init_globals()
         self.init_spiral()
         self.init_images()
         self.init_text()
         self.init_music()
         self.init_screen()
+        try:
+            self.listen()
+        except:
+            pass
+    def init(self):
+        return self
 
 
 
@@ -481,5 +601,7 @@ if __name__=='__main__':
     print "Waiting %i:%i." % (delay/60,delay%60)
     time.sleep(delay)
     print usage
-    s = Spiral(c)
+    s = Spiral.alloc().init()
+    s.__init__(c)
+    setDelegate(s)
     s.run_spiral()

@@ -1,6 +1,7 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2.7
+#!/usr/bin/env python2.4
 # Speech-driven spiral
-# Copyright (C) 2006, 2007 by Yonah Arakoslav
+# Copyright (C) 2006, 2007, 2011 by Yonah Arakoslav
 # yonah.arakoslav@yahoo.com
 #
 # This program is free software; you can redistribute it and/or modify
@@ -25,8 +26,9 @@
 #  * mail variable contents to a master
 #  * mail audio and video to a master
 
-import pygame, math, os, sys, random, textwrap, string, re
+import pygame, math, os, sys, random, textwrap, string, re, time
 from datetime import datetime
+from time import gmtime, strftime
 from pygame.locals import *
 from configSpeaker import configs
 from AppKit import *
@@ -35,6 +37,14 @@ try:
     camera = True
 except:
     camera = False
+
+# global constants
+FREQ = 44100   # same as audio CD
+BITSIZE = -16  # unsigned 16 bit
+CHANNELS = 2   # 1 == mono, 2 == stereo
+BUFFER = 1024  # audio buffer size in no. of samples
+FRAMERATE = 30 # how often to check if playback has finished
+
 
 def pick_config(cs):
     if len(cs) == 0:
@@ -138,6 +148,14 @@ class Spiral (NSObject) :
         #self.camera.setDelegate_(self)
         #self.camera_index = 0
 
+    def init_subliminals(self): 
+	self.subliminal_offset_x=random.randint(30,200);
+        self.subliminal_offset_y=random.randint(30,200);
+	#self.subliminal_list=["Slave","You will Obey","Obey"];
+	#self.subliminal_current="Obey";
+	self.subliminal_list=[""];
+	self.subliminal_current="";
+
     def start_recording(self):
         #self.camera.startWithSize_((320,240))
         pass #os.system('osascript start_recording')
@@ -151,6 +169,12 @@ class Spiral (NSObject) :
             filename="video/img%s.tif" % (datetime.now())
             frame.TIFFRepresentation().writeToFile_atomically_(filename, 0)
 
+    def camera_snapshot(self):
+        filename="video/img%s.jpg" % (strftime("%m%d%H%M%S",gmtime()))
+	command="./bin/isightcapture '%s' &" % filename
+	os.system(command)
+	self.config.lastCamImage=filename
+
     def init_speech(self):
         voice = self.config.voice
         self.v = NSSpeechSynthesizer.alloc().initWithVoice_(voice)
@@ -162,7 +186,16 @@ class Spiral (NSObject) :
         re.sub("\n? +"," ",text)
         # print "Speaking text beginning with %s" % text[0:20]
         if ' !' in text: print "Warning: script command embedded in spoken text"
-        self.speaking_text = self.varsub(text)
+        self.speaking_text = "[[volm 1.0]]" + self.varsub(text)
+        self.should_advance = False
+        self.v.startSpeakingString_(self.speaking_text)
+            
+    def whisper(self,text):
+        re.sub("\n? +"," ",text)
+        # print "Speaking text beginning with %s" % text[0:20]
+	
+        if ' !' in text: print "Warning: script command embedded in spoken text"
+        self.speaking_text = "[[volm 0.14]] " + self.varsub(text);
         self.should_advance = False
         self.v.startSpeakingString_(self.speaking_text)
             
@@ -217,6 +250,10 @@ class Spiral (NSObject) :
 
     def images_on(self): self.draw_image=True
     def images_off(self): self.draw_image=False
+    def show_lastCamImage(self):
+	self.hold_image_index=self.image_lookup[self.config.lastCamImage]
+        self.draw_image=True
+
     def hold_image_start(self):
                 self.advance_text()
                 image_name=""
@@ -227,9 +264,10 @@ class Spiral (NSObject) :
     
                 word = self.text[self.words_index]
                 image_name=image_name+self.varsub(word)
+		# print image_name
 		if (self.image_lookup[image_name] >=0):
 			self.hold_image_index=self.image_lookup[image_name]
-		#print self.hold_image_index,
+		# print self.hold_image_index,
 
     def hold_image_end(self): 
 		word=""
@@ -237,6 +275,20 @@ class Spiral (NSObject) :
     def hold_image_blank(self): 
 		self.hold_image_index=-1
                 self.draw_image=False
+
+    def play_sound_start(self):
+        self.advance_text()
+        while ((self.text[self.words_index+1].startswith("!") != True) and (self.words_index+2 < len(self.text))):
+              filename = self.text[self.words_index]
+              self.advance_text()
+        filename = self.text[self.words_index]
+	#print "Sound file: %r" % filename
+	#sound = pygame.mixer.Sound("bb90-6.wav")
+	#sound.play()
+ 
+    def play_sound_end(self):
+	return
+
     def hold_text_start(self):
                 self.advance_text()
                 self.persistent_text=""
@@ -288,6 +340,20 @@ class Spiral (NSObject) :
         while True:
             event = pygame.event.wait()
             if event.type==KEYDOWN and event.key==K_RETURN: break
+    def short_prompt(self,text,time):
+        self.display_box(self.varsub(text))
+        pygame.time.set_timer(USEREVENT,time)
+        while True:
+            event = pygame.event.wait()
+            if event.type==USEREVENT: break
+            if event.type==KEYDOWN and event.key==K_RETURN: break
+    def short_prompt_jump(self,text,time,new):
+        self.display_box(self.varsub(text))
+        pygame.time.set_timer(USEREVENT,time)
+        while True:
+            event = pygame.event.wait()
+            if event.type==USEREVENT: break
+            if event.type==KEYDOWN and event.key==K_RETURN: self.new_text(new)
     def yn_question(self,question,yes=None,no=None):
         self.display_box(self.varsub(question) + "(y/n)")
         while True:
@@ -363,6 +429,22 @@ class Spiral (NSObject) :
         i.set_alpha(self.config.image_alpha)
         return i
 
+    def load_lastCameraShot(self):
+	path = self.config.lastCamImage
+	# print self.config.lastCamImage
+	i = pygame.image.load(path).convert()
+	i.set_alpha(self.config.image_alpha)
+	self.image_lookup[path]=len(self.unshuffled_images)
+        x = self.x_size * 4.0 / 5.0
+        y = self.y_size * 4.0 / 5.0
+        pic_x,pic_y = i.get_size()
+        x_factor = x / pic_x
+        y_factor = y / pic_y
+        scale = min(x_factor, y_factor)
+        i = pygame.transform.rotozoom(i,0,scale)
+	self.unshuffled_images.append(i)
+
+
     def scale_font(self):
         fontsize = self.x_size/10
         self.font = pygame.font.SysFont(None,fontsize) # use default font
@@ -395,8 +477,9 @@ class Spiral (NSObject) :
             self.scale_images()
     
     def init_images(self):
-        self.clear_screen()
-        self.draw_text("Loading images")
+        #self.clear_screen()
+        #self.draw_text("Loading images")
+        print "Loading images...",
         image_file_names = os.listdir(self.config.image_dir)
 	list_number=0
 	self.hold_image_index=-1
@@ -426,10 +509,15 @@ class Spiral (NSObject) :
         self.images_initialized = True
 
     def init_music(self):
+	try:
+        	pygame.mixer.init(FREQ, BITSIZE, CHANNELS, BUFFER)
+    	except pygame.error, exc:
+        	print >>sys.stderr, "Could not initialize sound system: %s" % exc
+        	return 1
         if self.config.music:
             pygame.mixer.music.load(self.config.music)
             pygame.mixer.music.play(-1)
-    
+   
     def draw_surface(self,surface,delay=False):
         cx, cy = surface.get_rect().center
         x_off = (self.x_size/2) - cx
@@ -449,6 +537,46 @@ class Spiral (NSObject) :
         temp_word.set_alpha(self.config.text_alpha)
         self.draw_surface(temp_word,delay)
 
+    def set_subliminals(self,raw_list):
+	self.subliminal_list=raw_list.split('|')
+	if (len(self.subliminal_list) > 1):
+                self.subliminal_current=self.subliminal_list[random.randint(0,len(self.subliminal_list)-1)]
+        else:
+                self.subliminal_current=self.subliminal_list[0]
+
+    def draw_subliminals(self):
+	if (random.randint(0,100) < self.config.subliminal_changeprobability):
+		if (len(self.subliminal_list) > 1):
+			self.subliminal_current=self.subliminal_list[random.randint(0,len(self.subliminal_list)-1)]
+		else:
+			self.subliminal_current=self.subliminal_list[0]
+	words=self.subliminal_current
+        if words=="":return
+        if self.config.broken_fonts:
+            temp_word = self.font.render(words,True,self.config.subliminal_color)
+        else:
+            temp_word = textOutline(self.font,
+                                    words,
+                                    self.config.subliminal_color,
+                                    self.config.color)
+        temp_word.set_alpha(self.config.subliminal_alpha)
+	if (random.randint(0,100) < self.config.subliminal_moveprobability):
+		quad_x=1
+		quad_y=1
+		if (random.randint(0,1)):
+			quad_x=-1
+		if (random.randint(0,1)):
+			quad_y=-1
+		self.subliminal_offset_x=quad_x*random.randint(30,200)
+		self.subliminal_offset_y=quad_y*random.randint(30,200)
+	if (random.randint(0,100) < self.config.subliminal_displayprobability):
+        	self.draw_offsetsurface(temp_word,self.subliminal_offset_x+random.randint(-1*self.config.subliminal_scatter,self.config.subliminal_scatter),self.subliminal_offset_y+random.randint(-1*self.config.subliminal_scatter,self.config.subliminal_scatter))
+ 
+    def draw_offsetsurface(self,surface,cx,cy):
+        x_off = (self.x_size/2) - cx
+        y_off = (self.y_size/2) - cy
+        self.screen.blit(surface, (x_off, y_off))
+
     def clear_screen(self,delay=False):
         self.screen.fill((0,0,0))
         if not delay: pygame.display.flip()
@@ -457,8 +585,8 @@ class Spiral (NSObject) :
         if text==None:
             text = self.speaking_text
         start, end = word.location, (word.location + word.length)
-        while text[start] not in string.whitespace and start >= 0: start -=1
-        while text[end] not in string.whitespace and end<len(text)-1: end += 1
+        while start > 0 and text[start] not in string.whitespace: start -=1
+        while end<len(text)-1 and text[end] not in string.whitespace: end += 1
         self.spoken_word = text[start:end]
 
     def speechSynthesizer_didFinishSpeaking_(self, synth, success):
@@ -506,6 +634,7 @@ class Spiral (NSObject) :
                     print "Index %i out of range 0..%i" % (self.spirals_index,
                                                            len(self.spirals))
             word = self.text[self.words_index]
+            self.draw_subliminals();
             if word.startswith("!"):
                 self.act_on(word)
             elif word.startswith("[[") and word.endswith("]]"):
@@ -529,6 +658,7 @@ class Spiral (NSObject) :
         self.init_music()
         self.init_speech()
         self.init_camera()
+        self.init_subliminals()
         return self
 
 startup = """Hypnotic Spiral, Copyright (C) 2006 Yonah Arakoslav
@@ -546,6 +676,11 @@ usage = """Keys:
 if __name__=='__main__':
     print startup
     c = pick_config(configs)
+    delay = random.randint(c.minimum_delay,c.maximum_delay)
+    if delay > 0:
+        print "It is now %s" % time.ctime()
+        print "Will run at %s" % time.ctime(delay+time.time())
+        time.sleep(delay)
     print usage
     s = Spiral.alloc().init_(c)
     s.run_spiral()

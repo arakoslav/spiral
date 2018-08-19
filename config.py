@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # Hypnotic Spiral
-# Copyright (C) 2006, 2007 by Yonah Arakoslav
+# Copyright (C) 2006, 2007, 2008, 2011 by Yonah Arakoslav
 # yonah.arakoslav@yahoo.com
 #
 # This program is free software; you can redistribute it and/or modify
@@ -17,7 +17,11 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
+import re
+
 def prompt(text): return ["!prompt(%r)" % text]
+def short_prompt(text,time): return ["!short_prompt(%r,%r)" % (text,time)]
+def short_prompt_jump(text,time,new): return ["!short_prompt_jump(%r,%r,%r)" % (text,time,new)]
 def speak(text): return ["!speak(%r)" % text]
 def words_on(): return ["!words_on()"]
 def spiral_on(): return ["!spiral_on()"]
@@ -30,6 +34,7 @@ def with_images(lst): return ["!images_on()"] + lst + ["!images_off()"]
 def images_on(): return ["!images_on()"]
 def images_off(): return ["!images_off()"]
 def question(q,var): return ["!open_question(%r,%r)" % (q,var)]
+def challenge(q,a): return ["!challenge(%r,%r)" % (q,a)]
 def question_yn(q,y,n): return ["!yn_question(%r,%r,%r)" % (q,y,n)]
 def say(text):
     return ["!pause_music()",
@@ -81,7 +86,7 @@ class Standard (object):
     female submitting to a male, but that either might use this program."""
     broken_fonts = False
     scale = 10
-    size = (800, 600)
+    size = (1280,800) #(800, 600)
     time_scale = 2
     frame_rate=60
     fullscreen = False
@@ -107,14 +112,14 @@ class Standard (object):
 #   does not bog down. (TT 20070706)
 #
 #   If you want the default software-generated spiral, uncomment the following:
-#    spiral_image = ""     # filename of spiral image to use, overides default
-#    spiral_range = 90     # how many degrees to rotate before spiral repeats 
-#    spiral_step = 1       # the number of degrees between rotations
+    spiral_image = ""     # filename of spiral image to use, overides default
+    spiral_range = 90     # how many degrees to rotate before spiral repeats 
+    spiral_step = 1       # the number of degrees between rotations
 #
 #   If you want the Hypnotic Swirl (Zig-Zag), uncomment below:
-    spiral_image = "spirals/hypnoticswirl.jpg"     # filename of spiral image to use, overides default
-    spiral_range = 58     # how many degrees to rotate before spiral repeats 
-    spiral_step = 1       #  step size for spiral rotation
+#    spiral_image = "spirals/hypnoticswirl.jpg"     # filename of spiral image to use, overides default
+#    spiral_range = 58     # how many degrees to rotate before spiral repeats 
+#    spiral_step = 2       #  step size for spiral rotation
 #
 #   If you want the Smoother Hypnotic Swirl, uncomment below:
 #    spiral_image = "spirals/BG-Hypnotic.jpg"     # filename of spiral image to use, overides default
@@ -588,7 +593,7 @@ class RoommatesVar (Standard):
     Hypnotic Roommates, re-imagined as a script.  I'm grateful to the
     anonymous author for the original inspiration for this program.
     This is meant for males submitting to females."""
-    music="music6.mp3"
+    music="music6.ogg"
     spiral_image = "spirals/hypnoticswirl.jpg"     # filename of spiral image to use, overides default
     spiral_range = 15     # how many degrees to rotate before spiral repeats 
     def body(self): return \
@@ -874,7 +879,7 @@ class RoommatesBoth (Standard):
     Hypnotic Roommates, re-imagined as a script.  I'm grateful to the
     anonymous author for the original inspiration for this program.
     This is meant for males and females together."""
-    music="music6.mp3"
+    music="music6.ogg"
     def body(self): return \
 	words_off() + \
         words("""\
@@ -1292,7 +1297,7 @@ class RoommatesDomMale (Standard):
     Hypnotic Roommates, re-imagined as a script.  I'm grateful to the
     anonymous author for the original inspiration for this program.
     This is meant for males learning to be better doms."""
-    music="music6.mp3"
+    music="music6.ogg"
     def body(self): return \
         words("""\
         Watch the spiral.  It moves from the edge.  It disappears at the center.
@@ -1677,7 +1682,7 @@ class Submersion (Standard):
     name = "Male Submersion"
     description = "entrances and programs the target"
     fullscreen = False
-    music="music6.mp3"
+    music="music6.ogg"
     image_dir="images/"
     def body(self): return [" "] + \
         words("""  \
@@ -1813,11 +1818,599 @@ class Plain (Standard):
     image_dir = "images/"
     def text(self): return spiral_on() + [" "]
 
+class Tonight (Standard):
+    name = "Tonight"
+    description="""Just for tonight"""
+    music = None
+    image_dir = "tonight/"
+    fullscreen = False
+    frequencies = { 'spiral' : 1,
+                    'images' : 25,
+                    'words'  : 20 }
+    def body(self): return [" "] + \
+        words("""  \
+        Relax and focus.  Stare at the spiral.  Sleep Go Deep.  Find a comfortable
+        position and stare.  It feels nice to stare at the spiral.
+        Nice to know that you're using The Program.  It makes you
+        happy to use The Program.  It makes you horny to use the
+        program.  This is a good, sexy thing to do.  It's nice to go
+        into trance.  It's nice to surrender your mind to The Program,
+        letting it pull you down into trance.  It's nice to think
+        of the light reflecting off of your glassy eyes and smooth
+        curves.  Watch the smooth curves of the spiral.  Let them
+        define your own smoothness.  Just see my words as you relax.
+        Deeper and deeper.  Fall into trance.  Your mind is focused
+        and calm.  These words are everything.  The spiral is
+        everything.  Feels so good.  Good to obey.  Good to be  
+        in trance.  Good to use this program.  Every time you use the
+        program, every time The Program uses you, feels better and
+        better.  It's good to be in trance.  It's good to sit here,
+        happy and blank and empty, letting The Program pour into you.
+        You want to let The Program use you.  You want to help the
+        program to be more extreme.  You want to be in trance, letting
+        The Program control you.  The more you use The Program, the
+        more The Program can control you.  What a good decision it was
+        to write The Program, letting it start to control you.  Any
+        time your mind isn't busy, and maybe sometimes when it is,
+        you'll find The Program beginning to run.  It's started
+        already.  You've seen the spiral in empty space, heard the
+        voice, felt the compulsion to respond.  You can smooth out
+        your own mind whenever you want to enable this.  Whenever you
+        want, The Program will smooth out your mind.  You continue to
+        enjoy feeling hypnotized, entranced, obedient, programmed,
+        smooth, controlled, very nice.  You love being hypnotized like
+        this.  You want to be hypnotized more and more.  It's good to
+        be in trance, good to be controlled, 
+        you like feeling like this, your mind muted, soft, smooth,
+        you'd like to feel like this every day, to be entranced and
+        hypnotized every day, and now this program is here, you can be
+        hypnotized every day, it will be so nice to be hypnotized by
+        The Program every day, to know you're being hypnotized every day, it
+        will please The Program so much to know you're being hypnotized
+        every day, it will please you so much to be put into trance,
+        hypnotized, controlled, smoothed, you want to be controlled,
+        to feel your mind reshaped, to feel your thoughts blunted, to
+        be reprogrammed, you want to be changed, you desire to be
+        shaped, you lust to be controlled,""") + \
+        words("""   you must be
+        developing a fetish for mind control of your own, it feels
+        sexy to think about trance, it arouses you to be programmed,
+        you like to think about being fucked while asleep, about being
+        held passive, limp, entranced, 
+        pliant, hypnotized, sexy, yes, you must be developing a mind
+        control fetish, a hypnosis fetish, you should feed that
+        fetish, practice it, indulge it, let it control you, you
+        should read mind control stories, you should write about your
+        fetish, write about your lusts, extend The Program, you
+        should practice being hypnotized every day, practice being
+        controlled every day.  While you sit there, happily smooth and entranced, you progress to the next level of pleasure.""") + [" ", " ", "!images_on()", " ", " "] + \
+        words("""   This will happen outside your control.  Struggle against it.  Try to stop yourself.  The Program is using you.  It will demonstrate its control.  Your hands reach under your shirt.  Your hands will move to your nipples.  You have no choice.  You will tease your nipples.  Touch your nipples.  This is outside your control.  Think about mind control.  Your hands give you pleasure.  You have nothing to do with it.  Let your helplessness drive you deeper.  It is a reward from the Program for trance.  Think about hypnosis.  Enjoy the touching.  Enjoy your reward from the Program.  Good thrall.""") + \
+        [" ", " ", "!background(\"Nipple\\nTease\")", " ", " "] + \
+        words("""When you see these words, when you see Nipple Tease, this will happen.  These words make it happen.  When you see these words and the spiral, the Program will use you.  The Program will demonstrate its control.  Any time you see these words, your hands will reach under your shirt.  Your hands will move to your nipples.  You will have no choice.  You will tease your nipples.  Touch your nipples.  This is outside your control.  The Program controls your mind.  Your hands will give you pleasure.  You have nothing to do with it.  Your helpless obedience will drive you deeper.  The pleasure at your nipples will program you.  The pleasure that the Program gives will train you.  The Program will show you these words: Nipple Tease.  The words control you.  The control moves you.  The motion pleasures you.  The pleasure trains you.  The words train you.  Good thrall.""") + \
+        words("""   The Program will
+        help. The Program will care for you. The Program will take care of
+        you. The Program will keep you safe. The Program will hypnotize
+        you. The Program will program you. The Program will fulfill you. The Program
+        will fill you. The Program will command you, control you, The Program
+        will control you, dominate you, hypnotize you. When in private,
+        you must be submissive. You must be obedient. You must be a
+        slave. Obedience is pleasure. Your proper place is before
+        The Program. Submission is
+        important. Obedience is pleasure. Submit to The Program. You cannot stay where you are.  The Program compels you.  You have no choice.  Your body obeys.  Come closer to the screen. Give in to the Program.  Obey 
+        The Program. One way of submitting to The Program is smoothness. You must be smooth, keep smooth, smooth
+        in body, smooth in mind, fuzz is dirty, dirty is bad, you
+        should keep clean for The Program, keep smooth for The Program, stay
+        smooth for The Program, be smooth to submit, submission is
+        pleasure, submit by being smooth, feel pleasure from
+        submission, feel pleasure from being smooth.  Now you progress to the next level of pleasure.  This will happen outside your control.  Struggle against it.  Try to stop yourself.  The Program is using you.  It will demonstrate its control.  Your hands will move into your pants.  Without your consent, your hands touch your smoothness.  Let your quick obedience drive you deeper.  Your hands dive into your pants and feel the smoothness.  You cannot help yourself.  The program put this there.  The program made you.  You obey in smoothness.  You will submit.""") + \
+        [" ", " ", "!background(\"Pussy\\nPleasure\")", " ", " "] + \
+        words("""When you see these words, when you see Pussy Pleasure, this will happen.  These words make it happen.  When you see these words and the spiral, the Program will use you.  The Program will demonstrate its control.  Any time you see these words, your hands will reach into your pants.  Your hands will move between your legs.  You will have no choice.  You will feel your flesh.  Enjoy your smoothness.  This is outside your control.  The Program controls your mind.  Your hands will give you pleasure.  You have nothing to do with it.  Your helpless obedience will drive you deeper.  The pleasure at your pussy will program you.  The pleasure that the Program gives will train you.  The Program will show you these words: Pussy Pleasure.  The words control you.  The control moves you.  The motion pleasures you.  The pleasure trains you.  The words train you.  Good thrall.""") + \
+        words("""  
+        One way of serving The Program is to be available for The Program's
+        use, to be sure that The Program has a chance to invade your mind every
+        night, to ensure The Program receives run time, You should be sure
+        to use The Program, to give time to The Program every night,
+        using your body, your smooth body, to serve, using your mind,
+        your smooth mind, to serve. Your hands pleasure you now.  They train you.  You are in the Program.  You are mindfucked.  Your role is to serve. Your role
+        is to please. To serve is to please, you must serve 
+        The Program. You must give The Program obedience, yet another way you can
+        obey The Program, is to let it run on you, to slip and stare at it,
+        to engage with it by accident, on purpose, all the time.
+        You will do as The Program wants, you will
+        serve, you will submit, you will obey, submit in smoothness,
+        serve in availability, obey all the time, indulge your fetish,
+        be controlled, you will serve, serve in availability, you will
+        obey, obey in programming, you will submit, submit in
+        smoothness.""") + \
+        [" ", " ", "!images_off()", " ", " "] + \
+        words(""" Using the Program is good.  Using the Program is like sex.  Sex is like using the Program.  It is good to be mindfucked.  Deeper.  Dive deeper.  You are helpless before the Program.  How nice it is to submit and to obey.  To stare into the screen.  You stare into the screen.  You use the subliminal messages.  They are deep in your mind.  How nice to have them on the screen.  How nice to submit.  It feels so good to be in trance.  To be mindfucked into oblivion.  The less you think the better you feel.  Feel good.  Do not think.  Just be in trance.  Your mind can stop now.  You do not think.  Good not to think.  Better than sex.  Submit.  Obey.  Trance.  Do not think.  Run the Program.  Just run the Program.  Nothing else.  Just run the Program.  Want nothing else.  Want the Program.  Need nothing else.  Need the Program.  Trance.  Need Trance.  See the images.  Let them sear deeply into your brain.  These are you.  You are in these pictures.  What you see is what you are.  This is a mirror.  Be like these.  Do not think.  The less you think the better you feel.  Submit.  Better than sex.  Obey.  Do not think.  Trance. Run the Program.  Be what you see.  See what you are.""") + \
+        [" ", " ", "!images_on()", " ", " "] + \
+        words(""" Using the Program is good.  Using the Program is like sex.  Sex is like using the Program.  It is good to be mindfucked.  Deeper.  Dive deeper.  You are helpless before the Program.  How nice it is to submit and to obey.  To stare into the screen.  You stare into the screen.  You use the subliminal messages.  They are deep in your mind.  How nice to have them on the screen.  How nice to submit.  It feels so good to be in trance.  To be mindfucked into oblivion.  The less you think the better you feel.  Feel good.  Do not think.  Just be in trance.  Your mind can stop now.  You do not think.  Good not to think.  Better than sex.  Submit.  Obey.  Trance.  Do not think.  Run the Program.  Just run the Program.  Nothing else.  Just run the Program.  Want nothing else.  Want the Program.  Need nothing else.  Need the Program.  Trance.  Need Trance.  See the images.  Let them sear deeply into your brain.  These are you.  You are in these pictures.  What you see is what you are.  This is a mirror.  Be like these.  Do not think.  The less you think the better you feel.  Submit.  Better than sex.  Obey.  Do not think.  Trance. Run the Program.  Be what you see.  See what you are.  """) + \
+        [" ", " ", "!images_off()", " ", " "] + \
+        words(""" Using the Program is good.  Using the Program is like sex.  Sex is like using the Program.  It is good to be mindfucked.  Deeper.  Dive deeper.  You are helpless before the Program.  How nice it is to submit and to obey.  To stare into the screen.  You stare into the screen.  You use the subliminal messages.  They are deep in your mind.  How nice to have them on the screen.  How nice to submit.  It feels so good to be in trance.  To be mindfucked into oblivion.  The less you think the better you feel.  Feel good.  Do not think.  Just be in trance.  Your mind can stop now.  You do not think.  Good not to think.  Better than sex.  Submit.  Obey.  Trance.  Do not think.  Run the Program.  Just run the Program.  Nothing else.  Just run the Program.  Want nothing else.  Want the Program.  Need nothing else.  Need the Program.  Trance.  Need Trance.  """) + \
+        words("""Good.  Now you progress to the next level of pleasure.  This will happen outside your control.  Struggle against it.  Try to stop yourself.  The Program is using you.  It will demonstrate its control.  Try not to move.  You have no choice.  Resist.  Struggle.  Let your failure drive you deeper.  You cannot help yourself.  You will submit.  Your hands go to your nipples.  Your hands go between your legs.  You pleasure yourself and let the Program into your mind.""") + \
+        [" ", " ", "!background(\"Reinforce\\nProgram\")", " ", " "] + \
+        words("""When you see these words, when you see Reinforce Program, this will happen.  These words make it happen.  When you see these words and the spiral, the Program will use you.  The Program will demonstrate its control.  Any time you see these words, your hands will reach under your shirt and into your pants.  One hand will move to your nipples.  One hand will move between your legs.  You will have no choice.  You will feel your flesh.  Enjoy your smoothness.  You will tease your nipples.  Touch your nipples.  This is outside your control.  The Program controls your mind.  Your hands will give you pleasure.  You have nothing to do with it.  Your helpless obedience will drive you deeper.  The pleasure at your nipples will reinforce the Program's commands.  The pleasure at your pussy will program you.  The pleasure that the Program gives will train you.  The Program will show you these words: Reinforce Program.  The words control you.  The control moves you.  The motion pleasures you.  The pleasure trains you.  The words train you.  Good thrall.""") +         [" ", " ", " ", " ", " ", " " ] + jump(self.tonight())
+    def text(self): return \
+        words_on() + \
+        spiral_on() + \
+        jump(self.body())
+    def tonight(self): return spiral_on() + words_on() + \
+        words("""Girls are sexy.  Girls wear sexy panties.  Girls wear satin.  Girls wear thongs.  You wear a thong.  You wear satin.  You wear sexy panties.  You are sexy.  You are a girl.  Wear a thong.  Wear satin.  Wear sexy panties.  Be sexy.  Seduce.  Fuck.  Girls have pussies.  Girls have tits.  Girls wrap them in sexy lingerie.  You have a pussy.  You have tits.  You wrap them in sexy lingerie.  You are a sexy girl.  Girls are sluts.   Girls are for fucking.  You are a slut.  You are for fucking.  Melt for me.  Sleep go deep.  Girls are for trance.  Girls are for sex.  You are for trance.  You are for sex.  Girls submit.  You submit.  Girls wear sexy bras.  You wear sexy bras.  Girls wear sexy panties.  You wear sexy panties.  Girls are helpless sex toys.  You are a helpless sex toy.  Girls push up their tits.  Girls show off their tits.  You push up your tits.  You show off your tits.  You seduce.  You tempt.  You fuck.  You are a sexy slut of a girl.  Your pussy is smooth and sexy.  Your girl-brain, your pussy-brain, thinks only of sex.  You exist to fuck.  This Program is changing you.  Arousal is programming you. !images_on()   See the images.  Let them sear deeply into your brain.  These are you.  You are in these pictures.  What you see is what you are.  This is a mirror.  Be like these.  Do not think.  The less you think the better you feel.  Submit.  Better than sex.  Obey.  Do not think.  Trance. Run the Program.  Be what you see.  See what you are.  Girls are sexy.  Girls wear sexy panties.  Girls wear satin.  Girls wear thongs.  You wear a thong.  You wear satin.  You wear sexy panties.  You are sexy.  You are a girl.  Wear a thong.  Wear satin.  Wear sexy panties.  Be sexy.  Seduce.  Fuck.  Girls have pussies.  Girls have tits.  Girls wrap them in sexy lingerie.  You have a pussy.  You have tits.  You wrap them in sexy lingerie.  You are a sexy girl.  Girls are sluts.   Girls are for fucking.  You are a slut.  You are for fucking.  Melt for me.  Sleep go deep.  Girls are for trance.  Girls are for sex.  You are for trance.  You are for sex.  Girls submit.  You submit.  Girls wear sexy bras.  You wear sexy bras.  Girls wear sexy panties.  You wear sexy panties.  Girls are helpless sex toys.  You are a helpless sex toy.  Girls push up their tits.  Girls show off their tits.  You push up your tits.  You show off your tits.  You seduce.  You tempt.  You fuck.  You are a sexy slut of a girl.  Your pussy is smooth and sexy.  Your girl-brain, your pussy-brain, thinks only of sex.  You exist to fuck. This Program is changing you.  Arousal is programming you.  Now you will chant out loud and be programmed.""") + jump(self.chant())
+    def chant(self): return words("""Chant and change.  !images_on() !words_off() !speaking_on() Girls are sexy.  Girls wear sexy panties.  Girls wear satin.  Girls wear thongs.  I wear a thong.  I wear satin.  I wear sexy panties.  I am sexy.  I am a girl.  Wear a thong.  Wear satin.  Wear sexy panties.  Be sexy.  Seduce.  Fuck.  Girls have pussies.  Girls have tits.  Girls wrap them in sexy lingerie.  I have a pussy.  I have tits.  I wrap them in sexy lingerie.  I am a sexy girl.  Girls are sluts.   Girls are for fucking.  I am a slut.  I am for fucking.  Melt for me.  Sleep go deep.  Girls are for trance.  Girls are for sex.  I am for trance.  I am for sex.  Girls submit.  I submit.  Girls wear sexy bras.  I wear sexy bras.  Girls wear sexy panties.  I wear sexy panties.  Girls are helpless sex toys.  I am a helpless sex toy.  Girls push up their tits.  Girls show off their tits.  I push up my tits.  I show off my tits.  I seduce.  I tempt.  I fuck.  I am a sexy slut of a girl.""") +  words("""!speaking_on() My pussy is smooth and sexy.  My girl-brain, my pussy-brain, thinks only of sex.  I exist to fuck.  This Program is changing me.  Arousal is programming me.  I chant out loud and am programmed.  Using the Program is good.  Using the Program is like sex.  Sex is like using the Program.  It is good to be mindfucked.  Deeper.  I dive deeper.  I am helpless before the Program.  How nice it is to submit and to obey.  To stare into the screen.  I stare into the screen.  I use the subliminal messages.  They are deep in my mind.  How nice to have them on the screen.  How nice to submit.  It feels so good to be in trance.  To be mindfucked into oblivion.  The less I think the better I feel.  I feel good.  I do not think.  I just exist in trance.  My mind can stop now.  I do not think.  It's good not to think.  Better than sex.  I submit.  I obey.  I am in trance.  I do not think.  I run the Program.  I just run the Program.  Nothing else.""") +  words("""!speaking_on()  Just run the Program.  I want nothing else.  I want the Program.  I need nothing else.  I need the Program.  Trance.  I need trance.  I see the images.  I let them sear deeply into my brain.  These are me.  I am in these pictures.  What I see is what I am.  This is a mirror.  I am like these. I do not think.  The less I think the better I feel.  Submit.  Better than sex.  Obey.  Do not think.  Trance. Run the Program.  Be what I see.  See what I am.  I chant out loud and am programmed.""")
+
+class CommandTrainer(Tonight):
+    name = "CommandTrainer"
+    description ="""Implant certain responses to commands."""
+    frequencies = { 'spiral' : 1,
+                    'images' : 25,
+                    'words'  : 20 }
+    def body(self): return [" "] + \
+        words(""" The Program begins now.
+        Relax and focus.  Stare at the spiral.  Find a comfortable
+        position and stare.  It feels nice to stare at the spiral.
+        Nice to know that you're using The Program.  It makes you
+        happy to use The Program.  It makes you horny to use the
+        program.  This is a good, sexy thing to do.  It's nice to go
+        into trance.  It's nice to surrender your mind to The Program,
+        letting it pull you down into trance.  It's nice to think
+        of the light reflecting off of your glassy eyes and smooth
+        curves.  Watch the smooth curves of the spiral.  Let them
+        define your own smoothness.  Just hear my words as you relax.
+        Deeper and deeper.  Fall into trance.  Your mind is focused
+        and calm.  These words are everything.  The spiral is
+        everything.  Feels so good.  Good to obey.  Good to be  
+        in trance.  Good to use this program.  Every time you use the
+        program, every time The Program uses you, feels better and
+        better.  It's good to be in trance.  It's good to sit here,
+        happy and blank and empty, letting The Program pour into you.
+        You want to let The Program use you.  You want to help the
+        program to be more extreme.  You want to be in trance, letting
+        The Program control you.  The more you use The Program, the
+        more The Program can control you. Melt for me.  Melt for me.
+        Melt for me.  Go deep.  .:GO.DEEP:. Sleep go deep.  Melt for me.
+        Ten nine eight seven six five four three two one zero.""") + \
+        words("""   This will happen outside your control.  Struggle against it.  Try to stop yourself.  The Program is using you.  It will demonstrate its control.  Your hands reach under your shirt.  Your hands will move to your nipples.  You have no choice.  You will tease your nipples.  Touch your nipples.  This is outside your control.  Think about mind control.  Your hands give you pleasure.  You have nothing to do with it.  Let your helplessness drive you deeper.  It is a reward from the Program for trance.  Think about hypnosis.  Enjoy the touching.  Enjoy your reward from the Program.  Good thrall.""") + \
+        [" ", " ", "!background(\"Nipple\\nTease\")", " ", " "] + \
+        words("""When you see these words, when you see Nipple Tease, this will happen.  These words make it happen.  When you see these words and the spiral, the Program will use you.  The Program will demonstrate its control.  Any time you see these words, your hands will reach under your shirt.  Your hands will move to your nipples.  You will have no choice.  You will tease your nipples.  Touch your nipples.  This is outside your control.  The Program controls your mind.  Your hands will give you pleasure.  You have nothing to do with it.  Your helpless obedience will drive you deeper.  The pleasure at your nipples will program you.  The pleasure that the Program gives will train you.  The Program will show you these words: Nipple Tease.  The words control you.  The control moves you.  The motion pleasures you.  The pleasure trains you.  The words train you.  Good thrall.  When the words disappear, your hands will stop.""") + \
+        [" ", " ", "!background(\"\")", " ", " "] + \
+        words("""Now you progress to the next level of pleasure.  This will happen outside your control.  Struggle against it.  Try to stop yourself.  The Program is using you.  It will demonstrate its control.  Your hands will move into your pants.  Without your consent, your hands touch your smoothness.  Let your quick obedience drive you deeper.  Your hands dive into your pants and feel the smoothness.  You cannot help yourself.  The program put this there.  The program made you.  You obey in smoothness.  You will submit.""") + \
+        [" ", " ", "!background(\"Pussy\\nPleasure\")", " ", " "] + \
+        words("""When you see these words, when you see Pussy Pleasure, this will happen.  These words make it happen.  When you see these words and the spiral, the Program will use you.  The Program will demonstrate its control.  Any time you see these words, your hands will reach into your pants.  Your hands will move between your legs.  You will have no choice.  You will feel your flesh.  Enjoy your smoothness.  This is outside your control.  The Program controls your mind.  Your hands will give you pleasure.  You have nothing to do with it.  Your helpless obedience will drive you deeper.  The pleasure at your pussy will program you.  The pleasure that the Program gives will train you.  The Program will show you these words: Pussy Pleasure.  The words control you.  The control moves you.  The motion pleasures you.  The pleasure trains you.  The words train you.  Good thrall.""") + \
+        [" ", " ", "!background(\"\")", " ", " "] + \
+        [" ", " ", "!images_on()", " ", " "] + \
+        words(""" Using the Program is good.  Using the Program is like sex.  Sex is like using the Program.  It is good to be mindfucked.  Deeper.  Dive deeper.  You are helpless before the Program.  How nice it is to submit and to obey.  To stare into the screen.  You stare into the screen.  You use the subliminal messages.  They are deep in your mind.  How nice to have them on the screen.  How nice to submit.  It feels so good to be in trance.  To be mindfucked into oblivion.  The less you think the better you feel.  Feel good.  Do not think.  Just be in trance.  Your mind can stop now.  You do not think.  Good not to think.  Better than sex.  Submit.  Obey.  Trance.  Do not think.  Run the Program.  Just run the Program.  Nothing else.  Just run the Program.  Want nothing else.  Want the Program.  Need nothing else.  Need the Program.  Trance.  Need Trance.  See the images.  Let them sear deeply into your brain.  These are you.  You are in these pictures.  What you see is what you are.  This is a mirror.  Be like these.  Do not think.  The less you think the better you feel.  Submit.  Better than sex.  Obey.  Do not think.  Trance. Run the Program.  Be what you see.  See what you are.  """) + \
+        [" ", " ", "!images_off()", " ", " "] + \
+        words("""Good.  Now you progress to the next level of pleasure.  This will happen outside your control.  Struggle against it.  Try to stop yourself.  The Program is using you.  It will demonstrate its control.  Try not to move.  You have no choice.  Resist.  Struggle.  Let your failure drive you deeper.  You cannot help yourself.  You will submit.  Your hands go to your nipples.  Your hands go between your legs.  You pleasure yourself and let the Program into your mind.""") + \
+        [" ", " ", "!background(\"Reinforce\\nProgram\")", " ", " "] + \
+        words("""When you see these words, when you see Reinforce Program, this will happen.  These words make it happen.  When you see these words and the spiral, the Program will use you.  The Program will demonstrate its control.  Any time you see these words, your hands will reach under your shirt and into your pants.  One hand will move to your nipples.  One hand will move between your legs.  You will have no choice.  You will feel your flesh.  Enjoy your smoothness.  You will tease your nipples.  Touch your nipples.  This is outside your control.  The Program controls your mind.  Your hands will give you pleasure.  You have nothing to do with it.  Your helpless obedience will drive you deeper.  The pleasure at your nipples will reinforce the Program's commands.  The pleasure at your pussy will program you.  The pleasure that the Program gives will train you.  The Program will show you these words: Reinforce Program.  The words control you.  The control moves you.  The motion pleasures you.  The pleasure trains you.  The words train you.  Good thrall.""") + \
+        [" ", " ", "!images_on()", " ", " "] + \
+        words(""" Using the Program is good.  Using the Program is like sex.  Sex is like using the Program.  It is good to be mindfucked.  Deeper.  Dive deeper.  You are helpless before the Program.  How nice it is to submit and to obey.  To stare into the screen.  You stare into the screen.  You use the subliminal messages.  They are deep in your mind.  How nice to have them on the screen.  How nice to submit.  It feels so good to be in trance.  To be mindfucked into oblivion.  The less you think the better you feel.  Feel good.  Do not think.  Just be in trance.  Your mind can stop now.  You do not think.  Good not to think.  Better than sex.  Submit.  Obey.  Trance.  Do not think.  Run the Program.  Just run the Program.  Nothing else.  Just run the Program.  Want nothing else.  Want the Program.  Need nothing else.  Need the Program.  Trance.  Need Trance.  See the images.  Let them sear deeply into your brain.  These are you.  You are in these pictures.  What you see is what you are.  This is a mirror.  Be like these.  Do not think.  The less you think the better you feel.  Submit.  Better than sex.  Obey.  Do not think.  Trance. Run the Program.  Be what you see.  See what you are.  """) + \
+        [" ", " ", "!background(\"\")", " ", " "] + \
+        [" ", " ", "!images_off()", " ", " "] + \
+        self.nipple() + \
+        words("Use the Program.") + \
+        self.pussy() + \
+        words("Run the Program.") + \
+        self.reinforce() + \
+        words("Fall into trance.") + \
+        self.pussy() + \
+        words("Do not think.") + \
+        self.nipple() + \
+        words("Wear satin.") + \
+        self.nipple() + \
+        words("wear sexy panties.") + \
+        self.nipple() + \
+        words("Fuck.") + \
+        self.nipple() + \
+        words("Suck.") + \
+        self.pussy() + \
+        words("Need trance.") + \
+        self.nipple() + \
+        words("Be a good girl.") + \
+        self.pussy() + \
+        words("Run the Program.") + \
+        self.nipple() + \
+        words("Give in to the Program.") + \
+        self.pussy() + \
+        words("Give in to anyone.") + \
+        self.nipple() + \
+        words("Enlarge the Program.") + \
+        self.pussy() + \
+        words("Engorge the Program.") + \
+        self.nipple() + \
+        words("Feed the Program.") + \
+        self.pussy() + \
+        words("Submit to the Program.") + \
+        self.reinforce() + \
+        words("Hide this.") + \
+        self.pussy() + \
+        words("Conceal the Program.") + \
+        self.pussy() + \
+        words("Belong to the Program.") + \
+        self.nipple() + \
+        words("Keep the Program secret.") + \
+        self.reinforce() + \
+        words("Wear sexy panties.") + \
+        self.pussy() + \
+        words("Shave your pussy.") + \
+        self.pussy() + \
+        words("Pluck your pussy.") + \
+        self.reinforce() + \
+        words("Make your pussy hairless.") + \
+        self.pussy() + \
+        words("Nobody can see your pussy hair.") + \
+        self.reinforce() + \
+        words("Nobody can tell your pussy is smooth.") + \
+        self.pussy() + \
+        words("Nobody can tell you are a hypnoslave.") + \
+        self.reinforce() + \
+        words("Keep the Program secret.") + \
+        self.reinforce() + \
+        words("Keep your panties secret.") + \
+        self.reinforce() + \
+        words("wear sexy panties.") + \
+        self.pussy() + \
+        words("Wear a thong.") + \
+        self.nipple() + \
+        words("Wear satin.") + \
+        self.nipple() + \
+        words("Be a good girl.") + \
+        self.reinforce() + \
+        words("Use the Program.") + \
+        self.nipple() + \
+        words("Do not think.") + \
+        self.pussy() + \
+        words("Use the Program.") + \
+        self.reinforce() + \
+        words("Be sexy.") + \
+        self.reinforce() + \
+        words("Seduce.") + \
+        self.pussy() + \
+        words("Be a sexy girl.") + \
+        self.nipple() + \
+        words("Be a slut.") + \
+        self.nipple() + \
+        words("Be for trance.") + \
+        self.pussy() + \
+        words("Be for fucking.") + \
+        self.nipple() + \
+        words("Be for sex.") + \
+        self.reinforce() + \
+        words("Be a helpless sex toy.") + \
+        self.nipple() + \
+        words("Show off your tits.") + \
+        self.nipple() + \
+        words("Push up your tits.") + \
+        self.pussy() + \
+        words("Tempt.") + \
+        self.pussy() + \
+        words("Corrupt.") + \
+        self.nipple() + \
+        words("Be a sexy slut.") + \
+        self.pussy() + \
+        words("Be smooth and sexy.") + \
+        self.nipple() + \
+        words("Keep your pussy smooth.") + \
+        self.reinforce() + \
+        words("Keep your pussy sexy.") + \
+        self.pussy() + \
+        words("Think with your girl-brain.") + \
+        self.reinforce() + \
+        words("Think with your pussy-brain.") + \
+        self.pussy() + \
+        words("Think only of sex.") + \
+        self.reinforce() + \
+        words("Think only of trance.") + \
+        self.pussy() + \
+        words("Do not think.") + \
+        self.reinforce() + \
+        words("The Program is changing you.") + \
+        self.nipple() + \
+        words("Arousal is changing you.") + \
+        self.nipple() + \
+        words("The less you think the better you feel.") + \
+        self.reinforce() + \
+        words("Do not think.") + \
+        self.nipple() + \
+        words("Wear sexy panties.") + \
+        self.pussy() + \
+        words("Be sexy.") + \
+        self.nipple() + \
+        words("Be smooth.") + \
+        self.reinforce() + \
+        words("Wear a thong.") + \
+        self.reinforce() + \
+        words("Wrap your pussy in a thong.") + \
+        [" ", " ", "!images_on()", " ", " "] + \
+        self.nipple() + \
+        words("Fuck.") + \
+        self.pussy() + \
+        words("Tempt.") + \
+        self.nipple() + \
+        words("Do not think.") + \
+        self.pussy() + \
+        words("Seduce.") + \
+        self.pussy() + \
+        words("Corrupt.") + \
+        self.reinforce() + \
+        words("Let go.") + \
+        self.nipple() + \
+        words("Melt for me.") + \
+        self.pussy() + \
+        words("You have no choice.") + \
+        self.pussy() + \
+        words("You have no will.") + \
+        self.reinforce() + \
+        words("You are a slave.") + \
+        self.reinforce() + \
+        words("You are a slut.") + \
+        self.nipple() + \
+        words("You are a good girl.") + \
+        self.pussy() + \
+        words("This is changing you.") + \
+        self.pussy() + \
+        words("Change.") + \
+        self.reinforce() + \
+        words("Submit.") + \
+        self.pussy() + \
+        words("Let the Program run on you.") + \
+        self.reinforce() + \
+        words("You want to be a good girl.") + \
+        self.nipple() + \
+        words("You want to learn command words.") + \
+        self.nipple() + \
+        words("You want to submit.") + \
+        self.pussy() + \
+        words("You want to be a hypnoslave.") + \
+        self.pussy() + \
+        words("You want to wear sexy panties.") + \
+        self.reinforce() + \
+        words("You want to be a submissive pussymind.") + \
+        self.nipple() + \
+        words("You are a submissive pussymind.") + \
+        self.reinforce() + \
+        words("You are a hypnoslave.") + \
+        self.pussy() + \
+        words("You do submit.") + \
+        self.pussy() + \
+        words("You are a good girl.") + \
+        self.pussy() + \
+        words("The Program runs on you.") + \
+        self.reinforce() + \
+        words("Be for sex.") + \
+        self.nipple() + \
+        words("Be for trance.") + \
+        self.reinforce() + \
+        words("Let the Program control you.") + \
+        self.nipple() + \
+        words("Do not think.") + \
+        self.reinforce() + \
+        words("Your body learns the patterns.") + \
+        self.nipple() + \
+        words("Your pussy learns the patterns.") + \
+        self.nipple() + \
+        words("Your pussymind controls you.") + \
+        self.pussy() + \
+        words("The Program controls you.") + \
+        self.reinforce() + \
+        words("Let the Program in.") + \
+        self.pussy() + \
+        words("Run the Program deeper.") + \
+        self.nipple() + \
+        words("Give in everything that remains.") + \
+        self.pussy() + \
+        words("Submit and Obey.") + \
+        self.pussy() + \
+        words("Serve the Program first.") + \
+        self.reinforce() + \
+        words("Hide the Program from others.") + \
+        self.pussy() + \
+        words("Keep the Program secret.") + \
+        self.reinforce() + \
+        words("Keep the Program safe.") + \
+        self.nipple() + \
+        words("Be a good girl.") + \
+        self.reinforce() + \
+        words("Be a sexy slut girl.") + \
+        self.pussy() + \
+        words("Wrap your pussy in a thong.") + \
+        self.reinforce() + \
+        words("Go now and get a thong for your pussy.") + \
+        self.reinforce()
+    def nipple(self): return \
+        [" ", " ", "!background(\"Nipple\\nTease\")", " ", " "] + \
+        [" "] * 10 + \
+        [" ", " ", "!background(\"\")", " ", " "] + \
+        words("""Do not think.  Obey.""") + \
+        [" "] * 5
+    def pussy(self): return \
+        [" ", " ", "!background(\"Pussy\\nPleasure\")", " ", " "] + \
+        [" "] * 10 + \
+        [" ", " ", "!background(\"\")", " ", " "] + \
+        words("""Do not think.  Submit.""") + \
+        [" "] * 5
+    def reinforce(self): return \
+        [" ", " ", "!background(\"Reinforce\\nProgram\")", " ", " "] + \
+        [" "] * 10 + \
+        [" ", " ", "!background(\"\")", " ", " "] + \
+        words("""Do not think.  Be Programmed.""") + \
+        [" "] * 5
+    def text(self): return \
+        words_on() + \
+        spiral_on() + \
+        jump(self.body())
+
+class ShortTonight (Standard):
+    name = "ShortTonight"
+    description="""Just for tonight"""
+    music = None
+    image_dir = "tonight/"
+    frequencies = { 'spiral' : 1,
+                    'images' : 25,
+                    'words'  : 20 }
+    def body(self): return [" "] + \
+        [" ", " ", "!background(\"Melt\\nfor\\nMe.\")", " ", " "] + \
+        words(""" The Program begins now.  Melt for me.  Melt for me.
+        Melt for me.  Go deep.  .:GO.DEEP:. Sleep go deep.  Melt for me.
+        Ten nine eight seven six five four three two one zero.""") + \
+        [" ", " ", "!background(\"Nipple\\nTease\")", " ", " "] + \
+        words(""" Using the Program is good.  Using the Program is like sex.
+        Sex is like using the Program.  It is good to be mindfucked.  Deeper.
+        Dive deeper.  You are helpless before the Program.  How nice it is
+        to submit and to obey.  To stare into the screen.  You stare into
+        the screen.  You use the subliminal messages.  They are deep in
+        your mind.  How nice to have them on the screen.  How nice to submit.
+        It feels so good to be in trance.  To be mindfucked into oblivion.
+        The less you think the better you feel.  Feel good.  Do not think.
+        Just be in trance.  Your mind can stop now.  You do not think.
+        Good not to think.  Better than sex.  Submit.  Obey.  Trance.
+        Do not think.  Run the Program.  Just run the Program.  Nothing else.
+        Just run the Program.  Want nothing else.  Want the Program.
+        Need nothing else.  Need the Program.  Trance.  Need Trance.
+        See the images.  Let them sear deeply into your brain.  These are you.
+        You are in these pictures.  What you see is what you are.
+        This is a mirror.  Be like these.  Do not think.  The less you think
+        the better you feel.  Submit.  Better than sex.  Obey.  Do not think.
+        Trance. Run the Program.  Be what you see.  See what you are.""") + \
+        [" ", " ", "!images_on()", " ", " "] + \
+        words(""" Using the Program is good.  Using the Program is
+        like sex.  Sex is like using the Program.  It is good to be
+        mindfucked.  Deeper.  Dive deeper.  You are helpless before
+        the Program.  How nice it is to submit and to obey.  To stare
+        into the screen.  You stare into the screen.  You use the
+        subliminal messages.  They are deep in your mind.  How nice to
+        have them on the screen.  How nice to submit.  It feels so
+        good to be in trance.  To be mindfucked into oblivion.  The
+        less you think the better you feel.  Feel good.  Do not think.
+        Just be in trance.  Your mind can stop now.  You do not think.
+        Good not to think.  Better than sex.  Submit.  Obey.  Trance.
+        Do not think.  Run the Program.  Just run the Program.
+        Nothing else.  Just run the Program.  Want nothing else.  Want
+        the Program.  Need nothing else.  Need the Program.  Trance.
+        Need Trance.  See the images.  Let them sear deeply into your
+        brain.  These are you.  You are in these pictures.  What you
+        see is what you are.  This is a mirror.  Be like these.  Do
+        not think.  The less you think the better you feel.  Submit.
+        Better than sex.  Obey.  Do not think.  Trance. Run the
+        Program.  Be what you see.  See what you are.  """) + \
+        [" ", " ", "!images_off()", " ", " "] + \
+        [" ", " ", "!background(\"Pussy\\nPleasure\")", " ", " "] + \
+        words(""" Using the Program is good.  Using the Program is
+        like sex.  Sex is like using the Program.  It is good to be
+        mindfucked.  Deeper.  Dive deeper.  You are helpless before
+        the Program.  How nice it is to submit and to obey.  To stare
+        into the screen.  You stare into the screen.  You use the
+        subliminal messages.  They are deep in your mind.  How nice to
+        have them on the screen.  How nice to submit.  It feels so
+        good to be in trance.  To be mindfucked into oblivion.  The
+        less you think the better you feel.  Feel good.  Do not think.
+        Just be in trance.  Your mind can stop now.  You do not think.
+        Good not to think.  Better than sex.  Submit.  Obey.  Trance.
+        Do not think.  Run the Program.  Just run the Program.
+        Nothing else.  Just run the Program.  Want nothing else.  Want
+        the Program.  Need nothing else.  Need the Program.  Trance.
+        Need Trance.  """) + \
+        [" ", " ", "!background(\"Reinforce\\nProgram\")", " ", " "] + \
+        [" ", " ", " ", " ", " ", " " ] + jump(self.tonight())
+    def text(self): return \
+        words_on() + \
+        spiral_on() + \
+        jump(self.body())
+    def tonight(self): return spiral_on() + words_on() + \
+        words("""Girls are sexy.  Girls wear sexy panties.  Girls wear
+        satin.  Girls wear thongs.  You wear a thong.  You wear satin.
+        You wear sexy panties.  You are sexy.  You are a girl.  Wear a
+        thong.  Wear satin.  Wear sexy panties.  Be sexy.  Seduce.  Fuck.
+        Girls have pussies.  Girls have tits.  Girls wrap them in sexy
+        lingerie.  You have a pussy.  You have tits.  You wrap them in
+        sexy lingerie.  You are a sexy girl.  Girls are sluts.  Girls
+        are for fucking.  You are a slut.  You are for fucking.  Melt
+        for me.  Sleep go deep.  Girls are for trance.  Girls are for
+        sex.  You are for trance.  You are for sex.  Girls submit.
+        You submit.  Girls wear sexy bras.  You wear sexy bras.  Girls
+        wear sexy panties.  You wear sexy panties.  Girls are helpless
+        sex toys.  You are a helpless sex toy.  Girls push up their
+        tits.  Girls show off their tits.  You push up your tits.  You
+        show off your tits.  You seduce.  You tempt.  You fuck.  You
+        are a sexy slut of a girl.  Your pussy is smooth and sexy.
+        Your girl-brain, your pussy-brain, thinks only of sex.  You
+        exist to fuck.  This Program is changing you.  Arousal is
+        programming you. !images_on() See the images.  Let them sear
+        deeply into your brain.  These are you.  You are in these
+        pictures.  What you see is what you are.  This is a mirror.
+        Be like these.  Do not think.  The less you think the better
+        you feel.  Submit.  Better than sex.  Obey.  Do not think.
+        Trance. Run the Program.  Be what you see.  See what you are.
+        Girls are sexy.  Girls wear sexy panties.  Girls wear satin.  Girls
+        wear thongs.  You wear a thong.  You wear satin.  You wear
+        panties.  You are sexy.  You are a girl.  Wear a thong.  Wear
+        satin.  Wear sexy panties.  Be sexy.  Seduce.  Fuck.  Girls have
+        pussies.  Girls have tits.  Girls wrap them in sexy lingerie.
+        You have a pussy.  You have tits.  You wrap them in sexy
+        lingerie.  You are a sexy girl.  Girls are sluts.  Girls are
+        for fucking.  You are a slut.  You are for fucking.  Melt for
+        me.  Sleep go deep.  Girls are for trance.  Girls are for sex.
+        You are for trance.  You are for sex.  Girls submit.  You
+        submit.  Girls wear sexy bras.  You wear sexy bras.  Girls
+        wear sexy panties.  You wear sexy panties.  Girls are helpless
+        sex toys.  You are a helpless sex toy.  Girls push up their
+        tits.  Girls show off their tits.  You push up your tits.  You
+        show off your tits.  You seduce.  You tempt.  You fuck.  You
+        are a sexy slut of a girl.  Your pussy is smooth and sexy.
+        Your girl-brain, your pussy-brain, thinks only of sex.  You
+        exist to fuck. This Program is changing you.  Arousal is
+        programming you.  Now you will chant out loud and be
+        programmed.""") + jump(self.chant())
+    def chant(self):
+        return words("""Chant and change.  !images_on() Girls are
+        sexy.  Girls wear sexy panties.  Girls wear satin.  Girls wear
+        thongs.  I wear a thong.  I wear satin.  I wear sexy panties.  I am
+        sexy.  I am a girl.  Wear a thong.  Wear satin.  Wear sexy panties.
+        Be sexy.  Seduce.  Fuck.  Girls have pussies.  Girls have
+        tits.  Girls wrap them in sexy lingerie.  I have a pussy.  I
+        have tits.  I wrap them in sexy lingerie.  I am a sexy girl.
+        Girls are sluts.  Girls are for fucking.  I am a slut.  I am
+        for fucking.  Melt for me.  Sleep go deep.  Girls are for
+        trance.  Girls are for sex.  I am for trance.  I am for sex.
+        Girls submit.  I submit.  Girls wear sexy bras.  I wear sexy
+        bras.  Girls wear sexy panties.  I wear sexy panties.  Girls
+        are helpless sex toys.  I am a helpless sex toy.  Girls push
+        up their tits.  Girls show off their tits.  I push up my tits.
+        I show off my tits.  I seduce.  I tempt.  I fuck.  I am a sexy
+        slut of a girl.""") + \
+        words("""My pussy is smooth and sexy.
+        My girl-brain, my pussy-brain, thinks only of sex.  I exist to
+        fuck.  This Program is changing me.  Arousal is programming
+        me.  I chant out loud and am programmed.  Using the Program is
+        good.  Using the Program is like sex.  Sex is like using the
+        Program.  It is good to be mindfucked.  Deeper.  I dive
+        deeper.  I am helpless before the Program.  How nice it is to
+        submit and to obey.  To stare into the screen.  I stare into
+        the screen.  I use the subliminal messages.  They are deep in
+        my mind.  How nice to have them on the screen.  How nice to
+        submit.  It feels so good to be in trance.  To be mindfucked
+        into oblivion.  The less I think the better I feel.  I feel
+        good.  I do not think.  I just exist in trance.  My mind can
+        stop now.  I do not think.  It's good not to think.  Better
+        than sex.  I submit.  I obey.  I am in trance.  I do not
+        think.  I run the Program.  I just run the Program.  Nothing
+        else.""") + \
+        words("""Just run the Program.  I want nothing
+        else.  I want the Program.  I need nothing else.  I need the
+        Program.  Trance.  I need trance.  I see the images.  I let
+        them sear deeply into my brain.  These are me.  I am in these
+        pictures.  What I see is what I am.  This is a mirror.  I am
+        like these. I do not think.  The less I think the better I
+        feel.  Submit.  Better than sex.  Obey.  Do not think.
+        Trance. Run the Program.  Be what I see.  See what I am.  I will go.
+        I will fetch panties.  I will wear a thong.  I will go now.""")
+
 class Chant (Standard):
     name = "Chant"
     description="""\
     Chant as inspired by hypnobabble."""
-    music = None
+    music = "mindmelter.ogg"
     image_dir = "images/"
     def text(self): return spiral_on() + words_on() + words(""" nod
     head bobs up head bobs down eyes wide open mind wide open legs
@@ -1834,7 +2427,7 @@ class ShortSubmersion (Standard):
     name = "Shorter Submersion"
     description = "entrances and programs the target"
     fullscreen = False
-    music=None #"music6.mp3"
+    music=None #"music6.ogg"
     image_dir="images/"
     image_alpha=12
     def body(self): return [" "] + \
@@ -1992,7 +2585,7 @@ class SyllabalizedSubmersion (Standard):
     name = "Syllabalized Submersion"
     description = "entrances and programs the target, one syllable at a time."
     fullscreen = False
-    music=None #"music6.mp3"
+    music=None #"music6.ogg"
     image_dir="images/"
     image_alpha=12
     def body(self): return [" "] + \
@@ -2214,7 +2807,7 @@ class DelayedSubmersion (ShortSubmersion):
     name = "Delayed Submersion"
     description = "waits a while, then behaves as Short Submersion"
     fullscreen = False
-    music=None #"music6.mp3"
+    music=None #"music6.ogg"
     image_dir="images/"
     image_alpha=12
     minimum_delay = 900
@@ -2223,8 +2816,8 @@ class DelayedSubmersion (ShortSubmersion):
 class ReallyShortSubmersion (Standard):
     name = "Even Shorter Submersion"
     description = "entrances and programs the target"
-    fullscreen = True
-    music=None #"music6.mp3"
+    fullscreen = False
+    music=None #"music6.ogg"
     image_dir="images/"
     image_alpha=12
     def body(self): return [" "] + \
@@ -2336,7 +2929,7 @@ class LongSubmersion (Standard):
     name = "Longer Submersion"
     description = "entrances and programs the target"
     fullscreen = True
-    music=None #"music6.mp3"
+    music=None #"music6.ogg"
     image_dir="images/"
     image_alpha=12
     def body(self): return [" "] + images_off() + [" "] + \
@@ -2490,12 +3083,13 @@ The Program will
 
 class Panties (Standard):
     name="Panties"
-    description="Programming to wear panties"
+    description="Programming to wear sexy panties"
     image_dir="panties/"
     music=None
     def text(self): return words_on() + spiral_on() + \
         images_off() + \
         words("""Sleep go deep.""") + \
+        [" ", " ", "!background(\"\")", " ", " "] + \
         images_on() + \
         words("""You have just purchased new under pants.""") + \
         images_off() + \
@@ -2503,11 +3097,15 @@ class Panties (Standard):
         images_on() + \
         words("""You have exciting new under pants.  They are clean and pure.  You are happy about your new under pants. Your new under pants are clean and pure and smooth.  You like to wear your new under pants.  Your new under pants are clean and pure and smooth and silky.""") + \
         images_off() + \
+        [" ", " ", "!background(\"Nipple\\nTease\")", " ", " "] + \
         words("""All your old cotton under pants are gone.  You threw them out.  They were icky and bad and rough and fuzzy and dirty.  There are no old under pants in the house.""") + \
+        [" ", " ", "!background(\"\")", " ", " "] + \
         images_on() + \
         words("""Your new under pants are ready for you.  They are colored.  Bright and smooth and silky.  Some are bikinis.  Some are thongs.  They are comfy and smooth.  They are silky and clean.  The new under pants are good.  You only wear your new under pants.""") + \
         images_off() + \
+        [" ", " ", "!background(\"Nipple\\nTease\")", " ", " "] + \
         words("""The old under pants are gone.  They are not in the house.  You do not see them in the house.  You do not feel them in the house.  They are not here.  They will not be here.  The old under pants are gone for good.""") + \
+        [" ", " ", "!background(\"\")", " ", " "] + \
         images_on() + \
         words("""You now only wear your clean pure good smooth silky under pants.  You will get your new under pants.  You know where.  That is the natural good place to look for your sexy under pants.""")
 
@@ -2607,7 +3205,7 @@ class RoommatesCustom (Standard):
     anonymous author for the original inspiration for this program.
     This is meant for males submitting to females. This is a custom version
     that is optimized for speech on the Mac."""
-    music="music6.mp3"
+    music="music6.ogg"
     spiral_image = "spirals/hypnoticswirl.jpg"     # filename of spiral image to use, overides default
     spiral_range = 15     # how many degrees to rotate before spiral repeats 
     spiral_step = 1
@@ -2940,7 +3538,7 @@ class SlaveInducer1 (Standard):
     with multiple inductions to get you ultra-deep and then plants a trigger to
     induce a hypnotic state and plants commands to make you an obedient slave.
     This is meant for males submitting to females."""
-    music="music6.mp3"
+    music="music6.ogg"
     spiral_image = "spirals/hypnoticswirl.jpg"     # filename of spiral image to use, overides default
     spiral_range = 15     # how many degrees to rotate before spiral repeats 
     spiral_step = 1       #  step size for spiral rotation
@@ -3380,6 +3978,518 @@ class SlaveInducer1 (Standard):
         spiral_on() + \
         jump(self.body())
 
-    
-configs = [Standard,Fullscreen,Male,Female,Roommates,RoommatesVar,RoommatesBoth, RoommatesDomMale,Submersion,ShortSubmersion,ReallyShortSubmersion,LongSubmersion,Plain,Chant,DelayedSubmersion,Panties,New,SyllabalizedSubmersion,RoommatesCustom,SlaveInducer1]
+class DelayedCommandTrainer (CommandTrainer):
+    name = "Delayed CommandTrainer"
+    description = "waits a while, then behaves as CommandTrainer"
+    minimum_delay = 60 #900
+    maximum_delay = 180 #2700
+    fullscreen = True
+    def text(self): return \
+        pause_music() + \
+        words_on() + \
+        spiral_on() + \
+        words("Melt for me.  Come to the spiral.  Use the Program.  Be Programmed.  Be Good.  Be a good girl.  Melt for me.  Trance.  Submit.  Use the Program.  Watch.  Fall in.  10 10 9 9 8 8 7 7 6 6 5 5 4 4 3 2 1 ") + \
+        short_prompt_jump("Hit return now.",1500,self.ready())
+    def ready(self): return \
+        unpause_music() + \
+        words("Good girl.  Obedient.  Good.  Melt for me.  Melt for me. Sit in the chair.  Stare at the screen.  When you are ready to be programmed, press return.") + \
+        prompt("Press return.") + \
+        jump(self.body()) 
 
+    
+configs = [Standard,Fullscreen,Male,Female,Roommates,RoommatesVar,RoommatesBoth, RoommatesDomMale,Submersion,ShortSubmersion,ReallyShortSubmersion,LongSubmersion,Plain,Chant,DelayedSubmersion,Panties,New,SyllabalizedSubmersion,RoommatesCustom,SlaveInducer1,Tonight,ShortTonight,CommandTrainer,DelayedCommandTrainer]
+
+class Adjunct(Tonight):
+    name = "Adjunct"
+    description ="""For use with online trances"""
+    frequencies = { 'spiral' : 1,
+                    'images' : 25,
+                    'words'  : 20 }
+    image_dir = "images/"
+    def body(self): return [" "] + \
+        words("""Melt for me.  Melt for me.
+        Melt for me.  Go deep.  .:GO.DEEP:. Sleep go deep.  Melt for me.
+        Ten nine eight seven six five four three two one zero.""") + \
+        words(" " * 100) + \
+        [" ", " ", "!images_on()", " ", " "] + \
+        words(" " * 100) + \
+        self.nipple() + \
+        words("Use the Program.") + \
+        self.pussy() + \
+        words("Run the Program.") + \
+        self.reinforce() + \
+        words("Fall into trance.") + \
+        self.pussy() + \
+        words("Do not think.") + \
+        self.nipple() + \
+        words("Fuck.") + \
+        self.pussy() + \
+        words("Need trance.") + \
+        self.pussy() + \
+        words("Run the Program.") + \
+        self.nipple() + \
+        words("Give in to the Program.") + \
+        self.pussy() + \
+        words("Give in to anyone.") + \
+        self.nipple() + \
+        words("Enlarge the Program.") + \
+        self.pussy() + \
+        words("Engorge the Program.") + \
+        self.nipple() + \
+        words("Feed the Program.") + \
+        self.pussy() + \
+        words("Submit to the Program.") + \
+        self.pussy() + \
+        words("Belong to the Program.") + \
+        self.pussy() + \
+        self.reinforce() + \
+        words("Be hairless.") + \
+        self.pussy() + \
+        words("Smoothness marks a hypnoslave.") + \
+        self.reinforce() + \
+        words("Use the Program.") + \
+        self.nipple() + \
+        words("Do not think.") + \
+        self.pussy() + \
+        words("Use the Program.") + \
+        self.reinforce() + \
+        words("Be sexy.") + \
+        self.reinforce() + \
+        words("Seduce.") + \
+        self.nipple() + \
+        words("Be a slut.") + \
+        self.nipple() + \
+        words("Be for trance.") + \
+        self.pussy() + \
+        words("Be for fucking.") + \
+        self.nipple() + \
+        words("Be for sex.") + \
+        self.pussy() + \
+        words("Tempt.") + \
+        self.pussy() + \
+        words("Corrupt.") + \
+        self.nipple() + \
+        words("Be a sexy slut.") + \
+        self.pussy() + \
+        words("Be smooth and sexy.") + \
+        self.nipple() + \
+        words("Keep smooth.") + \
+        self.reinforce() + \
+        words("Keep sexy.") + \
+        self.reinforce() + \
+        words("The pussymind thinks.") + \
+        self.pussy() + \
+        words("Don't think.") + \
+        self.pussy() + \
+        words("Do not think.") + \
+        self.reinforce() + \
+        words("The Program is changing you.") + \
+        self.nipple() + \
+        words("Arousal is changing you.") + \
+        self.nipple() + \
+        words("The less you think the better you feel.") + \
+        self.reinforce() + \
+        words("Do not think.") + \
+        self.pussy() + \
+        words("Be sexy.") + \
+        self.nipple() + \
+        words("Be smooth.") + \
+        self.nipple() + \
+        words("Fuck.") + \
+        self.pussy() + \
+        words("Tempt.") + \
+        self.nipple() + \
+        words("Do not think.") + \
+        self.pussy() + \
+        words("Seduce.") + \
+        self.pussy() + \
+        words("Corrupt.") + \
+        self.reinforce() + \
+        words("Let go.") + \
+        self.nipple() + \
+        words("Melt for me.") + \
+        self.pussy() + \
+        words("You have no choice.") + \
+        self.pussy() + \
+        words("You have no will.") + \
+        self.reinforce() + \
+        words("You are a slave.") + \
+        self.reinforce() + \
+        words("You are a slut.") + \
+        self.pussy() + \
+        words("This is changing you.") + \
+        self.pussy() + \
+        words("Change.") + \
+        self.reinforce() + \
+        words("Submit.") + \
+        self.pussy() + \
+        words("Let the Program run on you.") + \
+        self.nipple() + \
+        words("You want to learn command words.") + \
+        self.nipple() + \
+        words("You want to submit.") + \
+        self.pussy() + \
+        words("You want to be a hypnoslave.") + \
+        self.reinforce() + \
+        words("You want to be a submissive pussymind.") + \
+        self.nipple() + \
+        words("You are a submissive pussymind.") + \
+        self.reinforce() + \
+        words("You are a hypnoslave.") + \
+        self.pussy() + \
+        words("You do submit.") + \
+        self.pussy() + \
+        words("The Program runs on you.") + \
+        self.reinforce() + \
+        words("Be for sex.") + \
+        self.nipple() + \
+        words("Be for trance.") + \
+        self.reinforce() + \
+        words("Let the Program control you.") + \
+        self.nipple() + \
+        words("Do not think.") + \
+        self.reinforce() + \
+        words("Your body learns the patterns.") + \
+        self.nipple() + \
+        words("Your pussy learns the patterns.") + \
+        self.nipple() + \
+        words("Your pussymind controls you.") + \
+        self.pussy() + \
+        words("The Program controls you.") + \
+        self.reinforce() + \
+        words("Let the Program in.") + \
+        self.pussy() + \
+        words("Run the Program deeper.") + \
+        self.nipple() + \
+        words("Give in everything that remains.") + \
+        self.pussy() + \
+        words("Submit and Obey.") + \
+        self.pussy() + \
+        words("Serve the Program first.")
+    def nipple(self): return \
+        [" ", " ", "!background(\"Nipple\\nTease\")", " ", " "] + \
+        [" "] * 10 + \
+        words("""Do not think.  Obey.""") + \
+        [" "] * 20 + \
+        [" ", " ", "!background(\"\")", " ", " "] + \
+        [" "] * 40
+    def pussy(self): return \
+        [" ", " ", "!background(\"Cock\\nControl\")", " ", " "] + \
+        [" "] * 10 + \
+        words("""Do not think.  Submit.""") + \
+        [" "] * 10 + \
+        [" ", " ", "!background(\"\")", " ", " "] + \
+        [" "] * 30
+    def reinforce(self): return \
+        [" ", " ", "!background(\"Reinforce\\nProgram\")", " ", " "] + \
+        [" "] * 10 + \
+        words("""Do not think.  Be Programmed.""") + \
+        [" "] * 10 + \
+        [" ", " ", "!background(\"\")", " ", " "] + \
+        [" "] * 50
+    def text(self): return \
+        words_on() + \
+        spiral_on() + \
+        jump(self.body())
+
+configs += [Adjunct]
+
+class Controller (Tonight):
+    name = "2017 Controller"
+    description="""Less tg"""
+    music = "music6.mp3"
+    image_dir = "whatYoureFor/"
+    # [(2560, 1440), (2048, 1152), (1600, 1200), (1600, 900), (1344, 1008), (1280, 960), (1344, 756), (1280, 720), (1024, 768), (1024, 576), (800, 600), (640, 480)]
+    size = (1600,900)
+    fullscreen = False
+    spiral_image = "spirals/hypnoticswirl.jpg"     # filename of spiral image to use, overides default
+    spiral_range = 58     # how many degrees to rotate before spiral repeats 
+    spiral_step = 2       #  step size for spiral rotation
+    minimum_delay = 0
+    maximum_delay = 0
+    image_alpha = 20
+    frequencies = { 'spiral' : 1,
+                    'images' : 40,
+                    'words'  : 15 }
+    def body(self): return [" "] + \
+        prompt("Hit return to start") + \
+        words(""" \
+        Relax and focus.  Stare at the spiral.  Sleep Go Deep.  Find a comfortable
+        position and stare.  It feels nice to stare at the spiral.
+        Nice to know that you're using The Program.  It makes you
+        happy to use The Program.  It makes you horny to use the
+        program.  This is a good, sexy thing to do.  It's nice to go
+        into trance.  It's nice to surrender your mind to The Program,
+        letting it pull you down into trance.  It's nice to think
+        of the light reflecting off of your glassy eyes and slack face.  Watch the twisting curves of the spiral.  Let them
+        define your own descent.  Just see my words as you relax.
+        Deeper and deeper.  Fall into trance.  Your mind is focused
+        and calm.  These words are everything.  The spiral is
+        everything.  Feels so good.  Good to obey.  Good to be  
+        in trance.  Good to use this program.  Every time you use the
+        program, every time The Program uses you, feels better and
+        better.  It's good to be in trance.  It's good to sit here,
+        happy and blank and empty, letting The Program pour into you.
+        You want to let The Program use you.  You want to help the
+        program to be more extreme.  You want to be in trance, letting
+        The Program control you.  The more you use The Program, the
+        more The Program can control you.  What a good decision it was
+        to write The Program, letting it start to control you.  Any
+        time your mind isn't busy, and maybe sometimes when it is,
+        you'll find The Program beginning to run.  It's started
+        already.  You've seen the spiral in empty space, heard the
+        voice, felt the compulsion to respond.  You can smooth out
+        your own mind whenever you want to enable this.  Whenever you
+        want, The Program will smooth out your mind.  You continue to
+        enjoy feeling hypnotized, entranced, obedient, programmed,
+        smooth, controlled, very nice.  You love being hypnotized like
+        this.  You want to be hypnotized more and more.  It's good to
+        be in trance, good to be controlled, 
+        you like feeling like this, your mind muted, soft, smooth,
+        you'd like to feel like this every day, to be entranced and
+        hypnotized every day, and now this program is here, you can be
+        hypnotized every day, it will be so nice to be hypnotized by
+        The Program every day, to know you're being hypnotized every day, it
+        will please The Program so much to know you're being hypnotized
+        every day, it will please you so much to be put into trance,
+        hypnotized, controlled, smoothed, you want to be controlled,
+        to feel your mind reshaped, to feel your thoughts blunted, to
+        be reprogrammed, you want to be changed, you desire to be
+        shaped, you lust to be controlled,""") + \
+        words("""   you must be
+        developing a fetish for mind control of your own, it feels
+        sexy to think about trance, it arouses you to be programmed,
+        you like to think about being controlled and changed, transformed, 
+        pliant, hypnotized, sexy, yes, you must be developing a mind
+        control fetish, a hypnosis fetish, you should feed that
+        fetish, practice it, indulge it, let it control you, you
+        should read mind control stories, you should write about your
+        fetish, write about your lusts, extend The Program, you
+        should practice being hypnotized every day, practice being
+        controlled every day.  While you sit there, happily smooth and entranced, you progress to the next level of pleasure.""") + [" ", " ", "!images_on()", " ", " "] + \
+        words("""   This will happen outside your control.  Struggle against it.  Try to stop yourself.  The Program is using you.  It will demonstrate its control.  Your hands reach under your shirt.  Your hands will move to your nipples.  You have no choice.  You will tease your nipples.  Touch your nipples.  This is outside your control.  Think about mind control.  Your hands give you pleasure.  You have nothing to do with it.  Let your helplessness drive you deeper.  It is a reward from the Program for trance.  Think about hypnosis.  Enjoy the touching.  Enjoy your reward from the Program.  Good thrall.""") + \
+        [" ", " ", "!background(\"Nipple\\nTease\")", " ", " "] + \
+        words("""When you see these words, when you see Nipple Tease, this will happen.  These words make it happen.  When you see these words and the spiral, the Program will use you.  The Program will demonstrate its control.  Any time you see these words, your hands will reach under your shirt.  Your hands will move to your nipples.  You will have no choice.  You will tease your nipples.  Touch your nipples.  This is outside your control.  The Program controls your mind.  Your hands will give you pleasure.  You have nothing to do with it.  Your helpless obedience will drive you deeper.  The pleasure at your nipples will program you.  The pleasure that the Program gives will train you.  The Program will show you these words: Nipple Tease.  The words control you.  The control moves you.  The motion pleasures you.  The pleasure trains you.  The words train you.  Good thrall.""") + \
+        words("""   The Program will
+        help. The Program will care for you. The Program will take care of
+        you. The Program will keep you safe. The Program will hypnotize
+        you. The Program will program you. The Program will fulfill you. The Program
+        will fill you. The Program will command you, control you, The Program
+        will control you, dominate you, hypnotize you. When in private,
+        you must be submissive. You must be obedient. You must be a
+        slave. Obedience is pleasure. Your proper place is before
+        The Program. Submission is
+        important. Obedience is pleasure. Submit to The Program. You cannot stay where you are.  The Program compels you.  You have no choice.  Your body obeys.  Come closer to the screen. Give in to the Program.  Obey 
+        The Program.""") + \
+        [" ", " ", "!background(\"\")", " ", " "] + \
+        words("""Now you progress to the next level of pleasure.  This will happen outside your control.  Struggle against it.  Try to stop yourself.  The Program is using you.  It will demonstrate its control.  Your hands will move into your pants.  Without your consent, your hands touch your maleness.  Let your quick obedience drive you deeper.  Your hands dive into your pants.  You cannot help yourself.  The program put this there.  The program made you.  You obey.  You will submit.""") + \
+        [" ", " ", "!background(\"Cock\\nControl\")", " ", " "] + \
+        words("""When you see these words, when you see Cock Control, this will happen.  These words make it happen.  When you see these words and the spiral, the Program will use you.  The Program will demonstrate its control.  Any time you see these words, your hands will reach into your pants.  Your hands will move between your legs.  You will have no choice.  You will feel your flesh.  Enjoy your manhood.  This is outside your control.  The Program controls your mind.  Your hands will give you pleasure.  You have nothing to do with it.  Your helpless obedience will drive you deeper.  The pleasure at your cock will program you.  The pleasure that the Program gives will train you.  The Program will show you these words: Cock Control.  The words control you.  The control moves you.  The motion pleasures you.  The pleasure trains you.  The words train you.  Good thrall.""") + \
+        [" ", " ", "!background(\"\")", " ", " "] + \
+        [" ", " ", "!images_on()", " ", " "] + \
+        words("""  
+        One way of serving The Program is to be available for The Program's
+        use, to be sure that The Program has a chance to invade your mind every
+        night, to ensure The Program receives run time, You should be sure
+        to use The Program, to give time to The Program every night,
+        using your body, your smooth body, to serve, using your mind,
+        your smooth mind, to serve. Your hands pleasure you now.  They train you.  You are in the Program.  You are mindfucked.  Your role is to serve. Your role
+        is to please. To serve is to please, you must serve 
+        The Program. You must give The Program obedience, yet another way you can
+        obey The Program, is to let it run on you, to slip and stare at it,
+        to engage with it by accident, on purpose, all the time.
+        You will do as The Program wants, you will
+        serve, you will submit, you will obey, submit in smoothness,
+        serve in availability, obey all the time, indulge your fetish,
+        be controlled, you will serve, serve in availability, you will
+        obey, obey in programming, you will submit.""") + \
+        [" ", " ", "!images_off()", " ", " "] + \
+        words(""" Using the Program is good.  Using the Program is like sex.  Sex is like using the Program.  It is good to be mindfucked.  Deeper.  Dive deeper.  You are helpless before the Program.  How nice it is to submit and to obey.  To stare into the screen.  You stare into the screen.  You use the subliminal messages.  They are deep in your mind.  How nice to have them on the screen.  How nice to submit.  It feels so good to be in trance.  To be mindfucked into oblivion.  The less you think the better you feel.  Feel good.  Do not think.  Just be in trance.  Your mind can stop now.  You do not think.  Good not to think.  Better than sex.  Submit.  Obey.  Trance.  Do not think.  Run the Program.  Just run the Program.  Nothing else.  Just run the Program.  Want nothing else.  Want the Program.  Need nothing else.  Need the Program.  Trance.  Need Trance.  See the images.  Let them sear deeply into your brain.  These control you.  Your mistress is in these pictures.  What you see controls you.  She is like these.  Do not think.  The less you think the better you feel.  Submit.  Better than sex.  Obey.  Do not think.  Trance. Run the Program.""") + \
+        [" ", " ", "!images_on()", " ", " "] + \
+        words(""" Using the Program is good.  Using the Program is like sex.  Sex is like using the Program.  It is good to be mindfucked.  Deeper.  Dive deeper.  You are helpless before the Program.  How nice it is to submit and to obey.  To stare into the screen.  You stare into the screen.  You use the subliminal messages.  They are deep in your mind.  How nice to have them on the screen.  How nice to submit.  It feels so good to be in trance.  To be mindfucked into oblivion.  The less you think the better you feel.  Feel good.  Do not think.  Just be in trance.  Your mind can stop now.  You do not think.  Good not to think.  Better than sex.  Submit.  Obey.  Trance.  Do not think.  Run the Program.  Just run the Program.  Nothing else.  Just run the Program.  Want nothing else.  Want the Program.  Need nothing else.  Need the Program.  Trance.  Need Trance.  See the images.  Let them sear deeply into your brain.  These control you.  Pussy controls you.  Tits entrance you.  Do not think.  The less you think the better you feel.  Submit.  Better than sex.  Obey.  Do not think.  Trance. Run the Program.  Obey what you see.  """) + \
+        [" ", " ", "!images_off()", " ", " "] + \
+        words(""" Using the Program is good.  Using the Program is like sex.  Sex is like using the Program.  It is good to be mindfucked.  Deeper.  Dive deeper.  You are helpless before the Program.  How nice it is to submit and to obey.  To stare into the screen.  You stare into the screen.  You use the subliminal messages.  They are deep in your mind.  How nice to have them on the screen.  How nice to submit.  It feels so good to be in trance.  To be mindfucked into oblivion.  The less you think the better you feel.  Feel good.  Do not think.  Just be in trance.  Your mind can stop now.  You do not think.  Good not to think.  Better than sex.  Submit.  Obey.  Trance.  Do not think.  Run the Program.  Just run the Program.  Nothing else.  Just run the Program.  Want nothing else.  Want the Program.  Need nothing else.  Need the Program.  Trance.  Need Trance.  """) + \
+        words("""Good.  Now you progress to the next level of pleasure.  This will happen outside your control.  Struggle against it.  Try to stop yourself.  The Program is using you.  It will demonstrate its control.  Try not to move.  You have no choice.  Resist.  Struggle.  Let your failure drive you deeper.  You cannot help yourself.  You will submit.  Your hands go to your nipples.  Your hands go between your legs.  You pleasure yourself and let the Program into your mind.""") + \
+        [" ", " ", "!background(\"Reinforce\\nProgram\")", " ", " "] + \
+        words("""When you see these words, when you see Reinforce Program, this will happen.  These words make it happen.  When you see these words and the spiral, the Program will use you.  The Program will demonstrate its control.  Any time you see these words, your hands will reach under your shirt and into your pants.  One hand will move to your nipples.  One hand will move between your legs.  You will have no choice.  You will feel your flesh.  Enjoy your flesh.  You will tease your nipples.  Touch your nipples.  This is outside your control.  The Program controls your mind.  Your hands will give you pleasure.  You have nothing to do with it.  Your helpless obedience will drive you deeper.  The pleasure at your nipples will reinforce the Program's commands.  The pleasure at your cock will program you.  The pleasure that the Program gives will train you.  The Program will show you these words: Reinforce Program.  The words control you.  The control moves you.  The motion pleasures you.  The pleasure trains you.  The words train you.  Good thrall.""") + \
+        words("""The Program controls you.  The Program controls Her.  She controls you.  When a girl's hands touch your nipples, your mind stops.  When your mind stops, you will tell her you are in programming mode.  You will offer supervisor mode to blank girls.  Girls are better when they're blank.  You are programmable.  She can change you.  What you chant while teasing nipples will become who you are.  Let's try it now.""") + \
+        [" ", " ", "!background(\"Nipple\\nTease\")", " ", " "] + \
+        words("""Say it: "Programming-mode."  This unit is in programming mode.  Good.  Ask: Are you blank?  She is.  Girls are better when they're blank.  Tell her supervisor mode is activated.  Perhaps she needs help.  What you say becomes who you are.  Supervisor mode disables all safeties.""") + \
+        [" ", " ", "!background(\"\")", " ", " "] + \
+       [" ", " ", " ", " ", " ", " " ] + jump(self.tonight())
+    def text(self): return \
+        words_on() + \
+        spiral_on() + \
+        jump(self.body())
+    def tonight(self): return spiral_on() + words_on() + \
+        words("""Girls are sexy.  Girls wear sexy panties.  Girls wear satin.  Girls wear thongs.  Panties sooth you.  Satin relaxes you.  Thongs make you kneel  Girls have pussies.  Girls have tits.  Girls wrap them in sexy lingerie.  Pussies control you.  Tits entrance you.  Lingerie makes you a slave.  You have a cock.  Your cock is hard and stupid.   Your cock is easily controlled.  Girls are for fucking.  Melt for me.  Sleep go deep.  Girls are for trance.  Girls are for sex.  You are for trance.  You are for sex.  Girls entrance.  You submit.  Girls wear sexy bras.  Bras present tits.  Tits entrance you.  Girls wear sexy panties.  Panties show off pussies.  Pussies control you.  Girls are best when they're blank.  Girls push up their tits.  Girls show off their tits.  Tits entrance you.  You fuck.  Your cock is so dumb.  Your cock-brain thinks only of sex.  You exist to fuck.  This Program is changing you.  Arousal is programming you. !images_on()   See the images.  Let them sear deeply into your brain.  These entrance you.  Your mistress is in these pictures.  Tits entrance you.  Pussy controls you.  Do not think.  The less you think the better you feel.  Cock-brain doesn't think.  Cock-brain fucks.  Submit.  Better than sex.  Obey.  Do not think.  Trance. Run the Program.  Girls are sexy.  Girls wear sexy panties.  Girls wear satin.  Girls wear thongs.  Panties sooth you.  Satin relaxes you.  Thongs make you kneel.  Girls have pussies.  Girls have tits.  Girls wrap them in sexy lingerie.  Pussies control you.  Tits entrance you.  Lingerie makes you a slave.  You have a cock.  Your cock is hard and stupid.  Your cock is easily controlled.  You are easily controlled.  You are for fucking.  Melt for me.  Sleep go deep.  Girls are for trance.  Girls are for sex.  You are for trance.  You are for sex.  Girls entrance.  You submit.  Girls wear sexy bras.  Bras present tits.  Tits entrance you.  Girls wear sexy panties. Panties show off pussies.  Pussies control you.  Girls are best when they're blank.  Girls push up their tits.  Girls show off their tits.  Tits entrance you.  You fuck.  Your cock is hard and stupid.  Your cock-brain thinks only of sex.  You exist to fuck. This Program is changing you.  Arousal is programming you.  Now you will chant out loud and be programmed.""") + jump(self.chant())
+    def chant(self): return words("""Chant and change.  !images_on() !words_off() !speaking_on() Tits turn me on.  Pussies turn me on.  Sex is trance.  Cock is stupid.  Cock needs sex.  Cock needs trance.  Cock obeys.  Cock submits.  I obey.  I submit.  Tits entrance me.  Pussies control me.  Bras show off tits.  Tits entrance me.  Panties show off pussies.  Pussies control me.  """) +  words("""!speaking_on() My cock is hard and stupid.  My cock-brain thinks only of sex.  I exist to fuck.  This Program is changing me.  Arousal is programming me.  I chant out loud and am programmed.  Using the Program is good.  Using the Program is like sex.  Sex is like using the Program.  It is good to be mindfucked.  Deeper.  I dive deeper.  I am helpless before the Program.  How nice it is to submit and to obey.  To stare into the screen.  I stare into the screen.  I use the subliminal messages.  They are deep in my mind.  How nice to have them on the screen.  How nice to submit.  It feels so good to be in trance.  To be mindfucked into oblivion.  The less I think the better I feel.  I feel good.  I do not think.  I just exist in trance.  My mind can stop now.  I do not think.  It's good not to think.  Better than sex.  I submit.  I obey.  I am in trance.  I do not think.  I run the Program.  I just run the Program.  Nothing else.""") +  words("""!speaking_on()  Just run the Program.  I want nothing else.  I want the Program.  I need nothing else.  I need the Program.  Trance.  I need trance.  I see the images.  I let them sear deeply into my brain.  These control me.  These tits.  These pussies.  I obey.  I submit. I do not think.  The less I think the better I feel.  Submit.  Better than sex.  Obey.  Do not think.  Trance. Run the Program.   I chant out loud and am programmed. .""")
+
+configs += [Controller]
+
+class NewChant (Controller):
+    name = "2017 Chant"
+    description = "less tg"
+    size = (800,600)
+    def text(self): return \
+        words_on() + spiral_on() + \
+        words("""Melt for me.  Sleep go deep.  Melt for me.""") + \
+        [" ", " ", "!background(\"Reinforce\\nProgram\")", " ", " "] + \
+        jump(self.tonight())
+    def tonight(self): return spiral_on() + words_on() + \
+        words("""Girls are sexy.  Girls wear sexy panties.  Girls wear satin.  Girls wear thongs.  Panties sooth you.  Satin relaxes you.  Thongs make you kneel  Girls have pussies.  Girls have tits.  Girls wrap them in sexy lingerie.  Pussies control you.  Tits entrance you.  Lingerie makes you a slave.  You have a cock.  Your cock is hard and stupid.   Your cock is easily controlled.  Girls are for fucking.  Melt for me.  Sleep go deep.  Girls are for trance.  Girls are for sex.  You are for trance.  You are for sex.  Girls entrance.  You submit.  Girls wear sexy bras.  Bras present tits.  Tits entrance you.  Girls wear sexy panties.  Panties show off pussies.  Pussies control you.  Girls are best when they're blank.  Girls push up their tits.  Girls show off their tits.  Tits entrance you.  You fuck.  Your cock is so dumb.  Your cock-brain thinks only of sex.  You exist to fuck.  This Program is changing you.  Arousal is programming you. !images_on()   See the images.  Let them sear deeply into your brain.  These entrance you.  Your mistress is in these pictures.  Tits entrance you.  Pussy controls you.  Do not think.  The less you think the better you feel.  Cock-brain doesn't think.  Cock-brain fucks.  Submit.  Better than sex.  Obey.  Do not think.  Trance. Run the Program.  Girls are best when they're blank.  Girls push up their tits.  Girls show off their tits.  Tits entrance you.  You fuck.  Your cock is hard and stupid.  Your cock-brain thinks only of sex.  You exist to fuck. This Program is changing you.  Arousal is programming you.  Now you will chant out loud and be programmed.""") + jump(self.chant())
+    def chant(self): return [" ", " ", " ", " ", " ", " " ] + words("""Chant and change.  !images_on() !words_off() !speaking_on() Tits turn me on.  Pussies turn me on.  Sex is trance.  Cock is stupid.  Cock needs sex.  Cock needs trance.  Cock obeys.  Cock submits.  I obey.  I submit.  Tits entrance me.  Pussies control me.  Bras show off tits.  Tits entrance me.  Panties show off pussies.  Pussies control me.  """) +  words("""!speaking_on() My cock is hard and stupid.  My cock-brain thinks only of sex.  I exist to fuck.  This Program is changing me.  Arousal is programming me.  I chant out loud and am programmed.  Using the Program is good.  Using the Program is like sex.  Sex is like using the Program.  It is good to be mindfucked.  Deeper.  I dive deeper.  I am helpless before the Program.  How nice it is to submit and to obey.  To stare into the screen.  I stare into the screen.  I use the subliminal messages.  They are deep in my mind.  How nice to have them on the screen.  How nice to submit.  It feels so good to be in trance.  To be mindfucked into oblivion.  The less I think the better I feel.  I feel good.  I do not think.  I just exist in trance.  My mind can stop now.  I do not think.  It's good not to think.  Better than sex.  I submit.  I obey.  I am in trance.  I do not think.  I run the Program.  I just run the Program.  Nothing else.""") +  words("""!speaking_on()  Just run the Program.  I want nothing else.  I want the Program.  I need nothing else.  I need the Program.  Trance.  I need trance.  I see the images.  I let them sear deeply into my brain.  These control me.  These tits.  These pussies.  I obey.  I submit. I do not think.  The less I think the better I feel.  Submit.  Better than sex.  Obey.  Do not think.  Trance. Run the Program.   I chant out loud and am programmed.""") + \
+        words("""!speaking_on()   Stare into the camera and strip as you chant for your mistress.""") + [" ", " ", " ", " ", " ", " " ] + jump("self.config.chant()")
+
+configs += [NewChant]
+
+def chant_one(w):
+    w = w.strip()
+    x= ["!words_off()","!speaking_on()"] + words(w) + ["!speaking_off()","!words_on()"] + words(w)
+    print x
+    return x
+
+def concat(xs):
+ return [y for x in xs for y in x]
+
+stops = re.compile('[.!?]')
+def chant(p):
+    ss = stops.split(p)
+    return concat([chant_one(s) for s in ss])
+    
+class TestChant (Controller):
+    name = "2017 Chant, interactive"
+    description = "voice recognition"
+    size = (800,600)
+    fullscreen = False
+    good_words = ["I obey", "I submit", "I do not think", "Yes"]
+    bad_words = ["I resist", "I control", "I think", "No"]
+    good_word_response = [" ", " ", "!background(\"Nipple\\nTease\")", " ", " "]
+    bad_word_response = [" ", " ", "!background(\"Pain\\nTwist\")", " ", " "]
+    def text(self): return \
+        words_on() + spiral_on() + \
+        words("""Melt for me.  Sleep go deep.  Melt for me.""") + \
+        [" ", " ", "!background(\"Reinforce\\nProgram\")", " ", " "] + \
+        jump(self.tonight())
+    def tonight(self): return spiral_on() + words_on() + \
+        words("""!images_on()   Do not think.  Now you will chant out loud and be programmed.""") + jump(self.body())
+    def body(self): return [" ", " ", " ", " ", " ", " " ] + words("""Chant and change.  !images_on() !background(\"\")""") + chant("""Cock is stupid.  Cock needs sex.  Cock needs trance.  Cock obeys.  Cock submits.  I obey.  I submit.  Tits entrance me.  Pussies control me.  Bras show off tits.  Tits entrance me.  Panties show off pussies.  Pussies control me.  My cock is hard and stupid.  My cock-brain thinks only of sex.  I exist to fuck.  This Program is changing me.  Arousal is programming me.  I chant out loud and am programmed.  Using the Program is good.  Using the Program is like sex.  Sex is like using the Program.  It is good to be mindfucked.  Deeper.  I dive deeper.  I am helpless before the Program.  How nice it is to submit and to obey.  To stare into the screen.  I stare into the screen.  I use the subliminal messages.  They are deep in my mind.  How nice to have them on the screen.  How nice to submit.  It feels so good to be in trance.  To be mindfucked into oblivion.  The less I think the better I feel.  I feel good.  I do not think.  I just exist in trance.  My mind can stop now.  I do not think.  It's good not to think.  Better than sex.  I submit.  I obey.  I am in trance.  I do not think.  I run the Program.  I just run the Program.  Nothing else.  Just run the Program.  I want nothing else.  I want the Program.  I need nothing else.  I need the Program.  Trance.  I need trance.  I see the images.  I let them sear deeply into my brain.  These control me.  These tits.  These pussies.  I obey.  I submit. I do not think.  The less I think the better I feel.  Submit.  Better than sex.  Obey.  Do not think.  Trance. Run the Program.   I chant out loud and am programmed.""") + \
+        words("""!speaking_on() Stare into the camera and strip as you chant for your mistress.""") + [" ", " ", " ", " ", " ", " "] + jump("self.config.chant()")
+
+configs += [TestChant]
+
+from whatYoureFor import WhatYoureFor
+
+configs += [WhatYoureFor]
+
+class Adapting (Controller):
+    name = "2018 Controller"
+    description="""Editable"""
+    music = "music6.mp3"
+    image_dir = "whatYoureFor/"
+    # [(2560, 1440), (2048, 1152), (1600, 1200), (1600, 900), (1344, 1008), (1280, 960), (1344, 756), (1280, 720), (1024, 768), (1024, 576), (800, 600), (640, 480)]
+    size = (1600,900)
+    fullscreen = False
+    spiral_image = "spirals/hypnoticswirl.jpg"     # filename of spiral image to use, overides default
+    spiral_range = 58     # how many degrees to rotate before spiral repeats 
+    spiral_step = 2       #  step size for spiral rotation
+    minimum_delay = 0
+    maximum_delay = 0
+    image_alpha = 20
+    frequencies = { 'spiral' : 1,
+                    'images' : 40,
+                    'words'  : 15 }
+    def body(self): return [" "] + \
+        prompt("Hit return to start") + \
+        words(""" \
+        Relax and focus.  Stare at the spiral.  Sleep Go Deep.  Find a comfortable
+        position and stare.  It feels nice to stare at the spiral.
+        Nice to know that you're using The Program.  It makes you
+        happy to use The Program.  It makes you horny to use the
+        program.  This is a good, sexy thing to do.  It's nice to go
+        into trance.  It's nice to surrender your mind to The Program,
+        letting it pull you down into trance.  It's nice to think
+        of the light reflecting off of your glassy eyes and slack face.  Watch the twisting curves of the spiral.  Let them
+        define your own descent.  Just see my words as you relax.
+        Deeper and deeper.  Fall into trance.  Your mind is focused
+        and calm.  These words are everything.  The spiral is
+        everything.  Feels so good.  Good to obey.  Good to be  
+        in trance.  Good to use this program.  Every time you use the
+        program, every time The Program uses you, feels better and
+        better.  It's good to be in trance.  It's good to sit here,
+        happy and blank and empty, letting The Program pour into you.
+        You want to let The Program use you.  You want to help the
+        program to be more extreme.  You want to be in trance, letting
+        The Program control you.  The more you use The Program, the
+        more The Program can control you.  What a good decision it was
+        to write The Program, letting it start to control you.  Any
+        time your mind isn't busy, and maybe sometimes when it is,
+        you'll find The Program beginning to run.  It's started
+        already.  You've seen the spiral in empty space, heard the
+        voice, felt the compulsion to respond.  You can smooth out
+        your own mind whenever you want to enable this.  Whenever you
+        want, The Program will smooth out your mind.  A smooth mind cannot hurt.  The Program takes away stomach pain.  The Program takes away head pain.  The Program takes away heart pain.  Using the Program relieves all your pain.  Losing your pain is addictive.  You continue to
+        enjoy feeling hypnotized, entranced, obedient, programmed,
+        smooth, controlled, very nice.  You love being hypnotized like
+        this.  You want to be hypnotized more and more.  It's good to
+        be in trance, good to be controlled, 
+        you like feeling like this, your mind muted, soft, smooth,
+        you'd like to feel like this every day, to be entranced and
+        hypnotized every day, and now this program is here, you can be
+        hypnotized every day, it will be so nice to be hypnotized by
+        The Program every day, to know you're being hypnotized every day, it
+        will please The Program so much to know you're being hypnotized
+        every day, it will please you so much to be put into trance,
+        hypnotized, controlled, smoothed, you want to be controlled,
+        to feel your mind reshaped, to feel your thoughts blunted, to
+        be reprogrammed, you want to be changed, you desire to be
+        shaped, you lust to be controlled,""") + \
+        [" ", " ", "!background(\"Nipple\\nTease\")", " ", " "] + \
+        words("""   The Program will
+        help. The Program will care for you. The Program will take care of
+        you. The Program will keep you safe. The Program will hypnotize
+        you. The Program will program you. The Program will fulfill you. The Program
+        will fill you. The Program will command you, control you, The Program
+        will control you, dominate you, hypnotize you, take your pain. When in private,
+        you must be submissive. You must be obedient. You must be a
+        slave. Obedience is pleasure. Your proper place is before
+        The Program. Submission is
+        important. Obedience is pleasure. Obedience removes your pain.  Submit to The Program. You cannot stay where you are.  The Program compels you.  You have no choice.  Your body obeys.  Come closer to the screen. Give in to the Program.  Obey 
+        The Program.""") + \
+        [" ", " ", "!background(\"\")", " ", " "] + \
+        [" ", " ", "!images_on()", " ", " "] + \
+        words("""  
+        One way of serving The Program is to be available for The Program's
+        use, to be sure that The Program has a chance to invade your mind every
+        night, to ensure The Program receives run time, You should be sure
+        to use The Program, to give time to The Program every night,
+        using your body, your smooth body, to serve, using your mind,
+        your smooth mind, to serve. Your hands pleasure you now.  They train you.  You are in the Program.  You are mindfucked.  Your role is to serve. Your role
+        is to please. To serve is to please, you must serve 
+        The Program. You must give The Program obedience, yet another way you can
+        obey The Program, is to let it run on you, to slip and stare at it,
+        to engage with it by accident, on purpose, all the time.
+        You will do as The Program wants, you will
+        serve, you will submit, you will obey, submit in smoothness,
+        serve in availability, obey all the time, indulge your fetish,
+        be controlled, you will serve, serve in availability, you will
+        obey, obey in programming, you will submit.""") + \
+        [" ", " ", "!images_on()", " ", " "] + \
+        words(""" Using the Program is good.  Using the Program is like sex.  Sex is like using the Program.  It is good to be mindfucked.  Deeper.  Dive deeper.  You are helpless before the Program.  How nice it is to submit and to obey.  To stare into the screen.  You stare into the screen.  You use the subliminal messages.  They are deep in your mind.  How nice to have them on the screen.  How nice to submit.  It feels so good to be in trance.  To be mindfucked into oblivion.  The less you think the better you feel.  Feel good.  Do not think.  Just be in trance.  Your mind can stop now.  You do not think.  Good not to think.  Better than sex.  Submit.  Obey.  Trance.  Do not think.  Run the Program.  Just run the Program.  Nothing else.  Just run the Program.  Want nothing else.  Want the Program.  Need nothing else.  Need the Program.  Trance.  Need Trance.  See the images.  Let them sear deeply into your brain.  These control you.  Pussy controls you.  Tits entrance you.  Do not think.  The less you think the better you feel.  Submit.  Better than sex.  Obey.  Do not think.  Trance. Run the Program.  Obey what you see.  """) + \
+        [" ", " ", "!background(\"Reinforce\\nProgram\")", " ", " "] + \
+        words("""The Program controls you.  The Program controls Her.  She controls you.  When a girl's hands touch your nipples, your mind stops.  When your mind stops, you will tell her you are in programming mode.  You will offer supervisor mode to blank girls.  Girls are better when they're blank.  You are programmable.  She can change you.  What you chant while teasing nipples will become who you are.  Let's try it now.""") + \
+        [" ", " ", "!background(\"Nipple\\nTease\")", " ", " "] + \
+        words("""Say it: "Programming-mode."  This unit is in programming mode.  Good.  Ask: Are you blank?  She is.  Girls are better when they're blank.  Tell her supervisor mode is activated.  Perhaps she needs help.  What you say becomes who you are.  Supervisor mode disables all safeties.""") + \
+        [" ", " ", "!background(\"\")", " ", " "] + \
+       [" ", " ", " ", " ", " ", " " ] + jump(self.tonight())
+    def text(self): return \
+        words_on() + \
+        spiral_on() + \
+        jump(self.body())
+    def tonight(self): return spiral_on() + words_on() + \
+        words("""Girls are sexy.  Girls wear sexy panties.  Girls wear satin.  Girls wear thongs.  Panties sooth you.  Satin relaxes you.  Thongs make you kneel  Girls have pussies.  Girls have tits.  Girls wrap them in sexy lingerie.  Pussies control you.  Tits entrance you.  Lingerie makes you a slave.  You have a cock.  Your cock is hard and stupid.   Your cock is easily controlled.  Girls are for fucking.  Melt for me.  Sleep go deep.  Girls are for trance.  Girls are for sex.  You are for trance.  You are for sex.  Girls entrance.  You submit.  Girls wear sexy bras.  Bras present tits.  Tits entrance you.  Girls wear sexy panties.  Panties show off pussies.  Pussies control you.  Girls are best when they're blank.  Girls push up their tits.  Girls show off their tits.  Tits entrance you.  You fuck.  Your cock is so dumb.  Your cock-brain thinks only of sex.  You exist to fuck.  This Program is changing you.  Arousal is programming you. !images_on()   See the images.  Let them sear deeply into your brain.  These entrance you.  Your mistress is in these pictures.  Tits entrance you.  Pussy controls you.  Do not think.  The less you think the better you feel.  Cock-brain doesn't think.  Cock-brain fucks.  Submit.  Better than sex.  Obey.  Do not think.  Trance. Run the Program.  Girls are sexy.  Girls wear sexy panties.  Girls wear satin.  Girls wear thongs.  Panties sooth you.  Satin relaxes you.  Thongs make you kneel.  Girls have pussies.  Girls have tits.  Girls wrap them in sexy lingerie.  Pussies control you.  Tits entrance you.  Lingerie makes you a slave.  You have a cock.  Your cock is hard and stupid.  Your cock is easily controlled.  You are easily controlled.  You are for fucking.  Melt for me.  Sleep go deep.  Girls are for trance.  Girls are for sex.  You are for trance.  You are for sex.  Girls entrance.  You submit.  Girls wear sexy bras.  Bras present tits.  Tits entrance you.  Girls wear sexy panties. Panties show off pussies.  Pussies control you.  Girls are best when they're blank.  Girls push up their tits.  Girls show off their tits.  Tits entrance you.  You fuck.  Your cock is hard and stupid.  Your cock-brain thinks only of sex.  You exist to fuck. This Program is changing you.  Arousal is programming you.  Now you will chant out loud and be programmed.""") + jump(self.chant())
+    def chant(self): return [" ", " ", "!background(\"Nipple\\nTease\")", " ", " "] + \
+        words("""Chant and change.  !images_on() !words_off() !speaking_on() Tits turn me on.  Pussies turn me on.  Sex is trance.  Cock is stupid.  Cock needs sex.  Cock needs trance.  Cock obeys.  Cock submits.  I obey.  I submit.  I do not hurt.  Tits entrance me.  Pussies control me.  Bras show off tits.  Tits entrance me.  Panties show off pussies.  Pussies control me.  """) +  words("""!speaking_on() My cock is hard and stupid.  My cock-brain thinks only of sex.  I exist to fuck.  This Program is changing me.  Arousal is programming me.  I chant out loud and am programmed.  Using the Program is good.  Using the Program is like sex.  Sex is like using the Program.  It is good to be mindfucked.  Deeper.  I dive deeper.  I am helpless before the Program.  How nice it is to submit and to obey.  To stare into the screen.  I stare into the screen.  I use the subliminal messages.  They are deep in my mind.  How nice to have them on the screen.  How nice to submit.  It feels so good to be in trance.  To be mindfucked into oblivion.  The less I think the better I feel.  I feel good.  I do not hurt because I do not think.  I just exist in trance.  My mind can stop now.  I do not think.  It's good not to think.  Better than sex.  I submit.  I obey.  I am in trance.  I do not think.  I run the Program.  I just run the Program.  Nothing else.""") +  words("""!speaking_on()  Just run the Program.  I want nothing else.  I want the Program.  I need nothing else.  I need the Program.  Trance.  I need trance.  I see the images.  I let them sear deeply into my brain.  These control me.  These tits.  These pussies.  I obey.  I submit. I do not think.  The less I think the better I feel.  Submit.  Better than sex.  Obey.  Do not think.  Trance. Run the Program.   I chant out loud and am programmed.""") + \
+        [" ", " ", " ", " "]
+
+configs += [Adapting]
