@@ -148,6 +148,8 @@ class Spiral:
         self.words_index = 0
         self.text = self.config.text()
         self.variables={}
+        self.persistent_text=""
+        self.persistent_word = self.font.render("",True,self.config.text_color)
 
     def display_box(self,message):
         x,y = self.font.size(message)
@@ -189,6 +191,27 @@ class Spiral:
 
     def images_on(self): self.draw_image=True
     def images_off(self): self.draw_image=False
+    def hold_text_start(self): 
+                self.advance_text()
+		self.persistent_text=""
+		while ((self.text[self.words_index+1].startswith("!") != True) and (self.words_index+2 < len(self.text))):
+		    	word = self.text[self.words_index]
+		    	self.persistent_text=self.persistent_text+" "+self.varsub(word)
+                        self.advance_text()
+                    
+		word = self.text[self.words_index]
+		self.persistent_text=self.persistent_text+" "+self.varsub(word)
+        	if self.config.broken_fonts:
+            	    self.persistent_word = self.font.render(self.persistent_text,True,self.config.text_color)
+        	else:
+            	    self.persistent_word = textOutline(self.font,
+                                    self.persistent_text,
+                                    self.config.text_color,
+                                    self.config.color)
+        	    self.persistent_word.set_alpha(self.config.text_alpha)
+
+    def hold_text_end(self): word=""
+    def hold_text_blank(self): self.persistent_text=""
     def toggle_images(self): self.draw_image=not self.draw_image
     def words_on(self): self.draw_words=True
     def speaking_on(self): self.speak_words=True
@@ -258,28 +281,33 @@ class Spiral:
         #self.clear_screen()
         #self.draw_text("Loading spiral")
         print "Loading spiral...",
-        spiral_size = int(1.2* max(self.x_size, self.y_size))
-        spiral = pygame.Surface((spiral_size, spiral_size))
-        dots = []
-        for t in range(1, spiral_size*self.config.scale):
-            t *= 0.5 / self.config.scale
-            x =  t * t * math.cos(t)
-            y =  t * t * math.sin(t)
-            dots.append((int(x+spiral_size/2.0), int(y+spiral_size/2.0)))
-            self.process_events()
-        pygame.draw.lines(spiral, self.config.color, False, dots, 4)
-        spiral.set_colorkey((0,0,0))
-        a = pygame.transform.rotate(spiral,90)
-        b = pygame.transform.rotate(spiral,180)
-        c = pygame.transform.rotate(spiral,270)
-        spiral.blit(a,(0,0))
-        spiral.blit(b,(0,0))
-        spiral.blit(c,(0,0))
-        spiral.set_colorkey(None)
+        if (self.config.spiral_image != ""):
+		tmpspiral=pygame.image.load(self.config.spiral_image).convert()
+        	scale=1.0
+        	spiral = pygame.transform.rotozoom(tmpspiral,0,scale)
+	elif True:
+        	spiral_size = int(1.2* max(self.x_size, self.y_size))
+        	spiral = pygame.Surface((spiral_size, spiral_size))
+        	dots = []
+        	for t in range(1, spiral_size*self.config.scale):
+        	    t *= 0.5 / self.config.scale
+        	    x =  t * t * math.cos(t)
+        	    y =  t * t * math.sin(t)
+        	    dots.append((int(x+spiral_size/2.0), int(y+spiral_size/2.0)))
+        	    self.process_events()
+        	pygame.draw.lines(spiral, self.config.color, False, dots, 4)
+        	spiral.set_colorkey((0,0,0))
+        	a = pygame.transform.rotate(spiral,90)
+        	b = pygame.transform.rotate(spiral,180)
+        	c = pygame.transform.rotate(spiral,270)
+        	spiral.blit(a,(0,0))
+        	spiral.blit(b,(0,0))
+        	spiral.blit(c,(0,0))
+        	spiral.set_colorkey(None)
         spiral.set_alpha(self.config.alpha)
         self.spirals=[]
-        for t in xrange(0,90):
-            self.spirals.append(pygame.transform.rotate(spiral,-t))
+        for t in xrange(0,self.config.spiral_range/self.config.spiral_step):
+            self.spirals.append(pygame.transform.rotate(spiral,-t*self.config.spiral_step))
         #self.clear_screen()
         print "...done"
         self.spirals_index=0
@@ -340,6 +368,7 @@ class Spiral:
 
     def draw_text(self,word,delay=False):
         if word=="":return
+        if self.speak_words:return
         if self.config.broken_fonts:
             temp_word = self.font.render(word,True,self.config.text_color)
         else:
@@ -387,6 +416,7 @@ class Spiral:
                 self.draw_surface(self.images[self.image_index],True)
             if self.draw_spiral:
                 try:
+                    self.spirals[self.spirals_index].set_alpha(self.config.alpha)
                     self.draw_surface(self.spirals[self.spirals_index],True)
                 except IndexError:
                     print "Index %i out of range 0..%i" % (self.spirals_index,
@@ -398,11 +428,25 @@ class Spiral:
                 pass
             elif self.draw_words: #and ticks['words'] != self.config.frequencies['words']:
                 self.draw_text(self.varsub(word),True)
+            if (self.persistent_text != ""):
+        		self.draw_surface(self.persistent_word,True)
             if self.speak_words and \
                  ticks['words'] <= 1:
+		bulkspeak=""
                 if self.speaking_words_index != self.words_index:
-                    self.speak_text(self.varsub(word))
+		    while ((self.text[self.words_index+1].startswith("!") != True) and (self.words_index+2 < len(self.text))):
+		    	word = self.text[self.words_index]
+		    	bulkspeak=bulkspeak+" "+self.varsub(word)
+                        self.advance_text()
+                    
+		    word = self.text[self.words_index]
+		    bulkspeak=bulkspeak+" "+self.varsub(word)
+                    # self.speak_text(self.varsub(word))
+                    self.speak_text(bulkspeak)
                     self.speaking_words_index = self.words_index
+
+
+
             pygame.display.flip()
             self.process_events()
             

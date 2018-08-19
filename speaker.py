@@ -160,7 +160,7 @@ class Spiral (NSObject) :
         
     def speak(self,text):
         re.sub("\n? +"," ",text)
-        #print "Speaking text beginning with %s" % text[0:20]
+        # print "Speaking text beginning with %s" % text[0:20]
         if ' !' in text: print "Warning: script command embedded in spoken text"
         self.speaking_text = self.varsub(text)
         self.should_advance = False
@@ -174,6 +174,8 @@ class Spiral (NSObject) :
         self.words_index = 0
         self.text = self.config.text()
         self.variables={}
+        self.persistent_text=""
+        self.persistent_word = self.font.render("",True,self.config.text_color)
 
     def display_box(self,message):
         x,y = self.font.size(message)
@@ -215,6 +217,47 @@ class Spiral (NSObject) :
 
     def images_on(self): self.draw_image=True
     def images_off(self): self.draw_image=False
+    def hold_image_start(self):
+                self.advance_text()
+                image_name=""
+                while ((self.text[self.words_index+1].startswith("!") != True) and (self.words_index+2 < len(self.text))):
+                        word = self.text[self.words_index]
+                        image_name=image_name+" "+self.varsub(word)
+                        self.advance_text()
+    
+                word = self.text[self.words_index]
+                image_name=image_name+self.varsub(word)
+		if (self.image_lookup[image_name] >=0):
+			self.hold_image_index=self.image_lookup[image_name]
+		#print self.hold_image_index,
+
+    def hold_image_end(self): 
+		word=""
+                self.draw_image=True
+    def hold_image_blank(self): 
+		self.hold_image_index=-1
+                self.draw_image=False
+    def hold_text_start(self):
+                self.advance_text()
+                self.persistent_text=""
+                while ((self.text[self.words_index+1].startswith("!") != True) and (self.words_index+2 < len(self.text))):
+                        word = self.text[self.words_index]
+                        self.persistent_text=self.persistent_text+" "+self.varsub(word)
+                        self.advance_text()
+    
+                word = self.text[self.words_index]
+                self.persistent_text=self.persistent_text+" "+self.varsub(word)
+                if self.config.broken_fonts:
+                    self.persistent_word = self.font.render(self.persistent_text,True,self.config.text_color)
+                else:
+                    self.persistent_word = textOutline(self.font,
+                                    self.persistent_text,
+                                    self.config.text_color,
+                                    self.config.color)
+                    self.persistent_word.set_alpha(self.config.text_alpha)
+
+    def hold_text_end(self): word=""
+    def hold_text_blank(self): self.persistent_text=""
     def toggle_images(self): self.draw_image=not self.draw_image
     def words_on(self): self.draw_words=True
     def words_off(self): self.draw_words=False
@@ -282,28 +325,34 @@ class Spiral (NSObject) :
     def init_spiral(self):
         self.clear_screen()
         self.draw_text("Loading spiral")
-        spiral_size = int(1.2* max(self.x_size, self.y_size))
-        spiral = pygame.Surface((spiral_size, spiral_size))
-        dots = []
-	offset_x = []
-	offset_y = []
-        for t in range(1, spiral_size*self.config.scale):
-            t *= 0.5 / self.config.scale
-            x =  t * t * math.cos(t)
-            y =  t * t * math.sin(t)
-            dots.append((int(x+spiral_size/2.0), int(y+spiral_size/2.0)))
-            self.process_events()
-        pygame.draw.lines(spiral, self.config.color, False, dots, 4)
-        a = pygame.transform.rotate(spiral,90)
-        b = pygame.transform.rotate(spiral,180)
-        c = pygame.transform.rotate(spiral,270)
-        spiral.blit(a,(0,0),None,BLEND_ADD)
-        spiral.blit(b,(0,0),None,BLEND_ADD)
-        spiral.blit(c,(0,0),None,BLEND_ADD)
-        spiral.set_alpha(self.config.alpha)
+        if (self.config.spiral_image != ""):
+                tmpspiral=pygame.image.load(self.config.spiral_image).convert()
+                scale=1.0
+                spiral = pygame.transform.rotozoom(tmpspiral,0,scale)
+        elif True:
+        	spiral_size = int(1.2* max(self.x_size, self.y_size))
+        	spiral = pygame.Surface((spiral_size, spiral_size))
+        	dots = []
+		offset_x = []
+		offset_y = []
+        	for t in range(1, spiral_size*self.config.scale):
+            		t *= 0.5 / self.config.scale
+            		x =  t * t * math.cos(t)
+            		y =  t * t * math.sin(t)
+            		dots.append((int(x+spiral_size/2.0), int(y+spiral_size/2.0)))
+            		self.process_events()
+        	pygame.draw.lines(spiral, self.config.color, False, dots, 4)
+        	a = pygame.transform.rotate(spiral,90)
+        	b = pygame.transform.rotate(spiral,180)
+        	c = pygame.transform.rotate(spiral,270)
+        	spiral.blit(a,(0,0),None,BLEND_ADD)
+        	spiral.blit(b,(0,0),None,BLEND_ADD)
+        	spiral.blit(c,(0,0),None,BLEND_ADD)
+		spiral.set_colorkey(None)
+       	spiral.set_alpha(self.config.alpha)
         self.spirals=[]
-        for t in xrange(0,90):
-            self.spirals.append(pygame.transform.rotate(spiral,-t))
+        for t in xrange(0,self.config.spiral_range/self.config.spiral_step):
+            self.spirals.append(pygame.transform.rotate(spiral,-t*self.config.spiral_step))
         self.clear_screen()
         self.spirals_index=0
 
@@ -329,6 +378,17 @@ class Spiral (NSObject) :
             #scale = min(scale,1.0)
             self.images[i] = pygame.transform.rotozoom(self.images[i],0,scale)
 
+    def scale_unshuffled_images(self):
+        x = self.x_size * 4.0 / 5.0
+        y = self.y_size * 4.0 / 5.0
+        for i in range(0,len(self.unshuffled_images)):
+            pic_x,pic_y = self.unshuffled_images[i].get_size()
+            x_factor = x / pic_x 
+            y_factor = y / pic_y
+            scale = min(x_factor, y_factor)
+            #scale = min(scale,1.0)
+            self.unshuffled_images[i] = pygame.transform.rotozoom(self.unshuffled_images[i],0,scale)
+
     def rescale(self):
         self.scale_font()
         if self.images_initialized:
@@ -338,9 +398,21 @@ class Spiral (NSObject) :
         self.clear_screen()
         self.draw_text("Loading images")
         image_file_names = os.listdir(self.config.image_dir)
-        self.images = [self.load_image(i) for i in image_file_names
-                       if i.endswith(".jpg")]
+	list_number=0
+	self.hold_image_index=-1
+	self.image_lookup={'':-1}
+        self.images=[]
+	self.unshuffled_images=[]
+	for i in image_file_names:
+		if i.endswith(".jpg"):
+			self.image_lookup[i]=list_number
+			list_number=list_number+1
+			self.images.append(self.load_image(i))
+			self.unshuffled_images.append(self.load_image(i))
+        #self.images = [self.load_image(i) for i in image_file_names
+        #               if i.endswith(".jpg")]
         self.scale_images()
+        self.scale_unshuffled_images()
         if self.config.shuffle_images:
             random.shuffle(self.images)
         else:
@@ -423,7 +495,10 @@ class Spiral (NSObject) :
                         self.advance_text()
             self.clear_screen(True)
             if self.draw_image:
-                self.draw_surface(self.images[self.image_index],True)
+		if (self.hold_image_index >= 0):
+			self.draw_surface(self.unshuffled_images[self.hold_image_index],True)
+		elif True:
+                	self.draw_surface(self.images[self.image_index],True)
             if self.draw_spiral:
                 try:
                     self.draw_surface(self.spirals[self.spirals_index],True)
@@ -439,6 +514,8 @@ class Spiral (NSObject) :
                 self.draw_text(self.spoken_word,True)
             elif self.draw_words: #and ticks['words'] != self.config.frequencies['words']:
                 self.draw_text(self.varsub(word),True)
+	    if (self.persistent_text != ""):
+                        self.draw_surface(self.persistent_word,True)
             pygame.display.flip()
             self.process_events()
             
