@@ -1,6 +1,6 @@
-# Hypnotic Spiral 3.0
-Copyright (C) 2006, 2007 by Yonah Arakoslav
-yonah.arakoslav@yahoo.com
+# Hypnotic Spiral 3.4
+Copyright (C) 2006-2018 by Yonah Arakoslav
+arakoslav@protonmail.com
 
 ## New in this version
 

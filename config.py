@@ -4198,7 +4198,7 @@ class Controller (Tonight):
     name = "2017 Controller"
     description="""Less tg"""
     music = "music6.mp3"
-    image_dir = "whatYoureFor/"
+    image_dir = "images/"
     # [(2560, 1440), (2048, 1152), (1600, 1200), (1600, 900), (1344, 1008), (1280, 960), (1344, 756), (1280, 720), (1024, 768), (1024, 576), (800, 600), (640, 480)]
     size = (1600,900)
     fullscreen = False
@@ -4378,15 +4378,15 @@ class TestChant (Controller):
 
 configs += [TestChant]
 
-from whatYoureFor import WhatYoureFor
+#from whatYoureFor import WhatYoureFor
 
-configs += [WhatYoureFor]
+#configs += [WhatYoureFor]
 
 class Adapting (Controller):
     name = "2018 Controller"
     description="""Editable"""
     music = "music6.mp3"
-    image_dir = "whatYoureFor/"
+    image_dir = "images/"
     # [(2560, 1440), (2048, 1152), (1600, 1200), (1600, 900), (1344, 1008), (1280, 960), (1344, 756), (1280, 720), (1024, 768), (1024, 576), (800, 600), (640, 480)]
     size = (1600,900)
     fullscreen = False
