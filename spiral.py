@@ -37,6 +37,8 @@ except:
 
 try:
     import AppKit
+    class Master (AppKit.NSObject):
+        pass
     v = AppKit.NSSpeechSynthesizer.alloc().initWithVoice_("com.apple.speech.synthesis.voice.Vicki")
     def speak(word): 
 	if 0==v.isSpeaking(): 
@@ -55,6 +57,8 @@ except:
     def speaking(): return False
     def setDelegate(s): pass
     def listenFor(words): pass
+    class Master (object):
+        pass
     
 def pick_config(cs):
     if len(cs) == 0:
@@ -115,7 +119,7 @@ def color_rotate(color):
     (x, y, z) = color
     return (z, x, y)
 
-class Spiral  (AppKit.NSObject):
+class Spiral  (Master):
     def init_globals(self):
         self.flags = HWSURFACE | DOUBLEBUF | ASYNCBLIT
         self.waiting = False
@@ -601,7 +605,10 @@ if __name__=='__main__':
     print "Waiting %i:%i." % (delay/60,delay%60)
     time.sleep(delay)
     print usage
-    s = Spiral.alloc().init()
-    s.__init__(c)
-    setDelegate(s)
+    try:
+        s = Spiral.alloc().init()
+        s.__init__(c)
+        setDelegate(s)
+    except:
+        s = Spiral(c)
     s.run_spiral()
