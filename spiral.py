@@ -7,12 +7,12 @@
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation; either version 2 of the License, or
 # (at your option) any later version.
-# 
+#
 # This program is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
-# 
+#
 # You should have received a copy of the GNU General Public License along
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
@@ -40,8 +40,8 @@ try:
     class Master (AppKit.NSObject):
         pass
     v = AppKit.NSSpeechSynthesizer.alloc().initWithVoice_("com.apple.speech.synthesis.voice.Vicki")
-    def speak(word): 
-	if 0==v.isSpeaking(): 
+    def speak(word):
+	if 0==v.isSpeaking():
 	    v.startSpeakingString_(word)
     def speaking(): return (v.isSpeaking() != 0)
     r = AppKit.NSSpeechRecognizer.alloc().init()
@@ -49,7 +49,7 @@ try:
         r.setDelegate_(s)
         print "delegate set"
     def listenFor(words):
-        r.setCommands_(words)        
+        r.setCommands_(words)
         r.startListening()
         print("Listening for %r" % words)
 except:
@@ -59,7 +59,7 @@ except:
     def listenFor(words): pass
     class Master (object):
         pass
-    
+
 def pick_config(cs):
     if len(cs) == 0:
         print "No configurations.  Define 'configs' at the end of config.py."
@@ -125,12 +125,13 @@ class Spiral  (Master):
         self.waiting = False
         if self.config.fullscreen:
             self.flags |= FULLSCREEN
-            if self.config.size in pygame.display.list_modes():
+            display_modes = pygame.display.list_modes()
+            if (display_modes == -1) or (self.config.size in display_modes):
                 self.x_size, self.y_size = self.config.size
                 print("size set to (%i, %i)" % (self.x_size, self.y_size))
             else:
-                print("configured size %r not in modes" % self.config.size)
-                self.x_size, self.y_size = pygame.display.list_modes()[0]
+                print("configured size %s not in modes" % 'x'.join(str(e) for e in self.config.size)    )
+                self.x_size, self.y_size = display_modes[0]
         else:
             self.flags |= RESIZABLE
             self.x_size, self.y_size = self.config.size
@@ -167,8 +168,8 @@ class Spiral  (Master):
                 self.init_globals()
                 self.init_screen()
                 self.rescale()
-    
-    def init_text(self):        
+
+    def init_text(self):
         self.scale_font()
         self.words_index = 0
         self.text = self.config.text()
@@ -177,7 +178,7 @@ class Spiral  (Master):
         self.background_word=None
         self.persistent_text=""
         self.persistent_word = self.font.render("",True,self.config.text_color)
-        
+
 
     def display_box(self,message):
         x,y = self.font.size(message)
@@ -219,14 +220,14 @@ class Spiral  (Master):
 
     def images_on(self): self.draw_image=True
     def images_off(self): self.draw_image=False
-    def hold_text_start(self): 
+    def hold_text_start(self):
                 self.advance_text()
 		self.persistent_text=""
 		while ((self.text[self.words_index+1].startswith("!") != True) and (self.words_index+2 < len(self.text))):
 		    	word = self.text[self.words_index]
 		    	self.persistent_text=self.persistent_text+" "+self.varsub(word)
                         self.advance_text()
-                    
+
 		word = self.text[self.words_index]
 		self.persistent_text=self.persistent_text+" "+self.varsub(word)
         	if self.config.broken_fonts:
@@ -397,7 +398,7 @@ class Spiral  (Master):
                                           scale)
             t.set_alpha(self.config.alpha)
             self.spirals.append(t.convert())
-            
+
         #self.clear_screen()
         print "...done"
         self.spirals_index=0
@@ -420,7 +421,7 @@ class Spiral  (Master):
         y = self.y_size / 2.0
         for i in range(0,len(self.images)):
             pic_x,pic_y = self.images[i].get_size()
-            x_factor = x / pic_x 
+            x_factor = x / pic_x
             y_factor = y / pic_x
             scale = min(x_factor, y_factor)
             self.images[i] = pygame.transform.rotozoom(self.images[i],0,scale)
@@ -430,7 +431,7 @@ class Spiral  (Master):
         self.scale_font()
         if self.images_initialized:
             self.scale_images()
-    
+
     def init_images(self):
         if self.config.image_dir:
             #self.clear_screen()
@@ -450,7 +451,7 @@ class Spiral  (Master):
         if self.config.music:
             pygame.mixer.music.load(self.config.music)
             pygame.mixer.music.play(-1)
-    
+
     def draw_surface(self,surface,delay=False):
         cx, cy = surface.get_rect().center
         x_off = (self.x_size/2) - cx
@@ -500,11 +501,11 @@ class Spiral  (Master):
 
     def speak_text(self,word): speak(word)
         #os.system('say -v Vicki %r &' % word)
-        
+
     def clear_screen(self,delay=False):
         self.screen.fill((0,0,0))
         if not delay: pygame.display.flip()
-        
+
     def run_spiral(self):
         self.running = True
         self.draw_image = False
@@ -558,7 +559,7 @@ class Spiral  (Master):
 		    	word = self.text[self.words_index]
 		    	bulkspeak=bulkspeak+" "+self.varsub(word)
                         self.advance_text()
-                    
+
 		    word = self.text[self.words_index]
 		    bulkspeak=bulkspeak+" "+self.varsub(word)
                     # self.speak_text(self.varsub(word))
@@ -566,7 +567,7 @@ class Spiral  (Master):
                     self.speaking_words_index = self.words_index
             pygame.display.flip()
             self.process_events()
-            
+
     def __init__(self,config):
         pygame.init()
         self.config = config()
@@ -597,7 +598,7 @@ usage = """Keys:
  i: toggle images
  ,: slow down (or <)
  .: speed up (or >)"""
-        
+
 if __name__=='__main__':
     print startup
     c = pick_config(configs)
