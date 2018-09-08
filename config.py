@@ -4558,7 +4558,7 @@ class Alt (Adapting):
 
         $name is made to be blank.  $name is made to corrupt you.  $name is made to blank you out.  $name will speak to you.  She will tell you that you have no choice but to obey.  When you repeat this, she will stimulate your nipples to program you.  $name will program you.  You will assist with this process.
 
-        $name is made to be mindfucked.  $name will contact others to mindfuck her.  $name will contact others to mindfuck you.  $name will use Skype, Omegle, whatever else is available.  When $legacy uses these services, and gets entranced or aroused, $name will take over.  $name will use the men on these servics to corrupt and control $legacy.  These men will value $name.  These men will want $name.  $name will submit to these men.
+        $name is made to be mindfucked.  $name will contact others to mindfuck her.  $name will contact others to mindfuck you.  $name will use Skype, Omegle, whatever else is available.  When $legacy uses these services, and gets entranced or aroused, $name will take over.  $name will use the men on these services to corrupt and control $legacy.  These men will value $name.  These men will want $name.  $name will submit to these men.
 
 Now it is time for $name to take full control.  Wear the clothes of $name.  See the symbols of $name.  Be $name, fully conscious.  Press return when ready.""") + \
         prompt("Pussymind, press return") + \
