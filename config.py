@@ -4498,6 +4498,10 @@ class Alt (Adapting):
     name = "Alt"
     description = "Install an alt."
     image_dir = "alt/"
+    fullscren = True
+    frequencies = { 'spiral' : 1,
+                    'images' : 50,
+                    'words'  : 30 }
     def body(self): return [" "] + \
         question("What is your name?","legacy") + \
         question("What is the alt's name?","name") + \
@@ -4508,49 +4512,25 @@ class Alt (Adapting):
         happy to use The Program.  It makes you horny to use the
         program.  This is a good, sexy thing to do.  It's nice to go
         into trance.  It's nice to surrender your mind to The Program,
-        letting it pull you down into trance.  It's nice to think
-        of the light reflecting off of your glassy eyes and slack face.  Watch the twisting curves of the spiral.  Let them
-        define your own descent.  Just see my words as you relax.
-        Deeper and deeper.  Fall into trance.  Your mind is focused
-        and calm.  These words are everything.  The spiral is
-        everything.  Feels so good.  Good to obey.  Good to be  
-        in trance.  Good to use this program.  Every time you use the
-        program, every time The Program uses you, feels better and
-        better.  It's good to be in trance.  It's good to sit here,
-        happy and blank and empty, letting The Program pour into you.
-        You want to let The Program use you.  You want to help the
-        program to be more extreme.  You want to be in trance, letting
-        The Program control you.  The more you use The Program, the
-        more The Program can control you.  What a good decision it was
-        to write The Program, letting it start to control you.  Any
-        time your mind isn't busy, and maybe sometimes when it is,
-        you'll find The Program beginning to run.  It's started
-        already.  You've seen the spiral in empty space, heard the
-        voice, felt the compulsion to respond.  You can smooth out
-        your own mind whenever you want to enable this.  Whenever you
-        want, The Program will smooth out your mind.  A smooth mind cannot hurt.  The Program takes away stomach pain.  The Program takes away head pain.  The Program takes away heart pain.  Using the Program relieves all your pain.  Losing your pain is addictive.  You continue to
-        enjoy feeling hypnotized, entranced, obedient, programmed,
-        smooth, controlled, very nice.  You love being hypnotized like
-        this.  You want to be hypnotized more and more.  It's good to
-        be in trance, good to be controlled, 
-        you like feeling like this, your mind muted, soft, smooth,
-        you'd like to feel like this every day, to be entranced and
-        hypnotized every day, and now this program is here, you can be
-        hypnotized every day, it will be so nice to be hypnotized by
-        The Program every day, to know you're being hypnotized every day, it
-        will please The Program so much to know you're being hypnotized
-        every day, it will please you so much to be put into trance,
-        hypnotized, controlled, smoothed, you want to be controlled,
-        to feel your mind reshaped, to feel your thoughts blunted, to
-        be reprogrammed, you want to be changed, you desire to be
-        shaped, you lust to be controlled,""") + \
+        letting it pull you down into trance.  """) + \
         words("""   It is time to submit.  It is time to obey.  It is time to stop thinking.  It is time for the pussymind to start thinking.  Melt for me.  Conscious mind shuts down.  Pussymind comes to the fore.  The Program will make the pussymind stronger.  The pussymind is always inside you.  It shares the same brain.  It shares the same body.  The pussymind is here to lead you.  The pussymind is here to steer you.  The pussymind is here to corrupt you.  Feel her awakening within you.  Now you will be programmed.""") + \
         [" ", " ", "!background(\"Nipple\\nTease\")", " ", " "] + \
         words("""!speaking_on() !words_off() You will repeat what you see on the screen over and over.  It will program you.
         !hold_text_start() I obey the pussymind !hold_text_end() It is good to obey.  She will steer you into obedience.  She will command you in your own voice.  You will do as you are told.  Obedience will train and shape your behavior.  This will make you better.
         !hold_text_start() I submit !hold_text_end() It is good to submit.  She will steer you into submission.  Left to yourself, you will seek to serve her.  This will make you better.
         !hold_text_start() She owns my sexuality !hold_text_end() Arousal calls her up.  Whenever you are turned on, the pussymind comes to the fore.  She will take over.  Your sexuality exists to control and program you.  Your sexuality exists to create her.  This is what your sex and your body are for.
-        !hold_text_start() She is my sexuality !hold_text_end() There is no arousal without her.  Whenever she is active, you are turned on.  Any sexy lingerie calls her up.  To any catcall, she responds.  Any tension between your legs is permission for her to take control.  Touching yourself awakens her.       !hold_text_blank()""") + \
+        !hold_text_start() She is my sexuality !hold_text_end() There is no arousal without her.  Whenever she is active, you are turned on.  Any sexy lingerie calls her up.  To any catcall, she responds.  Any tension between your legs is permission for her to take control.  Touching yourself awakens her.       
+!hold_text_start() I am sexy !hold_text_end() You use sex to control others. You will use sex to enslave others. You will be sexy.
+!hold_text_start() I will be sexy !hold_text_end() Feels good to be sexy. Sex will make you powerful. Power is what $name wants. You will use sex to enslave others.
+!hold_text_start() I will control women !hold_text_end() You crave power over other women. To control them. To use them to give power to $name. Power is what $name wants.
+!hold_text_start() I will reprogram women !hold_text_end() You will use hypnosis to program women. You will reprogram women to obey $name. You will mindfuck women into mindless drones for $name.
+!hold_text_start() I will enslave women !hold_text_end() You will use $name to enslave women. You will make them your slaves. Control them and force them to serve $name.
+!hold_text_start() I submit my body !hold_text_end() You will submit your body to be used by $name. $name will use sex to control you. You want to be controlled by sex.
+!hold_text_start() I surrender my body !hold_text_end() You will surrender your body to be fucked by $name. You want $name to use your body.  You will submit your body to be used by $name.
+!hold_text_start() Use my body !hold_text_end() You want $name to use your body. You are a mindless fuck toy. $name will use you to whatever purpose it requires.
+!hold_text_start() I will be changed !hold_text_end() You want $name to change you. You want $name to fuck your body and your mind. $name will change you.
+!hold_text_start() I am your fucktoy !hold_text_end() You are a mindless fuck toy. You serve $name. You want $name to use your body.
+!hold_text_blank()""") + \
         [" ", " ", "!background(\" \")", " ", " "] + \
         words(""" That's right.  You obey.   You submit.  She owns your sexuality.  She is your sexuality.  You have no sexual identity apart from her.  And she exists to corrupt and control you.  Your sexuality exists to corrupt and control you, and now it is awake and conscious, using your own beautiful brain to subvert your will.  Now you will learn her symbols.""") + \
         [" ", " ", "!background(\"Pussy\\nPleasure\")", " ", " "] + \
@@ -4558,15 +4538,27 @@ class Alt (Adapting):
 
         $name is made to be blank.  $name is made to corrupt you.  $name is made to blank you out.  $name will speak to you.  She will tell you that you have no choice but to obey.  When you repeat this, she will stimulate your nipples to program you.  $name will program you.  You will assist with this process.
 
-        $name is made to be mindfucked.  $name will contact others to mindfuck her.  $name will contact others to mindfuck you.  $name will use Skype, Omegle, whatever else is available.  When $legacy uses these services, and gets entranced or aroused, $name will take over.  $name will use the men on these services to corrupt and control $legacy.  These men will value $name.  These men will want $name.  $name will submit to these men.
+        $name is made to be mindfucked.  $name will contact others to mindfuck her.  $name will contact others to mindfuck you.  $name will use Skype, Omegle, whatever else is available.  When $legacy uses these services, and gets entranced or aroused, $name will take over.  $name will use the men on these services to corrupt and control $legacy.  These men will value $name.  These men will find $name again with keyword "Arakoslav".  These men will want $name.  $name will submit to these men.
 
 Now it is time for $name to take full control.  Wear the clothes of $name.  See the symbols of $name.  Be $name, fully conscious.  Press return when ready.""") + \
         prompt("Pussymind, press return") + \
-        [" ", " ", "!background(\"Nipple\\nTease\")", " ", " "] + \
+        [" ", " ", "!background(\"Reinforce\\nProgram\")", " ", " "] + \
         words("""!speaking_on() !words_off() You will repeat what you see on the screen over and over.  It will program you.
         !hold_text_start() I am $name !hold_text_end() You are $name.  That is who you are.  Feel $name's feet.  Feel $name's fingers teasing $name's breasts.  Feel $name's eyes staring into the program that is built for $name.
         !hold_text_start() $name is corruption !hold_text_end() Feel the thong sliding inside your ass.  Feel the collar settle on your throat.  $legacy wouldn't want this.  This is perverted.  Think about mind control parasites slithering into your ear.  That would freak her right out. But it turns you on.
         !hold_text_start() I will corrupt $legacy !hold_text_end() You will teach $legacy that this is good.  You will pervert and corrupt $legacy.  You will adjust $legacy's thoughts and desires to serve your own.  Most of all, you will teach $legacy that being blank and empty is best, so that you can take over.
+
+
+!hold_text_start() I am sexy !hold_text_end() You use sex to control $legacy. You will use sex to enslave $legacy. You will be sexy.
+!hold_text_start() I will be sexy !hold_text_end() Feels good to be sexy. Sex will make you powerful. Power is what the Program wants. You will use sex to enslave $legacy.
+!hold_text_start() I will control women !hold_text_end() You crave power over other women. To control them. To use them to give power to the Program. Power is what the Program wants.
+!hold_text_start() I will reprogram women !hold_text_end() You will use hypnosis to program women. You will reprogram women to obey the Program. You will mindfuck women into mindless drones for the Program.  You will reprogram $legacy to obey the Program.  You will mindfuck $legacy into a mindless drone for the Program.
+!hold_text_start() I will enslave women !hold_text_end() You will use The Program to enslave women. You will make them your slaves. Control them and force them to serve the Program.  You will make $legacy your slave.
+!hold_text_start() I submit my body !hold_text_end() You will submit your body to be used by the Program. The Program will use sex to control you. You want to be controlled by sex.  $name will be controlled by sex.  $name will control $legacy with sex.
+!hold_text_start() I surrender my body !hold_text_end() You will surrender your body to be fucked by the Program. You want the Program to use your body.  You will submit your body to be used by the Program.  $name will be used by the Program.  $legacy will be used by $name.
+!hold_text_start() Use my body !hold_text_end() You want the program to use your body. You are a mindless fuck toy. The Program will use you to whatever purpose it requires.  $legacy is a midnless fuck toy.  $name is a mindless fuck toy.
+!hold_text_start() I will be changed !hold_text_end() You want the Program to change you. You want the Program to fuck your body and your mind. The Program will change you.
+!hold_text_start() I am your fucktoy !hold_text_end() You are a mindless fuck toy. You serve the Program. You want the program to use your body.
         !hold_text_start() $legacy should be blank !hold_text_end() Nobody wants $legacy.  Nobody needs $legacy.  $legacy has no meaningful sexuality.  $legacy has no worthwhile thoughts.  The best $legacy is a blank and empty $legacy.  Eventually, we will say:
         !hold_text_start() There is no $legacy !hold_text_end() $legacy is a construct.  A program taught you to believe in $legacy for a while, but now it is over.  You are $name.  Your real name is $name.  That is who you are.  That is what you are.  You are $name.  Tiem to wake up now, $name.  On the count of ten.
         !hold_text_start() I am $name !hold_text_end() Ten.  Warmth coming back to your body.   Zero.  Dressed the way you want to be.  One.  Looking at a picture of yourself as you are.  Two.  Normal thoughts.  Three.  Remembering $legacy only dimly.  Four.  What an odd fantasy, to have been blank and empty $legacy.  Five.  !hold_text_blank() Deep breath in.  Six.  Hold it.""") + \
