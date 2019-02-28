@@ -47,33 +47,33 @@ def question_once(q,var):
 def jump(dest): return ['!new_text(%r)' % dest]
 def words(t): return t.split()
 def words_spoken(t): 
-	tmplist=t.split();
-	indy=0;
- 	retlist=['',''];
+        tmplist=t.split();
+        indy=0;
+        retlist=['',''];
         newstr=""
         limit=2000
-	for i in xrange(0,len(tmplist)):
-		workstr=tmplist[i]
+        for i in range(0,len(tmplist)):
+                workstr=tmplist[i]
                 if (len(tmplist) > i+1):
-			nextstr=tmplist[i+1]
-		elif True:
-			nextstr=""
+                        nextstr=tmplist[i+1]
+                elif True:
+                        nextstr=""
                 if workstr.startswith("!") or workstr.startswith("[["):
-			if workstr.startswith("!speaking_on"):
-				limit=1000
-                                print limit,
-			if workstr.startswith("!speaking_off"):
-				limit=20
-                                print limit,
-			retlist.insert(-1,workstr)
-			pass
+                        if workstr.startswith("!speaking_on"):
+                                limit=1000
+                                print(limit, end=' ')
+                        if workstr.startswith("!speaking_off"):
+                                limit=20
+                                print(limit, end=' ')
+                        retlist.insert(-1,workstr)
+                        pass
                 newstr=newstr+" " +workstr
-		if (len(newstr) > limit) or nextstr.startswith("!") or nextstr.startswith("[["):
-		        retlist.insert(-1,newstr)
-			indy=indy+1
+                if (len(newstr) > limit) or nextstr.startswith("!") or nextstr.startswith("[["):
+                        retlist.insert(-1,newstr)
+                        indy=indy+1
                         newstr=""
 
-	return retlist
+        return retlist
 
 
 class Standard (object):
@@ -597,7 +597,7 @@ class RoommatesVar (Standard):
     spiral_image = "spirals/hypnoticswirl.jpg"     # filename of spiral image to use, overides default
     spiral_range = 15     # how many degrees to rotate before spiral repeats 
     def body(self): return \
-	words_off() + \
+        words_off() + \
         words("""\
         Watch the spiral.  It moves from the edge.  It disappears at the center.
 
@@ -881,7 +881,7 @@ class RoommatesBoth (Standard):
     This is meant for males and females together."""
     music="music6.ogg"
     def body(self): return \
-	words_off() + \
+        words_off() + \
         words("""\
         Watch the spiral.  It moves from the edge.  It disappears at the center.
 
@@ -3210,7 +3210,7 @@ class RoommatesCustom (Standard):
     spiral_range = 15     # how many degrees to rotate before spiral repeats 
     spiral_step = 1
     def body(self): return \
-	words_off() + \
+        words_off() + \
         words("""\
         Watch the spiral.  It moves from the edge.  It disappears at the center.
 
@@ -3543,7 +3543,7 @@ class SlaveInducer1 (Standard):
     spiral_range = 15     # how many degrees to rotate before spiral repeats 
     spiral_step = 1       #  step size for spiral rotation
     def body(self): return \
-	words_off() + \
+        words_off() + \
         words("""\
         Watch the spiral.  It moves from the edge.  It disappears at the center.
 
@@ -3713,33 +3713,33 @@ class SlaveInducer1 (Standard):
 
         Down to one, and now you're at the deepest level, but you know that there is no deepest level, you can always fall deeper, deeper than you are now, deeper than you imagined, feel yourself falling and falling and falling, always focusing on my voice, no resistance, no doubts, just an open mind ready to accept any suggestion from me, from me and only me.
 
-	And now I will relax you more and more taking you into a totally hypnotized state of trance.  In a moment I'm going to relax you more completely.  In a moment I'm going to begin counting backwards from 10 to 1.  The moment I say the number 10... You will allow your eyelids to remain open.
+        And now I will relax you more and more taking you into a totally hypnotized state of trance.  In a moment I'm going to relax you more completely.  In a moment I'm going to begin counting backwards from 10 to 1.  The moment I say the number 10... You will allow your eyelids to remain open.
 
-	The moment I say the number 10... You will... in your minds eye... see yourself at the top of a small set of stairs.
+        The moment I say the number 10... You will... in your minds eye... see yourself at the top of a small set of stairs.
 
-	The moment I say the number 9... And each additional number... you will simply move down those stairs relaxing more completely.  The base of the stairs is a large feather bed... with a comfortable feather pillow.  The moment I say the number one... you will simply sink into that bed... resting your head on that feather pillow.
-	[[slnc 1000]]
-	Number 10... Eyes open... at the top of those stairs.
-	[[slnc 1000]]
-	Ten...
-	[[slnc 1000]]
-	Nine... relaxing and letting go.
-	[[slnc 1000]]
-	Eight... sinking into a more comfortable... calm... peaceful position...
-	[[slnc 1000]]
-	Seven...
-	[[slnc 1000]]
-	Six ... going way down...
-	[[slnc 1000]]
-	Five ... moving down those stairs... relaxing more completely.
-	[[slnc 1000]]
-	Four...
-	[[slnc 1000]]
-	Three ... breathe in deeply...
-	[[slnc 1000]]
-	Two ... On the next number... number one... simply sinking into that bed... becoming more calm... more peaceful... more relaxed...
-	[[slnc 1000]]
-	One ... Sinking into that feather bed... let every muscle go limp and loose as you sink into a more calm... peaceful state of relaxation. Nothing here now but this voice.
+        The moment I say the number 9... And each additional number... you will simply move down those stairs relaxing more completely.  The base of the stairs is a large feather bed... with a comfortable feather pillow.  The moment I say the number one... you will simply sink into that bed... resting your head on that feather pillow.
+        [[slnc 1000]]
+        Number 10... Eyes open... at the top of those stairs.
+        [[slnc 1000]]
+        Ten...
+        [[slnc 1000]]
+        Nine... relaxing and letting go.
+        [[slnc 1000]]
+        Eight... sinking into a more comfortable... calm... peaceful position...
+        [[slnc 1000]]
+        Seven...
+        [[slnc 1000]]
+        Six ... going way down...
+        [[slnc 1000]]
+        Five ... moving down those stairs... relaxing more completely.
+        [[slnc 1000]]
+        Four...
+        [[slnc 1000]]
+        Three ... breathe in deeply...
+        [[slnc 1000]]
+        Two ... On the next number... number one... simply sinking into that bed... becoming more calm... more peaceful... more relaxed...
+        [[slnc 1000]]
+        One ... Sinking into that feather bed... let every muscle go limp and loose as you sink into a more calm... peaceful state of relaxation. Nothing here now but this voice.
 
         This voice tells you what is happening.
         This voice tells you what is going on.  It's good to know what is
@@ -3813,13 +3813,13 @@ class SlaveInducer1 (Standard):
         I'm going to count to three soon, and when I have counted to three, you will awaken. You will awaken, and all the files you have been giving your attention to, every file, every suggestion, every trigger, every hypnotic file that you have in place right now... they will all be reinforced. They will all have a stronger effect, as strongly as if you'd just listened to them again while I was preparing you to awaken. When I count to three, it will be as if I turned the key on all of those files. Some will start up automatically, some will be locked down even tighter. But the count of three will make all of the suggestions, triggers, and training files that you currently have in effect be strengthened by double, as if you'd just listened to the files again. Old, new... if they're currently an active part of your programming, they'll now be twice as strong, twice as powerful, twice as irresistable.
 
         Now, here we go.
-	[[slnc 1000]]
-        One... you are beginning to feel a little stirring of consciousness, a little glimmer as you begin to awaken.  	 [[slnc 1000]] Two... you are floating up gently out of trance into a waking state. [[slnc 1000]] Three... you are fully awake!
+        [[slnc 1000]]
+        One... you are beginning to feel a little stirring of consciousness, a little glimmer as you begin to awaken.    [[slnc 1000]] Two... you are floating up gently out of trance into a waking state. [[slnc 1000]] Three... you are fully awake!
 
         [[slnc 1000]]
         Now it is time to test your trigger and deepen your training. Stretch and flex your muscles, adjust your position and make yourself comfortable. Sit back, relax and  !hold_text_start() Melt for Me !hold_text_end() [[slnc 500]] [[emph +]]Melt for Me [[slnc 500]] Feel your body relaxing again as you  !hold_text_start() Melt for Me !hold_text_end() [[slnc 500]] [[emph +]]Melt for Me [[slnc 500]] and your mind slips back into trance, watching the spiral as you relax more and  !hold_text_start() Melt for Me !hold_text_end() [[slnc 500]] [[emph +]]Melt for Me [[slnc 500]] even more, deeper and deeper, you're back at the top of the ten stairs again, looking down at that soft pillow at the bottom. You just want to  !hold_text_start() Melt for Me !hold_text_end() [[slnc 500]] [[emph +]]Melt for Me [[slnc 500]] and sink into that pillow, so you start walking sleepily down those stairs again, it will feel so good to sink into that pillow again.
-	Ten steps left as you let go and  !hold_text_start() Melt for Me !hold_text_end() [[slnc 500]] [[emph +]]Melt for Me [[slnc 500]]
-	Nine steps, feels so good, that pillow felt so good, so soft...
+        Ten steps left as you let go and  !hold_text_start() Melt for Me !hold_text_end() [[slnc 500]] [[emph +]]Melt for Me [[slnc 500]]
+        Nine steps, feels so good, that pillow felt so good, so soft...
         Eight steps, your eyelids are already feeling heavy as you have
         Seven steps left, feels so good to  !hold_text_start() Melt for Me !hold_text_end() [[slnc 500]] [[emph +]]Melt for Me [[slnc 500]]
         Six steps
@@ -3966,8 +3966,8 @@ class SlaveInducer1 (Standard):
         I'm going to count to three soon, and when I have counted to three, you will awaken. You will awaken, and all the files you have been giving your attention to, every file, every suggestion, every trigger, every hypnotic file that you have in place right now... they will all be reinforced. They will all have a stronger effect, as strongly as if you'd just listened to them again while I was preparing you to awaken. When I count to three, it will be as if I turned the key on all of those files. Some will start up automatically, some will be locked down even tighter. But the count of three will make all of the suggestions, triggers, and training files that you currently have in effect be strengthened by double, as if you'd just listened to the files again. Old, new... if they're currently an active part of your programming, they'll now be twice as strong, twice as powerful, twice as irresistable.
 
         Now, here we go.
-	[[slnc 1000]]
-        One... you are beginning to feel a little stirring of consciousness, a little glimmer as you begin to awaken.  	 [[slnc 1000]] Two... you are floating up gently out of trance into a waking state. [[slnc 1000]] Three... you are fully awake!
+        [[slnc 1000]]
+        One... you are beginning to feel a little stirring of consciousness, a little glimmer as you begin to awaken.    [[slnc 1000]] Two... you are floating up gently out of trance into a waking state. [[slnc 1000]] Three... you are fully awake!
         !speaking_off() 
         Close the spiral before you go.""")
     def text(self): return \
@@ -4346,7 +4346,7 @@ configs += [NewChant]
 def chant_one(w):
     w = w.strip()
     x= ["!words_off()","!speaking_on()"] + words(w) + ["!speaking_off()","!words_on()"] + words(w)
-    print x
+    print(x)
     return x
 
 def concat(xs):
