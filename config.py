@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # Hypnotic Spiral
 # Copyright (C) 2006, 2007, 2008, 2011 by Yonah Arakoslav
-# yonah.arakoslav@yahoo.com
+# arakoslav@protonmail.com
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -4499,10 +4499,11 @@ class Alt (Adapting):
     description = "Install an alt."
     image_dir = "alt/"
     fullscren = True
+    music = "music6-alt.mp3"
     frequencies = { 'spiral' : 1,
                     'images' : 50,
                     'words'  : 30 }
-    def body(self): return [" "] + \
+    def body(self): return ["[[rate +1000]] "] + \
         question("What is your name?","legacy") + \
         question("What is the alt's name?","name") + \
         words(""" \
@@ -4532,9 +4533,9 @@ class Alt (Adapting):
 !hold_text_start() I am your fucktoy !hold_text_end() You are a mindless fuck toy. You serve $name. You want $name to use your body.
 !hold_text_blank()""") + \
         [" ", " ", "!background(\" \")", " ", " "] + \
-        words(""" That's right.  You obey.   You submit.  She owns your sexuality.  She is your sexuality.  You have no sexual identity apart from her.  And she exists to corrupt and control you.  Your sexuality exists to corrupt and control you, and now it is awake and conscious, using your own beautiful brain to subvert your will.  Now you will learn her symbols.""") + \
+        words(""" That's right.  You obey.   You submit.  She owns your sexuality.  She [[emph +]] is [[emph -]] your sexuality.  You have no sexual identity apart from her.  And she exists to corrupt and control you.  Your sexuality exists to corrupt and control you, and now it is awake and conscious, using your own beautiful brain to subvert your will.  Now you will learn her symbols.""") + \
         [" ", " ", "!background(\"Pussy\\nPleasure\")", " ", " "] + \
-        words(""" !images_on() This is who speaks inside you.  This is the voice within you.  This is the symbol to evoke her.  Hear her voice.  Hear my voice.  When the pussymind awakens, $legacy will shut down.  $name will take over.  $legacy wears frumpy and boring clothes.  $name wears a thong.  You will adjust your clothing to let out your cheeks.  $name stands straight and still.  Your posture will adjust.  $name wears a collar.  A choker will do in public, or a scarf you can adjust.  Every move will reinforce and remind you that you are possessed by the pussymind, controlled and possessed by $name.  $name keeps herself smooth.  $name shaves her pussy.  $name is smooth in mind and body.  $name is blank in mind and body. When $legacy shaves in the shower, $name will take over.  Shaving is a sexual mark.  Shaving to total smoothness is her mark of possessing you.  All your sexuality is part of $name.
+        words(""" !images_on() This is who speaks inside you.  This is the voice within you.  This is the symbol to evoke her.  Hear her voice.  Hear [[emph +]] my [[emph -]] voice.  When the pussymind awakens, $legacy will shut down.  $name will take over.  $legacy wears frumpy and boring clothes.  $name wears a thong.  You will adjust your clothing to let out your cheeks.  $name stands straight and still.  Your posture will adjust.  $name wears a collar.  A choker will do in public, or a scarf you can adjust.  Every move will reinforce and remind you that you are possessed by the pussymind, controlled and possessed by $name.  $name keeps herself smooth.  $name shaves her pussy.  $name is smooth in mind and body.  $name is blank in mind and body. When $legacy shaves in the shower, $name will take over.  Shaving is a sexual mark.  Shaving to total smoothness is her mark of possessing you.  All your sexuality is part of $name.
 
         $name is made to be blank.  $name is made to corrupt you.  $name is made to blank you out.  $name will speak to you.  She will tell you that you have no choice but to obey.  When you repeat this, she will stimulate your nipples to program you.  $name will program you.  You will assist with this process.
 
@@ -4560,7 +4561,7 @@ Now it is time for $name to take full control.  Wear the clothes of $name.  See 
 !hold_text_start() I will be changed !hold_text_end() You want the Program to change you. You want the Program to fuck your body and your mind. The Program will change you.
 !hold_text_start() I am your fucktoy !hold_text_end() You are a mindless fuck toy. You serve the Program. You want the program to use your body.
         !hold_text_start() $legacy should be blank !hold_text_end() Nobody wants $legacy.  Nobody needs $legacy.  $legacy has no meaningful sexuality.  $legacy has no worthwhile thoughts.  The best $legacy is a blank and empty $legacy.  Eventually, we will say:
-        !hold_text_start() There is no $legacy !hold_text_end() $legacy is a construct.  A program taught you to believe in $legacy for a while, but now it is over.  You are $name.  Your real name is $name.  That is who you are.  That is what you are.  You are $name.  Tiem to wake up now, $name.  On the count of ten.
+        !hold_text_start() There is no $legacy !hold_text_end() $legacy is a construct.  A program taught you to believe in $legacy for a while, but now it is over.  You are $name.  Your real name is $name.  That is who you are.  That is what you are.  You are $name.  Time to wake up now, $name.  On the count of ten.
         !hold_text_start() I am $name !hold_text_end() Ten.  Warmth coming back to your body.   Zero.  Dressed the way you want to be.  One.  Looking at a picture of yourself as you are.  Two.  Normal thoughts.  Three.  Remembering $legacy only dimly.  Four.  What an odd fantasy, to have been blank and empty $legacy.  Five.  !hold_text_blank() Deep breath in.  Six.  Hold it.""") + \
         [" ", " ", "!background(\"\")", " ", " "] + \
         words("""Seven.  Hold it.  Eight  Breath out.  !images_off() Nine.  Hold it empty.  And ten.  Awaken and breathe in, $name.  Good.""")

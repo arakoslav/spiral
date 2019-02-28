@@ -606,10 +606,11 @@ if __name__=='__main__':
     print "Waiting %i:%i." % (delay/60,delay%60)
     time.sleep(delay)
     print usage
-    try:
+#    try:
+    if True:
         s = Spiral.alloc().init()
         s.__init__(c)
         setDelegate(s)
-    except:
-        s = Spiral(c)
+#    except:
+        #s = Spiral(c)
     s.run_spiral()
