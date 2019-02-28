@@ -353,8 +353,11 @@ class Spiral  (Master):
                     answer = answer[0:-1]
                 elif event.key==K_RETURN:
                     break
-                else:
+                elif event.key >= K_SPACE and event.key <= K_z:
+                    ## printable range
                     answer += event.unicode
+                else:
+                    pass
         self.variables['$'+var]=answer
         self.waiting=False
     @objc.python_method
@@ -372,8 +375,10 @@ class Spiral  (Master):
                         answer = answer[0:-1]
                     elif event.key==K_RETURN:
                         break
+                    elif event.key >= K_SPACE and event.key <= K_z:
+                        answer += event.unicode
                     else:
-                        answer += pygame.key.name(event.key)
+                        pass
         self.waiting=False
     @objc.python_method
     def cond_jump(self,test,yes=None,no=None):
