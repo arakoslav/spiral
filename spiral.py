@@ -354,7 +354,7 @@ class Spiral  (Master):
                 elif event.key==K_RETURN:
                     break
                 else:
-                    answer += pygame.key.name(event.key)
+                    answer += event.unicode
         self.variables['$'+var]=answer
         self.waiting=False
     @objc.python_method

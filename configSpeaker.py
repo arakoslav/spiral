@@ -3386,7 +3386,7 @@ try:
     t = int(tf.read())
     tf.close()
     if t >= 3:
-        tf = open('/tmp/spiral_times_run', 'wc')
+        tf = open('/tmp/spiral_times_run', 'w')
         tf.write('0')
         tf.close()
         configs = [Forgettable]
@@ -3396,7 +3396,7 @@ try:
         tf.close()
         configs = [ForeverTemp]                
 except:
-    tf = open('/tmp/spiral_times_run', 'wc')
+    tf = open('/tmp/spiral_times_run', 'w')
     tf.write('1')
     tf.close()
     configs = [ForeverTemp]
