@@ -1,5 +1,4 @@
-#!/usr/bin/env python2.7
-#!/usr/bin/env python2.4
+#!/usr/bin/env python3
 # Speech-driven spiral
 # Copyright (C) 2006, 2007, 2011 by Yonah Arakoslav
 # yonah.arakoslav@yahoo.com
@@ -48,7 +47,7 @@ FRAMERATE = 30 # how often to check if playback has finished
 
 def pick_config(cs):
     if len(cs) == 0:
-        print "No configurations.  Define 'configs' at the end of config.py."
+        print("No configurations.  Define 'configs' at the end of config.py.")
         sys.exit(1)
     elif len(cs) == 1:
         return cs[0]
@@ -56,23 +55,23 @@ def pick_config(cs):
         for c in cs:
             if c.name == sys.argv[1]:
                 return c
-    print "Select a configuration:"
-    for i in xrange(0,len(cs)):
-        print "  %i) %s" % (i, cs[i].name)
+    print("Select a configuration:")
+    for i in range(0,len(cs)):
+        print("  %i) %s" % (i, cs[i].name))
         try:
             for line in textwrap.wrap(textwrap.dedent(cs[i].description)):
-                print "     %s" % line
+                print("     %s" % line)
         except:
             pass
     while 1:
         try:
-            input = raw_input('> ')
-            return cs[int(input)]
+            inp = input('> ')
+            return cs[int(inp)]
         except KeyboardInterrupt:
-            print
+            print()
             sys.exit(0)
         except:
-            print "I didn't understand that.  Please try again."
+            print("I didn't understand that.  Please try again.")
 
 # From http://www.pygame.org/pcr/hollow_outline/index.php
 def textHollow(font, message, fontcolor):
@@ -102,6 +101,7 @@ def textOutline(font, message, fontcolor, outlinecolor):
     return img
 
 class Spiral (NSObject) :
+    @objc.python_method
     def init_screen(self):
         flags = HWSURFACE | DOUBLEBUF | ASYNCBLIT
         if self.config.fullscreen:
@@ -116,25 +116,26 @@ class Spiral (NSObject) :
             self.x_size, self.y_size = self.config.size
         self.screen = pygame.display.set_mode((self.x_size, self.y_size),flags)
 
+    @objc.python_method
     def process_events(self):
         for event in pygame.event.get():
             if event.type == KEYDOWN:
-                if event.unicode == 'f':
+                if event.key == K_f:
                     self.config.fullscreen = not self.config.fullscreen
                     self.init_screen()
                     self.rescale()
-                elif event.unicode in ['<',',']:
+                elif event.key == K_COMMA:
                     self.config.time_scale = max(self.config.time_scale-1,1)
-                elif event.unicode in ['>','.']:
+                elif event.key == K_PERIOD:
                     self.config.time_scale = self.config.time_scale+1
-                elif event.unicode == 'i':
+                elif event.key == K_i:
                     self.draw_image = not self.draw_image
-                elif event.unicode == 'n':
+                elif event.key == K_n:
                     if self.speaking():
                         self.speaking_text = None
                         self.v.stopSpeaking()
                     self.advance_text()
-                elif event.unicode == 'q':
+                elif event.key == K_q:
                     self.stop_recording()
                     sys.exit(0)
                     self.running=False
@@ -143,23 +144,27 @@ class Spiral (NSObject) :
                 self.init_screen()
                 self.rescale()
 
+    @objc.python_method
     def init_camera(self): pass
         #self.camera = CSGCamera.alloc().init()
         #self.camera.setDelegate_(self)
         #self.camera_index = 0
 
+    @objc.python_method
     def init_subliminals(self): 
-	self.subliminal_offset_x=random.randint(30,200);
+        self.subliminal_offset_x=random.randint(30,200);
         self.subliminal_offset_y=random.randint(30,200);
-	#self.subliminal_list=["Slave","You will Obey","Obey"];
-	#self.subliminal_current="Obey";
-	self.subliminal_list=[""];
-	self.subliminal_current="";
+        #self.subliminal_list=["Slave","You will Obey","Obey"];
+        #self.subliminal_current="Obey";
+        self.subliminal_list=[""];
+        self.subliminal_current="";
 
+    @objc.python_method
     def start_recording(self):
         #self.camera.startWithSize_((320,240))
         pass #os.system('osascript start_recording')
 
+    @objc.python_method
     def stop_recording(self):
         pass #self.camera.stop()
 
@@ -169,12 +174,14 @@ class Spiral (NSObject) :
             filename="video/img%s.tif" % (datetime.now())
             frame.TIFFRepresentation().writeToFile_atomically_(filename, 0)
 
+    @objc.python_method
     def camera_snapshot(self):
         filename="video/img%s.jpg" % (strftime("%m%d%H%M%S",gmtime()))
-	command="./bin/isightcapture '%s' &" % filename
-	os.system(command)
-	self.config.lastCamImage=filename
+        command="./bin/isightcapture '%s' &" % filename
+        os.system(command)
+        self.config.lastCamImage=filename
 
+    @objc.python_method
     def init_speech(self):
         voice = self.config.voice
         self.v = NSSpeechSynthesizer.alloc().initWithVoice_(voice)
@@ -182,26 +189,30 @@ class Spiral (NSObject) :
         self.spoken_word = " "
         self.speaking_text = None
         
+    @objc.python_method
     def speak(self,text):
         re.sub("\n? +"," ",text)
         # print "Speaking text beginning with %s" % text[0:20]
-        if ' !' in text: print "Warning: script command embedded in spoken text"
+        if ' !' in text: print("Warning: script command embedded in spoken text")
         self.speaking_text = "[[volm 1.0]]" + self.varsub(text)
         self.should_advance = False
         self.v.startSpeakingString_(self.speaking_text)
             
+    @objc.python_method
     def whisper(self,text):
         re.sub("\n? +"," ",text)
         # print "Speaking text beginning with %s" % text[0:20]
-	
-        if ' !' in text: print "Warning: script command embedded in spoken text"
+        
+        if ' !' in text: print("Warning: script command embedded in spoken text")
         self.speaking_text = "[[volm 0.14]] " + self.varsub(text);
         self.should_advance = False
         self.v.startSpeakingString_(self.speaking_text)
             
+    @objc.python_method
     def speaking(self):
         return self.speaking_text != None # (self.v.isSpeaking() != 0)
     
+    @objc.python_method
     def init_text(self):
         self.scale_font()
         self.words_index = 0
@@ -210,6 +221,7 @@ class Spiral (NSObject) :
         self.persistent_text=""
         self.persistent_word = self.font.render("",True,self.config.text_color)
 
+    @objc.python_method
     def display_box(self,message):
         x,y = self.font.size(message)
         x/=2
@@ -229,31 +241,38 @@ class Spiral (NSObject) :
                              (self.x_size / 2 - x, self.y_size / 2 - y))
         pygame.display.flip()
 
+    @objc.python_method
     def advance_text(self):
-	self.words_index = (self.words_index + 1) % len(self.text)
+        self.words_index = (self.words_index + 1) % len(self.text)
 
+    @objc.python_method
     def varsub(self,word):
         if '$' in word:
             try:
                 for var in self.variables:
                     word=word.replace(var,self.variables[var])
             except KeyError:
-                print "Bad variable '%s'" % word
+                print("Bad variable '%s'" % word)
         return word
 
+    @objc.python_method
     def act_on(self,command):
-        try:
-            exec "self.%s" % command[1:]
+        #try:
+            exec("self.%s" % command[1:])
             self.advance_text()
-        except:
-             print "Unrecognized command: %s" % command
+        #except:
+        #     print("Unrecognized command: %s" % command)
 
+    @objc.python_method
     def images_on(self): self.draw_image=True
+    @objc.python_method
     def images_off(self): self.draw_image=False
+    @objc.python_method
     def show_lastCamImage(self):
-	self.hold_image_index=self.image_lookup[self.config.lastCamImage]
+        self.hold_image_index=self.image_lookup[self.config.lastCamImage]
         self.draw_image=True
 
+    @objc.python_method
     def hold_image_start(self):
                 self.advance_text()
                 image_name=""
@@ -264,31 +283,36 @@ class Spiral (NSObject) :
     
                 word = self.text[self.words_index]
                 image_name=image_name+self.varsub(word)
-		# print image_name
-		if (self.image_lookup[image_name] >=0):
-			self.hold_image_index=self.image_lookup[image_name]
-		# print self.hold_image_index,
+                # print image_name
+                if (self.image_lookup[image_name] >=0):
+                        self.hold_image_index=self.image_lookup[image_name]
+                # print self.hold_image_index,
 
+    @objc.python_method
     def hold_image_end(self): 
-		word=""
+                word=""
                 self.draw_image=True
+    @objc.python_method
     def hold_image_blank(self): 
-		self.hold_image_index=-1
+                self.hold_image_index=-1
                 self.draw_image=False
 
+    @objc.python_method
     def play_sound_start(self):
         self.advance_text()
         while ((self.text[self.words_index+1].startswith("!") != True) and (self.words_index+2 < len(self.text))):
               filename = self.text[self.words_index]
               self.advance_text()
         filename = self.text[self.words_index]
-	#print "Sound file: %r" % filename
-	#sound = pygame.mixer.Sound("bb90-6.wav")
-	#sound.play()
+        #print "Sound file: %r" % filename
+        #sound = pygame.mixer.Sound("bb90-6.wav")
+        #sound.play()
  
+    @objc.python_method
     def play_sound_end(self):
-	return
+        return
 
+    @objc.python_method
     def hold_text_start(self):
                 self.advance_text()
                 self.persistent_text=""
@@ -308,38 +332,57 @@ class Spiral (NSObject) :
                                     self.config.color)
                     self.persistent_word.set_alpha(self.config.text_alpha)
 
+    @objc.python_method
     def hold_text_end(self): word=""
+    @objc.python_method
     def hold_text_blank(self): self.persistent_text=""
+    @objc.python_method
     def toggle_images(self): self.draw_image=not self.draw_image
+    @objc.python_method
     def words_on(self): self.draw_words=True
+    @objc.python_method
     def words_off(self): self.draw_words=False
+    @objc.python_method
     def spiral_on(self): self.draw_spiral=True
+    @objc.python_method
     def spiral_off(self): self.draw_spiral=False
+    @objc.python_method
     def quit(self): self.running=False
+    @objc.python_method
     def pause_music(self): pygame.mixer.music.pause()
+    @objc.python_method
     def unpause_music(self): pygame.mixer.music.unpause()
+    @objc.python_method
     def stop_music(self): pygame.mixer.music.stop()
+    @objc.python_method
     def shell(self,text): os.system(text)
+    @objc.python_method
     def start_music(self,filename):
         self.config.music=filename
         self.init_music()
+    @objc.python_method
     def new_text(self,new):
         while type(new)==str:
             new=eval(new)
         self.text = new
         self.words_index=0
+    @objc.python_method
     def insert_text(self,t):
         index = self.words_index+1
         self.text[index:index] = t
+    @objc.python_method
     def show_spoken_words_off(self):
         self.show_spoken_words = False
+    @objc.python_method
     def show_spoken_words_on(self):
         self.show_spoken_words = True
+    @objc.python_method
     def prompt(self,text):
         self.display_box(self.varsub(text))
         while True:
             event = pygame.event.wait()
             if event.type==KEYDOWN and event.key==K_RETURN: break
+    @objc.python_method
     def short_prompt(self,text,time):
         self.display_box(self.varsub(text))
         pygame.time.set_timer(USEREVENT,time)
@@ -347,6 +390,7 @@ class Spiral (NSObject) :
             event = pygame.event.wait()
             if event.type==USEREVENT: break
             if event.type==KEYDOWN and event.key==K_RETURN: break
+    @objc.python_method
     def short_prompt_jump(self,text,time,new):
         self.display_box(self.varsub(text))
         pygame.time.set_timer(USEREVENT,time)
@@ -354,6 +398,7 @@ class Spiral (NSObject) :
             event = pygame.event.wait()
             if event.type==USEREVENT: break
             if event.type==KEYDOWN and event.key==K_RETURN: self.new_text(new)
+    @objc.python_method
     def yn_question(self,question,yes=None,no=None):
         self.display_box(self.varsub(question) + "(y/n)")
         while True:
@@ -365,6 +410,7 @@ class Spiral (NSObject) :
                 elif event.key==K_n:
                     if no: self.new_text(no)
                     break
+    @objc.python_method
     def open_question(self,question,var):
         answer=""
         while True:
@@ -378,16 +424,19 @@ class Spiral (NSObject) :
                 else:
                     answer += event.unicode
         self.variables['$'+var]=answer
+    @objc.python_method
     def cond_jump(self,test,yes=None,no=None):
         if eval(test) and yes:
             self.new_text(yes)
         elif no:
             self.new_text(no)
+    @objc.python_method
     def conditional(self,test,yes=[],no=[]):
         if eval(test):
             self.insert_text(yes)
         else:
             self.insert_text(no)
+    @objc.python_method
     def init_spiral(self):
         self.clear_screen()
         self.draw_text("Loading spiral")
@@ -396,32 +445,33 @@ class Spiral (NSObject) :
                 scale=1.0
                 spiral = pygame.transform.rotozoom(tmpspiral,0,scale)
         elif True:
-        	spiral_size = int(1.2* max(self.x_size, self.y_size))
-        	spiral = pygame.Surface((spiral_size, spiral_size))
-        	dots = []
-		offset_x = []
-		offset_y = []
-        	for t in range(1, spiral_size*self.config.scale):
-            		t *= 0.5 / self.config.scale
-            		x =  t * t * math.cos(t)
-            		y =  t * t * math.sin(t)
-            		dots.append((int(x+spiral_size/2.0), int(y+spiral_size/2.0)))
-            		self.process_events()
-        	pygame.draw.lines(spiral, self.config.color, False, dots, 4)
-        	a = pygame.transform.rotate(spiral,90)
-        	b = pygame.transform.rotate(spiral,180)
-        	c = pygame.transform.rotate(spiral,270)
-        	spiral.blit(a,(0,0),None,BLEND_ADD)
-        	spiral.blit(b,(0,0),None,BLEND_ADD)
-        	spiral.blit(c,(0,0),None,BLEND_ADD)
-		spiral.set_colorkey(None)
-       	spiral.set_alpha(self.config.alpha)
+                spiral_size = int(1.2* max(self.x_size, self.y_size))
+                spiral = pygame.Surface((spiral_size, spiral_size))
+                dots = []
+                offset_x = []
+                offset_y = []
+                for t in range(1, spiral_size*self.config.scale):
+                        t *= 0.5 / self.config.scale
+                        x =  t * t * math.cos(t)
+                        y =  t * t * math.sin(t)
+                        dots.append((int(x+spiral_size/2.0), int(y+spiral_size/2.0)))
+                        self.process_events()
+                pygame.draw.lines(spiral, self.config.color, False, dots, 4)
+                a = pygame.transform.rotate(spiral,90)
+                b = pygame.transform.rotate(spiral,180)
+                c = pygame.transform.rotate(spiral,270)
+                spiral.blit(a,(0,0),None,BLEND_ADD)
+                spiral.blit(b,(0,0),None,BLEND_ADD)
+                spiral.blit(c,(0,0),None,BLEND_ADD)
+                spiral.set_colorkey(None)
+        spiral.set_alpha(self.config.alpha)
         self.spirals=[]
-        for t in xrange(0,self.config.spiral_range/self.config.spiral_step):
+        for t in range(0,int(self.config.spiral_range/self.config.spiral_step)):
             self.spirals.append(pygame.transform.rotate(spiral,-t*self.config.spiral_step))
         self.clear_screen()
         self.spirals_index=0
 
+    @objc.python_method
     def load_image(self,i):
         self.process_events()
         path = os.path.join(self.config.image_dir,i)
@@ -429,12 +479,13 @@ class Spiral (NSObject) :
         i.set_alpha(self.config.image_alpha)
         return i
 
+    @objc.python_method
     def load_lastCameraShot(self):
-	path = self.config.lastCamImage
-	# print self.config.lastCamImage
-	i = pygame.image.load(path).convert()
-	i.set_alpha(self.config.image_alpha)
-	self.image_lookup[path]=len(self.unshuffled_images)
+        path = self.config.lastCamImage
+        # print self.config.lastCamImage
+        i = pygame.image.load(path).convert()
+        i.set_alpha(self.config.image_alpha)
+        self.image_lookup[path]=len(self.unshuffled_images)
         x = self.x_size * 4.0 / 5.0
         y = self.y_size * 4.0 / 5.0
         pic_x,pic_y = i.get_size()
@@ -442,13 +493,15 @@ class Spiral (NSObject) :
         y_factor = y / pic_y
         scale = min(x_factor, y_factor)
         i = pygame.transform.rotozoom(i,0,scale)
-	self.unshuffled_images.append(i)
+        self.unshuffled_images.append(i)
 
 
+    @objc.python_method
     def scale_font(self):
-        fontsize = self.x_size/10
+        fontsize = int(self.x_size/10)
         self.font = pygame.font.SysFont(None,fontsize) # use default font
 
+    @objc.python_method
     def scale_images(self):
         x = self.x_size * 4.0 / 5.0
         y = self.y_size * 4.0 / 5.0
@@ -460,6 +513,7 @@ class Spiral (NSObject) :
             #scale = min(scale,1.0)
             self.images[i] = pygame.transform.rotozoom(self.images[i],0,scale)
 
+    @objc.python_method
     def scale_unshuffled_images(self):
         x = self.x_size * 4.0 / 5.0
         y = self.y_size * 4.0 / 5.0
@@ -471,27 +525,29 @@ class Spiral (NSObject) :
             #scale = min(scale,1.0)
             self.unshuffled_images[i] = pygame.transform.rotozoom(self.unshuffled_images[i],0,scale)
 
+    @objc.python_method
     def rescale(self):
         self.scale_font()
         if self.images_initialized:
             self.scale_images()
     
+    @objc.python_method
     def init_images(self):
         #self.clear_screen()
         #self.draw_text("Loading images")
-        print "Loading images...",
+        print("Loading images...", end=' ')
         image_file_names = os.listdir(self.config.image_dir)
-	list_number=0
-	self.hold_image_index=-1
-	self.image_lookup={'':-1}
+        list_number=0
+        self.hold_image_index=-1
+        self.image_lookup={'':-1}
         self.images=[]
-	self.unshuffled_images=[]
-	for i in image_file_names:
-		if i.endswith(".jpg"):
-			self.image_lookup[i]=list_number
-			list_number=list_number+1
-			self.images.append(self.load_image(i))
-			self.unshuffled_images.append(self.load_image(i))
+        self.unshuffled_images=[]
+        for i in image_file_names:
+                if i.endswith(".jpg"):
+                        self.image_lookup[i]=list_number
+                        list_number=list_number+1
+                        self.images.append(self.load_image(i))
+                        self.unshuffled_images.append(self.load_image(i))
         #self.images = [self.load_image(i) for i in image_file_names
         #               if i.endswith(".jpg")]
         self.scale_images()
@@ -508,16 +564,18 @@ class Spiral (NSObject) :
         self.image_index=0
         self.images_initialized = True
 
+    @objc.python_method
     def init_music(self):
-	try:
-        	pygame.mixer.init(FREQ, BITSIZE, CHANNELS, BUFFER)
-    	except pygame.error, exc:
-        	print >>sys.stderr, "Could not initialize sound system: %s" % exc
-        	return 1
+        try:
+                pygame.mixer.init(FREQ, BITSIZE, CHANNELS, BUFFER)
+        except pygame.error as exc:
+                print("Could not initialize sound system: %s" % exc, file=sys.stderr)
+                return 1
         if self.config.music:
             pygame.mixer.music.load(self.config.music)
             pygame.mixer.music.play(-1)
    
+    @objc.python_method
     def draw_surface(self,surface,delay=False):
         cx, cy = surface.get_rect().center
         x_off = (self.x_size/2) - cx
@@ -525,6 +583,7 @@ class Spiral (NSObject) :
         self.screen.blit(surface, (x_off, y_off))
         if not delay: pygame.display.flip()
 
+    @objc.python_method
     def draw_text(self,word,delay=False):
         if word=="":return
         if self.config.broken_fonts:
@@ -537,20 +596,22 @@ class Spiral (NSObject) :
         temp_word.set_alpha(self.config.text_alpha)
         self.draw_surface(temp_word,delay)
 
+    @objc.python_method
     def set_subliminals(self,raw_list):
-	self.subliminal_list=raw_list.split('|')
-	if (len(self.subliminal_list) > 1):
+        self.subliminal_list=raw_list.split('|')
+        if (len(self.subliminal_list) > 1):
                 self.subliminal_current=self.subliminal_list[random.randint(0,len(self.subliminal_list)-1)]
         else:
                 self.subliminal_current=self.subliminal_list[0]
 
+    @objc.python_method
     def draw_subliminals(self):
-	if (random.randint(0,100) < self.config.subliminal_changeprobability):
-		if (len(self.subliminal_list) > 1):
-			self.subliminal_current=self.subliminal_list[random.randint(0,len(self.subliminal_list)-1)]
-		else:
-			self.subliminal_current=self.subliminal_list[0]
-	words=self.subliminal_current
+        if (random.randint(0,100) < self.config.subliminal_changeprobability):
+                if (len(self.subliminal_list) > 1):
+                        self.subliminal_current=self.subliminal_list[random.randint(0,len(self.subliminal_list)-1)]
+                else:
+                        self.subliminal_current=self.subliminal_list[0]
+        words=self.subliminal_current
         if words=="":return
         if self.config.broken_fonts:
             temp_word = self.font.render(words,True,self.config.subliminal_color)
@@ -560,23 +621,25 @@ class Spiral (NSObject) :
                                     self.config.subliminal_color,
                                     self.config.color)
         temp_word.set_alpha(self.config.subliminal_alpha)
-	if (random.randint(0,100) < self.config.subliminal_moveprobability):
-		quad_x=1
-		quad_y=1
-		if (random.randint(0,1)):
-			quad_x=-1
-		if (random.randint(0,1)):
-			quad_y=-1
-		self.subliminal_offset_x=quad_x*random.randint(30,200)
-		self.subliminal_offset_y=quad_y*random.randint(30,200)
-	if (random.randint(0,100) < self.config.subliminal_displayprobability):
-        	self.draw_offsetsurface(temp_word,self.subliminal_offset_x+random.randint(-1*self.config.subliminal_scatter,self.config.subliminal_scatter),self.subliminal_offset_y+random.randint(-1*self.config.subliminal_scatter,self.config.subliminal_scatter))
+        if (random.randint(0,100) < self.config.subliminal_moveprobability):
+                quad_x=1
+                quad_y=1
+                if (random.randint(0,1)):
+                        quad_x=-1
+                if (random.randint(0,1)):
+                        quad_y=-1
+                self.subliminal_offset_x=quad_x*random.randint(30,200)
+                self.subliminal_offset_y=quad_y*random.randint(30,200)
+        if (random.randint(0,100) < self.config.subliminal_displayprobability):
+                self.draw_offsetsurface(temp_word,self.subliminal_offset_x+random.randint(-1*self.config.subliminal_scatter,self.config.subliminal_scatter),self.subliminal_offset_y+random.randint(-1*self.config.subliminal_scatter,self.config.subliminal_scatter))
  
+    @objc.python_method
     def draw_offsetsurface(self,surface,cx,cy):
         x_off = (self.x_size/2) - cx
         y_off = (self.y_size/2) - cy
         self.screen.blit(surface, (x_off, y_off))
 
+    @objc.python_method
     def clear_screen(self,delay=False):
         self.screen.fill((0,0,0))
         if not delay: pygame.display.flip()
@@ -593,6 +656,7 @@ class Spiral (NSObject) :
         self.should_advance = True
         self.spoken_word = " "
         
+    @objc.python_method
     def run_spiral(self):
         self.running = True
         self.should_advance = True
@@ -615,7 +679,7 @@ class Spiral (NSObject) :
                         if self.config.shuffle_images and 0==self.image_index:
                             random.shuffle(self.images)
                     elif key=='spiral':
-			inc = 1 # random.randint(1,3)
+                        inc = 1 # random.randint(1,3)
                         self.spirals_index = (self.spirals_index + inc) % \
                                              len(self.spirals)
                     elif key=='words' and \
@@ -623,16 +687,16 @@ class Spiral (NSObject) :
                         self.advance_text()
             self.clear_screen(True)
             if self.draw_image:
-		if (self.hold_image_index >= 0):
-			self.draw_surface(self.unshuffled_images[self.hold_image_index],True)
-		elif True:
-                	self.draw_surface(self.images[self.image_index],True)
+                if (self.hold_image_index >= 0):
+                        self.draw_surface(self.unshuffled_images[self.hold_image_index],True)
+                elif True:
+                        self.draw_surface(self.images[self.image_index],True)
             if self.draw_spiral:
                 try:
                     self.draw_surface(self.spirals[self.spirals_index],True)
                 except IndexError:
-                    print "Index %i out of range 0..%i" % (self.spirals_index,
-                                                           len(self.spirals))
+                    print("Index %i out of range 0..%i" % (self.spirals_index,
+                                                           len(self.spirals)))
             word = self.text[self.words_index]
             self.draw_subliminals();
             if word.startswith("!"):
@@ -643,11 +707,12 @@ class Spiral (NSObject) :
                 self.draw_text(self.spoken_word,True)
             elif self.draw_words: #and ticks['words'] != self.config.frequencies['words']:
                 self.draw_text(self.varsub(word),True)
-	    if (self.persistent_text != ""):
+            if (self.persistent_text != ""):
                         self.draw_surface(self.persistent_word,True)
             pygame.display.flip()
             self.process_events()
             
+    @objc.python_method
     def init_(self,config):
         pygame.init()
         self.config = config()
@@ -674,13 +739,13 @@ usage = """Keys:
  .: speed up (or >)"""
         
 if __name__=='__main__':
-    print startup
+    print(startup)
     c = pick_config(configs)
     delay = random.randint(c.minimum_delay,c.maximum_delay)
     if delay > 0:
-        print "It is now %s" % time.ctime()
-        print "Will run at %s" % time.ctime(delay+time.time())
+        print("It is now %s" % time.ctime())
+        print("Will run at %s" % time.ctime(delay+time.time()))
         time.sleep(delay)
-    print usage
+    print(usage)
     s = Spiral.alloc().init_(c)
     s.run_spiral()
