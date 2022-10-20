@@ -1,5 +1,5 @@
 # Hypnotic Spiral 3.4
-Copyright (C) 2006-2018 by Yonah Arakoslav
+Copyright (C) 2006-2022 by Yonah Arakoslav
 arakoslav@protonmail.com
 
 ## New in this version
