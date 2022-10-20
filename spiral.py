@@ -35,30 +35,43 @@ try:
 except:
     camera = False
 
+debounce_speaking=False
+    
 try:
     import AppKit,objc
     class Master (AppKit.NSObject):
         pass
     v = AppKit.NSSpeechSynthesizer.alloc().initWithVoice_("com.apple.speech.synthesis.voice.Vicki")
     def speak(word):
+        global debounce_speaking
         if 0==v.isSpeaking():
+            debounce_speaking=True
             v.startSpeakingString_(word)
-    def speaking(): return (v.isSpeaking() != 0)
-    r = AppKit.NSSpeechRecognizer.alloc().init()
-    def setDelegate(s):
-        r.setDelegate_(s)
-        print("delegate set")
-    def listenFor(words):
-        r.setCommands_(words)
-        r.startListening()
-        print(("Listening for %r" % words))
+    def speaking():
+        global debounce_speaking
+        s=(v.isSpeaking() != 0)
+        #print(s) # from fixing the debounce issue
+        if s:
+            debounce_speaking=False
+            return s
+        else:
+            return debounce_speaking
+    def listenFor(words): pass
+    def setDelegate(s): pass
+#    r = AppKit.NSSpeechRecognizer.alloc().init()
+#    def setDelegate(s):
+#        r.setDelegate_(s)
+#        print("delegate set")
+#    def listenFor(words):
+#        r.setCommands_(words)
+#        r.startListening()
+#        print(("Listening for %r" % words))
 except:
     def speak(word): pass
-    def speaking(): return False
-    def setDelegate(s): pass
-    def listenFor(words): pass
     class Master (object):
         pass
+    def speaking(): return False
+
 
 def pick_config(cs):
     if len(cs) == 0:
@@ -122,30 +135,31 @@ def color_rotate(color):
 class Spiral  (Master):
     @objc.python_method
     def init_globals(self):
-        self.flags = HWSURFACE | DOUBLEBUF | ASYNCBLIT
+        self.flags = DOUBLEBUF | ASYNCBLIT | HWSURFACE
         self.waiting = False
         if self.config.fullscreen:
-            self.flags |= FULLSCREEN
-            display_modes = pygame.display.list_modes()
-            if (display_modes == -1) or (self.config.size in display_modes):
-                self.x_size, self.y_size = self.config.size
-                print(("size set to (%i, %i)" % (self.x_size, self.y_size)))
-            else:
-                print(("configured size %s not in modes" % 'x'.join(str(e) for e in self.config.size)    ))
-                self.x_size, self.y_size = display_modes[0]
+            self.flags |= FULLSCREEN | NOFRAME
+            #display_modes = pygame.display.list_modes()
+            #x,y = self.config.size
+            #for (mode_x,mode_y) in display_modes:
+            #    if mode_x <= x and mode_y <= y:
+            #        if abs(self.x_size-mode_x) > 2: self.x_size = mode_x
+            #        self.y_size = mode_y
+            #        print(("size set to fullscreen (%i, %i)" % (self.x_size, self.y_size)))
+            #        break
         else:
             self.flags |= RESIZABLE
-            self.x_size, self.y_size = self.config.size
-            print(("size set to (%i, %i)" % (self.x_size, self.y_size)))
-        self.screen = pygame.display.set_mode((self.x_size, self.y_size),self.flags | NOFRAME)
+        self.x_size, self.y_size = self.config.size
+        print(("size set to (%i, %i)" % (self.x_size, self.y_size)))
+        self.screen = pygame.display.set_mode((self.x_size, self.y_size),self.flags)
 
     @objc.python_method
     def init_screen(self):
         print(("size at (%i, %i)" % (self.x_size, self.y_size)))
         if self.config.fullscreen:
             pygame.mouse.set_visible(False)
-        bestdepth = pygame.display.mode_ok((self.x_size, self.y_size), self.flags, 32)
-        self.screen = pygame.display.set_mode((self.x_size, self.y_size),self.flags,bestdepth)
+        #bestdepth = pygame.display.mode_ok((self.x_size, self.y_size), self.flags, 32)
+        self.screen = pygame.display.set_mode((self.x_size, self.y_size),self.flags)
 
     @objc.python_method
     def process_events(self):
@@ -154,7 +168,7 @@ class Spiral  (Master):
                 if event.key == K_f:
                     self.config.fullscreen = not self.config.fullscreen
                     self.init_globals()
-                    self.init_screen()
+                    #self.init_screen()
                     #self.rescale()
                     self.init_images()
                 elif event.key == K_COMMA:
@@ -167,10 +181,12 @@ class Spiral  (Master):
                     sys.exit(0)
                     self.running=False
             elif event.type == VIDEORESIZE:
-                self.config.size = event.size
-                self.init_globals()
-                self.init_screen()
-                self.rescale()
+                if event.size != self.config.size:
+                    print("resizing from %r to %r" % (self.config.size, event.size))
+                    self.config.size = event.size
+                    self.init_globals()
+                    self.init_screen()
+                    self.rescale()
 
     @objc.python_method
     def init_text(self):
@@ -191,17 +207,19 @@ class Spiral  (Master):
         y/=2
         margin=1
         pygame.draw.rect(self.screen, (0,0,0),
-                         ((self.x_size / 2) - x,
-                          (self.y_size / 2) - y,
-                          2*x,2*y), 0)
+                         (int((self.x_size / 2) - x),
+                          int((self.y_size / 2) - y),
+                          int(2*x),
+                          int(2*y)), 0)
         pygame.draw.rect(self.screen, self.config.color,
-                         ((self.x_size / 2) - (x+margin),
-                          (self.y_size / 2) - (y+margin),
-                          2*(x+margin),2*(y+margin)), 1)
+                         (int((self.x_size / 2) - (x+margin)),
+                          int((self.y_size / 2) - (y+margin)),
+                          int(2*(x+margin)),
+                          int(2*(y+margin))), 1)
         if len(message) != 0:
             self.screen.blit(self.font.render(message, True,
                                               self.config.text_color),
-                             (self.x_size / 2 - x, self.y_size / 2 - y))
+                             (int(self.x_size / 2 - x), int(self.y_size / 2 - y)))
         pygame.display.flip()
 
     @objc.python_method
@@ -276,6 +294,7 @@ class Spiral  (Master):
     def quit(self): self.running=False
     @objc.python_method
     def background(self,w):
+        print("background: %s" % w)
         self.background_text=w
         self.render_background_word()
     @objc.python_method
@@ -355,7 +374,7 @@ class Spiral  (Master):
                     break
                 elif event.key >= K_SPACE and event.key <= K_z:
                     ## printable range
-                    answer += event.unicode
+                    answer += event.dict['unicode']
                 else:
                     pass
         self.variables['$'+var]=answer
@@ -415,7 +434,7 @@ class Spiral  (Master):
         print("Loading spiral...", end=' ')
         scale=1.0
         if (self.config.spiral_image != ""):
-                spiral=pygame.image.load(self.config.spiral_image)
+                spiral=pygame.image.load(self.config.spiral_image).convert()
                 spiral_x, spiral_y = spiral.get_size()
                 scale=1.2 * max(self.x_size,self.y_size) / \
                             min(spiral_x,spiral_y)
@@ -444,9 +463,10 @@ class Spiral  (Master):
         for t in range(0,int(self.config.spiral_range/self.config.spiral_step)):
             t = pygame.transform.rotozoom(spiral,
                                           -t*self.config.spiral_step,
-                                          scale)
+                                          scale).convert()
             t.set_alpha(self.config.alpha)
-            self.spirals.append(t.convert())
+            t.set_colorkey((0,0,0))
+            self.spirals.append(t)
 
         #self.clear_screen()
         print("...done")
@@ -510,8 +530,8 @@ class Spiral  (Master):
     @objc.python_method
     def draw_surface(self,surface,delay=False):
         cx, cy = surface.get_rect().center
-        x_off = (self.x_size/2) - cx
-        y_off = (self.y_size/2) - cy
+        x_off = int((self.x_size/2) - cx)
+        y_off = int((self.y_size/2) - cy)
         self.screen.blit(surface, (x_off, y_off))
         if not delay: pygame.display.flip()
 
@@ -549,7 +569,7 @@ class Spiral  (Master):
             x_off = (width/2) - cx
             y_off = height
             height += 2*cy
-            img.blit(temp_word, (x_off, y_off))
+            img.blit(temp_word, (int(x_off), int(y_off)))
         img.set_alpha(int(self.config.text_alpha / 2))
         self.background_word=img.convert()
 
@@ -600,6 +620,7 @@ class Spiral  (Master):
             if self.draw_spiral:
                 try:
                     self.draw_surface(self.spirals[self.spirals_index],True)
+                    pass
                 except IndexError:
                     print("Index %i out of range 0..%i" % (self.spirals_index,
                                                            len(self.spirals)))
@@ -612,8 +633,7 @@ class Spiral  (Master):
                 self.draw_text(self.varsub(word),True)
             if (self.persistent_text != ""):
                         self.draw_surface(self.persistent_word,True)
-            if self.speak_words and \
-                 ticks['words'] <= 1:
+            if self.speak_words and (not speaking()) and ticks['words'] <= 1:
                 bulkspeak=""
                 if self.speaking_words_index != self.words_index:
                     while ((not self.text[self.words_index+1].startswith("!"))
@@ -635,11 +655,11 @@ class Spiral  (Master):
         self.config = config()
         self.images_initialized=False
         self.init_globals()
+        self.init_screen()
         self.init_spiral()
         self.init_images()
         self.init_text()
         self.init_music()
-        self.init_screen()
         try:
             self.listen()
         except:
