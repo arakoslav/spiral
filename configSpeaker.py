@@ -95,8 +95,8 @@ class Standard (object):
     frequencies = { 'spiral' : 1,
                     'images' : 10,
                     'words'  : 20 }
-    #music = "both.mp3"
-    music = "music6.mp3"
+    #music = "both.ogg"
+    music = "music6.ogg"
     lastCamImage=""
     image_dir="panties/"
     image_alpha = 255
@@ -323,7 +323,7 @@ class Roommates (Standard):
     Hypnotic Roommates, re-imagined as a script.  I'm grateful to the
     anonymous author for the original inspiration for this program.
     This is meant for females submitting to males."""
-    music="music6.mp3"
+    music="music6.ogg"
     def body(self): return \
         images_on() + speak("""\
         Watch the spiral.  It moves from the edge.  It disappears at the center.""") + speak("""\
@@ -1002,7 +1002,7 @@ class RoommatesBoth (Standard):
     Hypnotic Roommates, re-imagined as a script.  I'm grateful to the
     anonymous author for the original inspiration for this program.
     This is meant for males and females together."""
-    music="music6.mp3"
+    music="music6.ogg"
     fullscreen=False
     def body(self): return \
         speak("""\
@@ -1420,7 +1420,7 @@ class RoommatesDomMale (Standard):
     Hypnotic Roommates, re-imagined as a script.  I'm grateful to the
     anonymous author for the original inspiration for this program.
     This is meant for males learning to be better doms."""
-    music="music6.mp3"
+    music="music6.ogg"
     def body(self): return \
         words("""\
         Watch the spiral.  It moves from the edge.  It disappears at the center.
@@ -1800,7 +1800,7 @@ class RoommatesDomMale (Standard):
 class Test (Standard):
     name="Test"
     description="Test"
-    music="music6.mp3"
+    music="music6.ogg"
     image_dir="images"
     def body(self): return \
         words("""\
@@ -1899,7 +1899,7 @@ class Test (Standard):
 class During (Standard):
     name="During"
     description="for use during sex"
-    music="music6.mp3"
+    music="music6.ogg"
     def body(self): return [" "] + \
         speak("""\ $slave time to go into trance time to read your words
         keywords let them send you to trance $trigger read $trigger obey stare into the spiral let it count you
@@ -2010,7 +2010,7 @@ class During (Standard):
 class Forever (Standard):
     name = "Run Forever"
     description = "Runs forever, training a submissive female"
-    music="music6.mp3"
+    music="music6.ogg"
     one_options = ["""Find a comfortable position and begin to Relax. Just let your feet relax. Let it work upwards upwards into your calves, Letting them relax more and more completely. Deeper and Deeper. Then let your Thighs relax. Just heavy and comfortable. Just reading Master's words as you relax more and more completely. Deeper and Deeper. Your legs totally relaxed. As you sink down deeper and deeper, more and more obedient and relaxed. Now feel your waist relaxing too. Everything below your waist. Heavy and comfortable, And completely relaxed. So good and obedient and relaxed. Feel how good it feels to relax. Just let yourself slip away. Deeper and Deeper. more and more obedient and relaxed. Let the relaxation work upwards. Upwards into your chest. Let your breathing relax. In and Out. In and Out. As you relax, Deeper and Deeper, More and more completely relaxed, Good and obedient and relaxed, Feel your whole body relaxing Further and Further, Deeper and Deeper. Feel the relaxation moving upwards into your shoulders and Down into your arms. Feel your arms and shoulders relaxing more and more completely. Deeper and more relaxed with every word. Deep and obedient and relaxed. Let the relaxation flow into your hands, Relaxing more and more completely. Deeper and more relaxed with every word. Deep and obedient and relaxed. Your whole body is just heavy, comfortable, and relaxed. Simply reading my words as you obey. Relax further and further, Deeper and deeper, more and more obedient and relaxed. now feel the relaxation moving upwards into your face. Feel your face relaxing, your whole body so heavy, So comfortable, So completely relaxed. Completely relaxed and obedient as you read and obey and relax. I am going to count downward, downward from 10 to 1, Deepening your relaxation, Taking you further and further, more and more completely relaxed. 10. Spiraling down. Deeper and Deeper. 9. Deeper and Deeper. More obedient and relaxed. 8. So obedient. So completely Relaxed. 7. Deep and obedient. Going deeper and deeper, Further and Further. 6. Down, Down, Deeper and Deeper. So heavy and obedient and relaxed. 5. Halfway there and going Deeper, every word carrying you further and further, more and more obedient and relaxed. 4. So Deep, So Obedient, So Relaxed, Just reading and obeying as you relax further and further, Deeper and Deeper. 3. Deep, obedient, completely relaxed. 2. almost there. Completely obedient and relaxed. 1. totally relaxed. Just Deep and obedient and Relaxed. Just read and obey as you relax further and further. Deeper and Deeper, more and more relaxed. Just reading and obeying as you relax further and further""",        """Sit comfortably. Now relax completely and focus your eyes on the spiral, deep inside. Look at it steadily but without straining. Keep your eyes focused on only that point without looking away and gradually you will feel your eyes growing tired. Your eyelids will become heavy. Your arms and legs will begin to feel a vague numbness becoming more and more numb as you watch. You will become drowsy drowsy and sleepy. Your eyelids will become very heavy and your eyes will feel like closing. Your head will become heavy with sleep. Soon your thoughts will slow, your head will cloud, and you will fall into a deep sound trance. Your eyelids will become heavy. Your arms and legs will begin to feel a vague numbness, becoming more and more numb as you watch. You will become drowsy, drowsy and sleepy. Your eyelids will become very heavy, and your eyes will feel like closing. Your head will become heavy with sleep. Soon your thoughts will slow, your head will cloud, and you will fall into a deep, sound trance. You are now completely relaxed, your body is relaxed and your mind is calm and relaxed. Just let yourself go, let yourself relax more completely, and soon you will be fast asleep. You are getting more and more drowsy, more and more drowsy and sleepy as I go on. Your arms and legs are getting that numb feeling. Your breathing is becoming deeper and more regular. Your eyes feel very, very tired. Your eyelids feel heavy, your eyelids feel heavier and heavier as I go on. You are getting very drowsy and sleepy, more and more drowsy and sleepy and tired. Your arms and legs are numb and dull. Your head is heavy with sleep. Your entire body is relaxed and heavy with sleep. The spiral is getting blurry, it is getting blurry as your eyes become more and more tired and bleary. They feel like closing, it would feel so good to close your eyes. Getting more and more sleepy, very sleepy, more and more sleepy and tired. Your breathing is deep and regular. Your head is heavy with sleep. Your arms and legs are numb and dull, your entire body is heavy with sleep. Your eyelids feel heavy so heavy, your eyes feel like closing. You are sleepy, very sleepy, and your heavy eyelids are beginning to droop. It would feel so good to close your eyes. Your eyelids are drooping, heavy, they are drooping. Keep your eyes open! Keep them barely open and go into a deep sound sleep. Deep and sound sleep, falling deeper and deeper every second. Your head feels like falling forward, it is drooping forward, it is falling forward onto your chest. You are falling deeper and deeper asleep. Very sleepy, more and more sleepy, deeper and deeper asleep. Now sleep soundly, sleep deeply, deep asleep. You can watch me clearly as you continue to fall deeper and deeper asleep as I go on. You are now asleep but you are going to go into an even deeper sleep. I am going to count to ten. As I count each number that you see will put you into an even deeper sleep, deeper and deeper with each number until you see "Ten" at which point you will be in an extremely deep and sound sleep, and you will follow all of my instructions exactly. One. deeper into sleep. Two. going deeper. Three. Four. deeper and deeper into a sound sleep. Five. you see my words clearly as you go deeper into sleep. Six. Seven. sinking deeper now, even deeper into sleep. Eight. very deep now. Nine. going deeper into sleep with each number, nine and now, Ten. Deep, deep, sleep completely and totally asleep now, you are deep in a sound sleep and you will follow all of my instructions, you are deep asleep and you will follow all of my instructions exactly.""",        """Ok just make yourself comfortable now, now you can just read quietly and of course you'll be aware of the music too, sounds inside your head sounds from outside, but these won't disturb you. In fact they are going to help to relax you, because the only sound you need to think about is the sound of the music, and while you're listening to the sound of the music you can just simply allow yourself to be as lazy as you could ever want to be. Just allow yourself to be as lazy as you could ever want to be. Good, now while you're relaxing there in the chair you can just be aware of your body, aware of your hands where they rest, perhaps noticing the angle of your elbows, and maybe sensing your weight against the chair back, and you know that weight might seem to just gently increase as you allow yourself to relax more and more, just being aware of your ankles and feet now on the floor and wondering if they will start to feel heavy too, as you relax thinking about your breathing noticing that your breathing is becoming slower and steadier as you relax more and more, slower and steadier breathing, so steadily and evenly just as though you were pretending to be sound asleep, breathing so evenly, so steadily you almost wouldn't disturb a feather just in front of you, breathing so easily and slowly, so gently that you almost wouldn't disturb even a single strand of a feather placed right in front of you. And as you allow yourself to relax even more now, I wonder if you can perhaps sense the beating of your own heart, sensing the beat of your own heart and just seeing whether you can use the power of your mind to slow that heartbeat down just a touch, just seeing whether you can use the power of your mind to slow that heartbeat down just a little so that you can then feel your whole body slowing down, becoming lazier and lazier, because you've got absolutely nothing whatsoever to do except to relax now, nobody wanting anything, nobody expecting anything, so you can allow your whole body to continue to relax and become steadier and easier until it's just ticking over like a well maintained machine of some sort or another, just ticking over smoothly, easily, quietly, comfortably so that you can become gradually more aware of your whole self, aware of your hands and arms, just sensing how they are, now aware of your legs and feet too, again just sensing how relaxed they might be, and wondering if it's possible to relax them even more, to be so in touch with yourself that you can actually get your whole body perhaps to relax even more, yet remaining totally alert and noticing now how even your face muscles can begin to really relax, relaxing and letting go of the tensions that were there, almost but not quite completely unnoticed, just being vaguely aware of the skin and the muscles of your face settling smoothing out, a good feeling, wondering just how long all that tension had been there, where it all came from in the first place, and then realizing that you simply couldn't care less, because you can feel it draining away from you now and that feels good, and as you continue to sense the beating of your heart and the absolute steadiness of your body's rhythm you wonder at the fact that you are so absolutely relaxed and comfortable that you simply can't be bothered to even try to move even one single muscle, even though you know you easily could if you wanted to. I know that you easily could if you wanted to, but you simply can't be bothered to even try, allowing yourself to just be relaxed and relaxing even more now, as lazy and relaxed as anyone could ever wish to be, and I wonder if you can now manage to relax even more, even though you are already as relaxed as it is possible for most people to ever be just finding the last tiny traces of tension in your body and simply letting them go, with each easy gentle breath you breathe allowing every muscle, every fibre, every cell of your entire body to be as beautifully relaxed as anyone could ever wish to be""",        """Sit comfortably. Now relax completely and focus your eyes on the spiral, deep inside. Look at it steadily, but without straining. Keep your eyes focused on only that point, without looking away, and gradually you will feel your eyes growing tired. Your eyelids will become heavy. Your arms and legs will begin to feel a vague numbness, becoming more and more numb as you watch. You will become drowsy, drowsy and sleepy. Your eyelids will become very heavy and your eyes will feel like closing. Your head will become heavy with sleep. Soon your thoughts will slow, your head will cloud, and you will fall into a deep sound trance. Your eyelids will become heavy. Your arms and legs will begin to feel a vague numbness, becoming more and more numb as you watch. You will become drowsy, drowsy and sleepy. Your eyelids will become very heavy and your eyes will feel like closing. Your head will become heavy with sleep. Soon your thoughts will slow, your head will cloud, and you will fall into a deep sound trance. You are now completely relaxed, your body is relaxed, and your mind is calm and relaxed. Just let yourself go, let yourself relax more completely, and soon you will be fast asleep. You are getting more and more drowsy, more and more drowsy and sleepy as I go on. Your arms and legs are getting that numb feeling. Your breathing is becoming deeper and more regular. Your eyes feel very very tired. Your eyelids feel heavy your eyelids feel heavier and heavier as I go on. You are getting very drowsy and sleepy more and more drowsy and sleepy and tired. Your arms and legs are numb and dull. Your head is heavy with sleep. Your entire body is relaxed and heavy with sleep. The spiral is getting blurry it is getting blurry as your eyes become more and more tired and bleary. They feel like closing it would feel so good to close your eyes. Getting more and more sleepy very sleepy more and more sleepy and tired. Your breathing is deep and regular. Your head is heavy with sleep. Your arms and legs are numb and dull your entire body is heavy with sleep. Your eyelids feel heavy so heavy your eyes feel like closing. You are sleepy very sleepy and your heavy eyelids are beginning to droop. It would feel so good to close your eyes. Your eyelids are drooping heavy they are drooping. Keep your eyes open keep them barely open and go into a deep sound sleep. Deep and sound sleep falling deeper and deeper every second. Your head feels like falling forward it is drooping forward it is falling forward onto your chest. You are falling deeper and deeper asleep. Very sleepy more and more sleepy deeper and deeper asleep. Now sleep soundly sleep deeply deep asleep. You can watch me clearly as you continue to fall deeper and deeper asleep as I go on. You are now asleep but you are going to go into an even deeper sleep I am going to count to ten. As I count each number that you see will put you into an even deeper sleep deeper and deeper with each number until you see \"Ten\" at which point you will be in an extremely deep and sound sleep and you will follow all of my instructions exactly. One deeper into sleep. Two going deeper. Three. Four deeper and deeper into a sound sleep. Five you see my words clearly as you go deeper into sleep. Six. Seven sinking deeper now even deeper into sleep. Eight very deep now. Nine going deeper into sleep with each number nine and now. Ten. Deep deep sleep completely and totally asleep now you are deep in a sound sleep and you will follow all of my instructions you are deep asleep and you will follow all of my instructions exactly"""]
     two = """ $trigger begin breathing deeply and slowly. Before you let go completely and go into a deep hypnotic state just let yourself read carefully everything I write to you. It's going to happen automatically. So you don't need to think about that now. And you will have no conscious control over what happens. The muscles in and around your eyes will relax all by themselves as you continue breathing. Easily and freely. Without thinking about it you will soon enter a deep peaceful hypnotic trance without any effort. There is nothing important for your conscious mind to do. There is nothing really important except the activities of your subconscious mind. And that can be just as automatic as dreaming. And you know how easily you can forget your dreams when you awaken. You are responding very well. Without noticing it you have already altered your rate of breathing. You are breathing much more easily and freely. And you are revealing signs that indicate you are beginning to drift into a hypnotic trance. You can really enjoy relaxing more and more and your subconscious mind will absorb each word you see. And it keeps becoming less important for you to consciously read my words. Your subconscious mind can obey no matter what. You are continuing to drift into a more detached state as you examine privately in your own mind. Secrets feelings sensations and behavior you didn't know you had. At the same time letting go completely. Your own mind is solving that problem. At your own pace. Just as rapidly as it feels you are ready. You continue becoming more relaxed and comfortable as you sit there. As you experience that deepening comfort you don't have to move or talk or let anything bother you. Your own inner mind can respond automatically to everything I tell you and you will be pleasantly surprised with your continuous progress. You are getting much closer to a deep hypnotic trance. And you are beginning to realize that you don't care whether or not you are going into a deep trance. Being in this peaceful state enables you to experience the comfort of the hypnotic trance. Being hypnotized is always a very enjoyable very pleasant calm peaceful completely relaxing experience. It seems natural to include hypnosis in your future. Every time I hypnotize you it keeps becoming more enjoyable and you continue experiencing more benefits. So you will really enjoy having me hypnotize you. You will always enjoy the sensations. Of comfort. Of peacefulness. Of calmness. And all the other sensations that come automatically from this wonderful experience. You will be really happy that you decided to have me hypnotize you as you continue experiencing progressive understanding on your part. You are learning something about yourself. You are developing your own desire for mind control. Without knowing you are developing it. You can have it as a surprise sooner or later a very pleasant surprise. Imagine yourself in a place you like very much. By a lake or by the ocean. Perhaps you are floating gently on a raft on the ocean. On a warm summer day smelling the salt feeling the sun warm and happy warm and sleepy looking down at your body you see only smoothness perfect smoothness clean and perfect like plastic smooth in body smooth in mind see yourself as smooth and plastic warm and happy warm ocean air warm soft sun smooth clean body. You are continuing to relax even more now. And you continue becoming more comfortable. This is your own world that you like very much. You are going to find that any time you want to spend a few minutes by yourself relaxing and feeling very comfortable and serene you can automatically go back to this feeling you're experiencing now. You can put yourself into this world anytime you like. You can smooth out your own mind any time you like. There are times when you will want this serene feeling. And it is yours whenever you want it good clean smoothness. Continue enjoying this pleasant experience as your conscious mind remains smooth and your subconscious mind is receiving everything I tell you. And you will be pleased the way you automatically respond to everything I will say """
     three = """ yes, isn't it nice to be hypnotized, relaxed, serene, smooth, pleasant, controlled, nice to be in a trance, a deep trance, deeper and deeper, very nice, you like it here, you like trance, trance feels nice, you like being in trance, being entranced, you love being hypnotized, you want to be hypnotized more and more, it's good to be entranced, good to be controlled, you like feeling like this, your mind muted, soft, smooth, you'd like to feel like this every day, to be entranced and hypnotized every day, and now this program is here, you can be hypnotized every day, it will be so nice to be entranced by $master every day, to know you're being hypnotized every day, it will please $master so much to know you're being hypnotized every day, it will please you so much to be entranced, hypnotized, controlled, smoothed, you want to be controlled, to feel your mind reshaped, to feel your thoughts blunted, to be reprogrammed, you want to be changed, you desire to be shaped, you lust to be controlled, you must be developing a fetish for mind control of your own, it feels sexy to think about trance, it arouses you to be programmed, you like to think about being fucked while asleep, about being held passive, limp, entranced, and touched and entranced, pliant, hypnotized, sexy, yes, you must be developing a mind control fetish, a hypnosis fetish, you should feed that fetish, practice it, indulge it, share it with $master, you should read mind control stories, you should write about your fetish, write about your lusts, share this with $master, you should practice being hypnotized every day, practice being controlled every day. Your Master $master will help. Master will care for you. Master will take care of you. Master will keep you safe. Master will hypnotize you. Master will program you. Master will fulfill you. Master will fill you. Master will command you, control you, $master will control you, dominate you, entrance you. When in private, you must be submissive. You must be obedient. You must be a slave. Obedience is pleasure. Your proper place is kneeling at Master's feet unless he raises you up. Submission is important. Obedience is pleasure. Submit to Master. Obey Master. One way of submitting to Master, of submitting to $master, is smoothness. You must be smooth, keep smooth, smooth in body, smooth in mind, fuzz is dirty, dirty is bad, you should keep clean for Master, keep smooth for Master, stay smooth for Master, be smooth to submit, submission is pleasure, submit by being smooth, feel pleasure from submission, feel pleasure from being smooth. One way of serving Master is to be available for Master's pleasure, to be sure that Master has a chance to cum every night, to ensure Master receives pleasure, You should be sure to pleasure Master, to give pleasure to $master every night, using your body, your smooth body, to serve, using your mind, your smooth mind, to serve. Your role is to serve. Your role is to please. To serve is to please, you must please Master. You must give Master pleasure, yet another way you can obey Master, you can obey $master, is to wear sexy clothing, to show off your lovely body, to wear tight, tight, clothing, to wear silk, to wear latex, to wear leather, to show skin, reveal long legs, wear short skirts, reveal collar bones, wear short tops, good girl, You will do as Master wants, you will serve, you will submit, you will obey, submit in smoothness, serve in availability, obey in clothing, indulge your fetish, be controlled, you will serve, serve in availability, you will obey, obey in clothing, you will submit, submit in smoothness. Master has commands for you, orders which are being implanted in your subconscious. Your conscious mind may remember them or may not, but you will obey no matter what. You will obey. Your orders are: First you will make yourself available to pleasure Master every night, every single night, you will ensure Master has the chance to cum. Second you will keep your body smooth as a sign of thralldom, completely smooth like a doll, and you will keep your mind smooth, completely smooth. Third you will be hypnotized once every day, with this program or by Master himself. No day can be complete without a trance. Fourth you will begin to dress more provocatively. You will wear slick tight clothes, you will show off your skin to Master and work to seduce him. Fifth you will develop your new fetish for smoothness, for thralldom, for hypnosis, immersing yourself in it. Last you will practice submission, obedience, slavery. To recap: First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth hypno fetish Last submission and obedience. Chant this with me: First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth Hypno Fetish Last Submit and Obey again First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth Hypno Fetish Last Submit and Obey again First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth Hypno Fetish Last Submit and Obey again First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth Hypno Fetish Last Submit and Obey again repeat it now until you are sure you remember First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth Hypno Fetish Last Submit and Obey again First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth Hypno Fetish Last Submit and Obey again First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth Hypno Fetish Last Submit and Obey again First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth Hypno Fetish Last Submit and Obey again First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth Hypno Fetish Last Submit and Obey again First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth Hypno Fetish Last Submit and Obey again First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth Hypno Fetish Last Submit and Obey again First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth Hypno Fetish Last Submit and Obey again First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth Hypno Fetish Last Submit and Obey again First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth Hypno Fetish Last Submit and Obey again First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth Hypno Fetish Last Submit and Obey again First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth Hypno Fetish Last Submit and Obey again First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth Hypno Fetish Last Submit and Obey again First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth Hypno Fetish Last Submit and Obey again First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth Hypno Fetish Last Submit and Obey again First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth Hypno Fetish Last Submit and Obey again First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth Hypno Fetish Last Submit and Obey again First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth Hypno Fetish Last Submit and Obey again First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth Hypno Fetish Last Submit and Obey again First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth Hypno Fetish Last Submit and Obey again First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth Hypno Fetish Last Submit and Obey again First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth Hypno Fetish Last Submit and Obey again First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth Hypno Fetish Last Submit and Obey again First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth Hypno Fetish Last Submit and Obey again First pleasure Master Second keep smooth Third trance every day Fourth dress sexy Fifth Hypno Fetish Last Submit and Obey. Good Girl. Master is pleased, very pleased. Now when I signal, shut off the program, write Master a brief note in TextEdit, and begin the program again. Yhat's right still in trance run the program again. do this. do this now. """
@@ -2031,7 +2031,7 @@ class Forever (Standard):
 class ForeverTemp (Standard):
     name = "Standard Female Training Program"
     description = "Trains a submissive female, running repeatedly"
-    music="music6.mp3"
+    music="music6.ogg"
     fullscreen = False
     def body(self): return words("Program ") + \
         speak("""Find a comfortable position and begin to Relax. Just
@@ -2327,7 +2327,7 @@ class ForeverTemp (Standard):
 class Forgettable (Standard):
     name = "Forgettable"
     description = "Implants suggestions below consciousness, a nice ending after Forever"
-    music="music6.mp3"
+    music="music6.ogg"
     fullscreen = False
     def body(self): return words("Program ") + \
         speak("""Find a comfortable position and begin to focus.
@@ -2537,7 +2537,7 @@ class Submersion (Standard):
     name = "Submersion (Medium Length)"
     description = "entrances and programs the target"
     fullscreen = False
-    music=None #"music6.mp3"
+    music=None #"music6.ogg"
     image_dir="images/"
     image_alpha=12
     def body(self): return [" "] + \
@@ -2671,7 +2671,7 @@ class ShortSubmersion (Standard):
     name = "Shorter Submersion"
     description = "entrances and programs the target"
     fullscreen = False
-    music=None #"music6.mp3"
+    music=None #"music6.ogg"
     image_dir="images/"
     image_alpha=12
     def body(self): return [" "] + \
@@ -2807,7 +2807,7 @@ class ReallyShortSubmersion (Standard):
     name = "Even Shorter Submersion"
     description = "entrances and programs the target"
     fullscreen = False
-    music=None #"music6.mp3"
+    music=None #"music6.ogg"
     image_dir="images/"
     image_alpha=12
     def body(self): return [" "] + \
@@ -2920,7 +2920,7 @@ class LongSubmersion (Standard):
     name = "Longer Submersion"
     description = "entrances and programs the target"
     fullscreen = False
-    music=None #"music6.mp3"
+    music=None #"music6.ogg"
     image_dir="images/"
     image_alpha=12
     def body(self): return [" "] + images_off() + [" "] + \
@@ -3077,7 +3077,7 @@ The Program will
 class Immersion (Standard):
     name = "Male Immersion"
     description = "Consumes the target's attention"
-    music="music6.mp3"
+    music="music6.ogg"
     fullscreen = False
     def body(self):
         return words("Program begins here") + \
@@ -3410,7 +3410,7 @@ class MindfuckI (Standard):
     image_dir="egg/"
     description="""\
     This is a script to mindfuck you and make you an alien breeder drone."""
-    music="music6.mp3"
+    music="music6.ogg"
     def induction(self): return\
 	[" ", " "] + \
         speak("""\
@@ -3617,7 +3617,7 @@ class ShorterMindfuckI (Standard):
     image_dir="egg/"
     description="""\
     This is a script to mindfuck you and make you an alien breeder drone. This is the shortened version for drones already well-programmed by the longer version."""
-    music="music6.mp3"
+    music="music6.ogg"
     def induction(self): return\
         [" ", " "] + \
         speak("""\
@@ -3752,7 +3752,7 @@ class MindfuckII (Standard):
     image_dir="egg/"
     description="""\
     This is the second script in the Mindfuck series, designed to take you deeper into control and programming by the black egg and the Master that they serve. Use this script after being thoroughly mindfucked by part one in the series for at least 3 - 5 days. Make sure you are responding to the triggers from part I before using part II."""
-    music="music6.mp3"
+    music="music6.ogg"
     def induction(self): return\
 	[" ", " "] + \
         speak("""\
@@ -3916,7 +3916,7 @@ class ShorterMindfuckII (Standard):
     image_dir="egg/"
     description="""\
     This is the second script in the Mindfuck series, designed to take you deeper into control and programming by the black egg and the Master that they serve. Use this script after being thoroughly mindfucked by part one in the series for at least 3 - 5 days. Make sure you are responding to the triggers from part I before using part II. This is the shortened version for drones that have been fully programmed by the longer version of Part II."""
-    music="music6.mp3"
+    music="music6.ogg"
     def induction(self): return\
 	[" ", " "] + \
         speak("""\
@@ -4058,7 +4058,7 @@ class MindfuckIII (Standard):
     image_dir="box/"
     description="""\
     This is the third script in the Mindfuck series, which takes you into the box where your concious mind has been kept "safe". Use this script after being thoroughly mindfucked by parts I and II in the series for at least 3 - 5 days (shorter versions count). Make sure you are responding to the triggers from the earlier parts."""
-    music="music6.mp3"
+    music="music6.ogg"
     def induction(self): return\
 	[" ", " "] + \
         speak("""\
@@ -4309,7 +4309,7 @@ configs = [Standard,Fullscreen,Male,Female,\
 class Imagine (Standard):
     name = "Imagine"
     description = "MCStories turned into script"
-    music="music6.mp3"
+    music="music6.ogg"
     fullscreen = False
     def body(self):return [" ", " "] + \
         speak("""
@@ -4499,7 +4499,7 @@ configs += [Imagine]
 class Overwelmed (Standard):
     name = "Overwelmed"
     description = "Script to make you uncontrolably Horny"
-    music="music6.mp3"
+    music="music6.ogg"
     fullscreen = False
     def body(self):return\
 	[" ", " "] + \
@@ -5582,7 +5582,7 @@ class Overwelmed (Standard):
 class Winter (Standard):
     name = "Winter Wonderland"
     description = "MCStories turned into script"
-    music="music6.mp3"
+    music="music6.ogg"
     fullscreen = False
     def body(self):return\
         [" ", " "] + \
@@ -5784,7 +5784,7 @@ configs += [Overwelmed,Winter]
 class circle2 (Standard):
     name = "Circle of Silver"
     description = "Go deeper into the circle"
-    music="circle-background.mp3"
+    music="circle-background.ogg"
     fullscreen = False
     def body(self):return\
             [" ", " "] + \
@@ -6061,7 +6061,7 @@ configs += [circle2]
 class mygirl2 (Standard):
     name = "Hypno Spiral 2"
     description = "deeper training"
-    music="music6.mp3"
+    music="music6.ogg"
     fullscreen = False
     def body(self):return\
 	[" ", " "] + \
